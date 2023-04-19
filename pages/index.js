@@ -7,11 +7,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>Modular</title>
-      </Head> */}
+      </Head>
+
       <Environment />
-      <main>{/* <div>MAI</div> */}</main>
+      <main>Main</main>
     </>
   );
 }

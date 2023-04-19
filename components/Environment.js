@@ -5,6 +5,7 @@ import ReactFlow, {
   Background,
   useNodesState,
   useEdgesState,
+  updateEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -13,8 +14,10 @@ import {
   edges as initialEdges,
 } from "./initial-elements";
 
+const proOptions = { hideAttribution: true };
+
 const rfStyle = {
-  backgroundColor: "white",
+  backgroundColor: "grey",
 };
 
 const onInit = (reactFlowInstance) =>
@@ -23,22 +26,29 @@ const onInit = (reactFlowInstance) =>
 const OverviewFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  const onEdgeUpdate = useCallback(
+    (oldEdge, newConnection) =>
+      setEdges((els) => updateEdge(oldEdge, newConnection, els)),
+    []
+  );
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
   return (
-    <div style={{ height: 800 }}>
+    <div style={{ height: 500 }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
         onInit={onInit}
         fitView
-        attributionPosition="top-right"
+        proOptions={proOptions}
       >
         <Controls />
         <Background color="black" gap={16} />

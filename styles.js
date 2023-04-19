@@ -13,7 +13,9 @@ export const GlobalStyle = createGlobalStyle`
     color: white;
     
   }
-
+  Environment{
+    background-color: white;
+  }
   main{  
     
     display: flex;
