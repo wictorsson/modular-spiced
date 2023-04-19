@@ -18,6 +18,8 @@ import {
 
 const proOptions = { hideAttribution: true };
 import Oscillator from "./Oscillator";
+
+var soundSource;
 // const rfStyle = {
 //   backgroundColor: "grey",
 // };
@@ -33,6 +35,8 @@ const OverviewFlow = () => {
   const onEdgeUpdate = useCallback(
     (oldEdge, newConnection) => {
       console.log("UPDATED CONNECTION");
+      // soundSource.volume.value = -60;
+      soundSource.stop();
       setEdges((els) => updateEdge(oldEdge, newConnection, els));
     },
     [setEdges]
@@ -42,7 +46,7 @@ const OverviewFlow = () => {
       console.log("NEW CONNECTION");
 
       // Call path component and send params- in path component update connections
-      Oscillator(400);
+      soundSource = Oscillator(400);
       setEdges((eds) => addEdge(params, eds));
     },
     [setEdges]
