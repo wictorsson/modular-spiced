@@ -26,7 +26,7 @@ export const nodes = [
     data: {
       label: (
         <>
-          <strong>SOURCE</strong>
+          <strong>SOUND SOURCE</strong>
         </>
       ),
     },
@@ -39,25 +39,25 @@ export const nodes = [
       border: "1px solid cyan",
     },
   },
-  {
-    id: "3",
-    type: "output",
-    data: {
-      label: (
-        <>
-          <strong>SOURCE 2</strong>
-        </>
-      ),
-    },
-    position: { x: 450, y: 100 },
-    style: {
-      width: 100,
-      height: 100,
-      background: "#FFFFFF90",
-      color: "#333",
-      border: "1px solid cyan",
-    },
-  },
+  //   {
+  //     id: "3",
+  //     type: "output",
+  //     data: {
+  //       label: (
+  //         <>
+  //           <strong>SOURCE 2</strong>
+  //         </>
+  //       ),
+  //     },
+  //     position: { x: 450, y: 100 },
+  //     style: {
+  //       width: 100,
+  //       height: 100,
+  //       background: "#FFFFFF90",
+  //       color: "#333",
+  //       border: "1px solid cyan",
+  //     },
+  //   },
   //   {
   //     id: "4",
   //     position: { x: 250, y: 200 },
