@@ -13,9 +13,16 @@ export const nodes = [
       ),
     },
     position: { x: 250, y: 0 },
+    style: {
+      width: 200,
+      height: 40,
+      background: "#FFFFFF119",
+      color: "#333",
+    },
   },
   {
     id: "2",
+    type: "output",
     data: {
       label: (
         <>
@@ -23,24 +30,13 @@ export const nodes = [
         </>
       ),
     },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: "3",
-    data: {
-      label: (
-        <>
-          <strong>SOURCE custom style</strong>
-        </>
-      ),
-    },
-    position: { x: 400, y: 100 },
+    position: { x: 250, y: 100 },
     style: {
-      background: "pink",
+      width: 100,
+      height: 100,
+      background: "#FFFFFF90",
       color: "#333",
-      border: "1px solid #222138",
-
-      width: 180,
+      border: "1px solid cyan",
     },
   },
   //   {
@@ -75,14 +71,15 @@ export const nodes = [
   //     data: { label: "Another output node" },
   //     position: { x: 400, y: 450 },
   //   },
+  ,
 ];
 
 export const edges = [
-  {
-    id: "e1-2",
-    source: "1",
-    target: "2",
-  },
+  //   {
+  //     id: "e1-2",
+  //     source: "1",
+  //     target: "2",
+  //   },
   //   { id: "e1-3", source: "1", target: "3" },
   //   {
   //     id: "e3-4",

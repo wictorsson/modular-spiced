@@ -1,4 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import * as Tone from "tone";
+
 import ReactFlow, {
   addEdge,
   Controls,
@@ -15,7 +17,7 @@ import {
 } from "./initial-elements";
 
 const proOptions = { hideAttribution: true };
-
+import Oscillator from "./Oscillator";
 // const rfStyle = {
 //   backgroundColor: "grey",
 // };
@@ -26,21 +28,28 @@ const proOptions = { hideAttribution: true };
 const OverviewFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [osc, setOsc] = useState();
 
-  const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
-    console.log("UPDATED CONNECTION");
-    setEdges((els) => updateEdge(oldEdge, newConnection, els));
-  });
+  const onEdgeUpdate = useCallback(
+    (oldEdge, newConnection) => {
+      console.log("UPDATED CONNECTION");
+      setEdges((els) => updateEdge(oldEdge, newConnection, els));
+    },
+    [setEdges]
+  );
   const onConnect = useCallback(
     (params) => {
       console.log("NEW CONNECTION");
+
+      // Call path component and send params- in path component update connections
+      Oscillator(400);
       setEdges((eds) => addEdge(params, eds));
     },
     [setEdges]
   );
 
   return (
-    <div style={{ height: 500 }}>
+    <div style={{ height: 650 }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -53,7 +62,7 @@ const OverviewFlow = () => {
         proOptions={proOptions}
       >
         <Controls showInteractive={false} showZoom={false} />
-        <Background color="black" gap={16} />
+        <Background color="grey" gap={50} variant={"dots"} />
       </ReactFlow>
     </div>
   );
