@@ -13,8 +13,10 @@ export const GlobalStyle = createGlobalStyle`
     color: white;
     
   }
-  Environment{
-    background-color: white;
+  .environment{
+    margin: 20px;
+    background-color: #2E2E2E;
+    border-radius: 20px;
   }
   main{  
     

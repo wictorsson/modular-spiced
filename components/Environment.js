@@ -16,24 +16,26 @@ import {
 
 const proOptions = { hideAttribution: true };
 
-const rfStyle = {
-  backgroundColor: "grey",
-};
+// const rfStyle = {
+//   backgroundColor: "grey",
+// };
 
-const onInit = (reactFlowInstance) =>
-  console.log("flow loaded:", reactFlowInstance);
+// const onInit = (reactFlowInstance) =>
+//   console.log("flow loaded:", reactFlowInstance);
 
 const OverviewFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const onEdgeUpdate = useCallback(
-    (oldEdge, newConnection) =>
-      setEdges((els) => updateEdge(oldEdge, newConnection, els)),
-    []
-  );
+  const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
+    console.log("UPDATED CONNECTION");
+    setEdges((els) => updateEdge(oldEdge, newConnection, els));
+  });
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => {
+      console.log("NEW CONNECTION");
+      setEdges((eds) => addEdge(params, eds));
+    },
     [setEdges]
   );
 
@@ -46,11 +48,11 @@ const OverviewFlow = () => {
         onEdgesChange={onEdgesChange}
         onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
-        onInit={onInit}
+        // onInit={onInit}
         fitView
         proOptions={proOptions}
       >
-        <Controls />
+        <Controls showInteractive={false} showZoom={false} />
         <Background color="black" gap={16} />
       </ReactFlow>
     </div>

@@ -10,9 +10,10 @@ export default function Home() {
       <Head>
         <title>Modular</title>
       </Head>
-
-      <Environment />
-      <main>Main</main>
+      <div className="environment">
+        <Environment />
+      </div>
+      <main>---DIV---</main>
     </>
   );
 }
