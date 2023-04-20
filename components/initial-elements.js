@@ -62,7 +62,7 @@ export const nodes = [
   ,
 ];
 
-//TODO - IMPLEMENT custom edgdes here
+//TODO - IMPLEMENT default edgdes here
 export const edges = [
   //   {
   //     id: "e1-2",
