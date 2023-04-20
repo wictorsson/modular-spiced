@@ -19,18 +19,41 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 20px;
   }
 
-  button {
-    background-color: #4CAF50; /* Green */
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 10px;
+  .welcome-screen{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6rem;
+    min-height: 100vh;}
+
   }
+
+  .button {
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: white;
+   
+    padding: 30px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+    }
+
+    .button:hover {
+    background: #434343;
+    letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    color: white;
+    transition: all 0.4s ease 0s;
+    }
+
+
   main{  
     
     display: flex;

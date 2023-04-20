@@ -26,7 +26,7 @@ import Osc from "./Oscillator";
 
 // USE this as sound source for user story 1
 var soundSource;
-var audioStarted = false;
+
 var oscStarted = false;
 
 // const rfStyle = {
@@ -38,7 +38,7 @@ var oscStarted = false;
 // console.log("flow loaded:", reactFlowInstance);
 
 // Listen and update the node connections
-const OverviewFlow = () => {
+const OverviewFlow = ({ audioStarted }) => {
   const edgeUpdateSuccessful = useRef(true);
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges] = useEdgesState(initialEdges);
@@ -92,7 +92,7 @@ const OverviewFlow = () => {
     console.log("NEW CONNECTION");
     const nodeType = initialNodes.find((node) => node.id === params.target);
     console.log(nodeType);
-
+    console.log("audiostarted", audioStarted);
     // TODO - Call path component and send params- in path component update connections
     if (audioStarted && !oscStarted) {
       soundSource = Osc(440);

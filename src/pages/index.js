@@ -3,28 +3,32 @@ import { Inter } from "next/font/google";
 import Environment from "../../components/Environment";
 import * as Tone from "tone";
 const inter = Inter({ subsets: ["latin"] });
-
-// Start audio by user interaction, needed for mobile devices
-// Send to audio master channel later
-function initAudio() {
-  audioStarted = true;
-  Tone.start();
-  // synth.triggerAttackRelease("C2", "8n");
-}
+import { useState } from "react";
 
 export default function Home() {
+  const [audioStarted, setAudioStarted] = useState(false);
+  const initAudio = () => {
+    setAudioStarted(true);
+    Tone.start();
+  };
   return (
     <>
       <Head>
         <title>Modular</title>
       </Head>
-      <button className="glow-on-hover" onClick={initAudio}>
-        ENABLE APP
-      </button>
-      <div className="environment">
-        <Environment />
-      </div>
-      <main>---SECTION---</main>
+      {!audioStarted && (
+        <div className="welcome-screen">
+          <button className="button" onClick={initAudio}>
+            ENTER
+          </button>
+        </div>
+      )}
+      {audioStarted && (
+        <div className="environment">
+          <Environment audioStarted={audioStarted} />
+        </div>
+      )}
+      <main></main>
     </>
   );
 }
