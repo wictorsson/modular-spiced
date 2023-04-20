@@ -1,5 +1,8 @@
 import React, { useCallback, useState, useRef } from "react";
 
+// THE viewport of the app, the nodes will go into separate components
+// Nodes are the draggable components, edges are the draggable virtual cables between nodes
+//TODO - send node chain to audio chain. Remove soundSource here
 import ReactFlow, {
   addEdge,
   Controls,
@@ -27,10 +30,11 @@ var soundSource;
 //   backgroundColor: "grey",
 // };
 
-//NO need for init yet, maybe implement later???
+//NO need for init yet, check if needed later when creating audio context
 // const onInit = (reactFlowInstance) =>
 //   console.log("flow loaded:", reactFlowInstance);
 
+// Listen and update the node connections
 const OverviewFlow = () => {
   const edgeUpdateSuccessful = useRef(true);
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
@@ -57,6 +61,7 @@ const OverviewFlow = () => {
     [setEdges]
   );
 
+  // Delete edge if not connected to another node
   const onEdgeUpdateEnd = useCallback((_, edge) => {
     if (!edgeUpdateSuccessful.current) {
       setEdges((eds) => eds.filter((e) => e.id !== edge.id));
@@ -68,16 +73,18 @@ const OverviewFlow = () => {
   const onConnect = useCallback(
     (params) => {
       console.log("NEW CONNECTION");
+      const nodeType = initialNodes.find((node) => node.id === params.target);
+      console.log(nodeType);
 
       // TODO - Call path component and send params- in path component update connections
-      soundSource = Oscillator(400);
+      soundSource = Oscillator(600);
       setEdges((eds) => addEdge(params, eds));
     },
     [setEdges]
   );
 
   return (
-    <div style={{ height: 650 }}>
+    <div style={{ height: 620 }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -92,7 +99,7 @@ const OverviewFlow = () => {
         proOptions={proOptions}
       >
         <Controls showInteractive={false} showZoom={false} />
-        <Background color="grey" gap={50} variant={"dots"} />
+        <Background color="cyan" gap={50} variant={"dots"} />
       </ReactFlow>
     </div>
   );

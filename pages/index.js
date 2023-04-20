@@ -13,7 +13,7 @@ export default function Home() {
       <div className="environment">
         <Environment />
       </div>
-      <main>---DIV---</main>
+      <main>---SECTION---</main>
     </>
   );
 }
