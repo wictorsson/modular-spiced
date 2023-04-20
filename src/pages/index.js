@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import Environment from "../components/Environment";
+import Environment from "../../components/Environment";
 
 const inter = Inter({ subsets: ["latin"] });
 
