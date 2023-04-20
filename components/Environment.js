@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useRef } from "react";
 
-// THE viewport of the app, the nodes will go into separate components
+// THE viewport of the app, the nodes will go into separate component
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
 //TODO - send node chain to audio chain. Remove soundSource here
 import ReactFlow, {
