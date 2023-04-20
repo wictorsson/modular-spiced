@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useRef } from "react";
 
-// THE viewport of the app, the nodes will go into separate component
+// THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
 //TODO - send node chain to audio chain. Remove soundSource here
 import ReactFlow, {
@@ -11,6 +11,7 @@ import ReactFlow, {
   useEdgesState,
   updateEdge,
   onEdgeUpdateEnd,
+  applyEdgeChanges,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -21,39 +22,56 @@ import {
 
 const proOptions = { hideAttribution: true };
 // WARNING TODO - use useEffect,
-import Oscillator from "./Oscillator";
+import Osc from "./Oscillator";
 
 // USE this as sound source for user story 1
 var soundSource;
+var audioStarted = false;
+var oscStarted = false;
 
 // const rfStyle = {
 //   backgroundColor: "grey",
 // };
 
 //NO need for init yet, check if needed later when creating audio context
-// const onInit = (reactFlowInstance) =>
-//   console.log("flow loaded:", reactFlowInstance);
+//const onInit = (reactFlowInstance) =>
+// console.log("flow loaded:", reactFlowInstance);
 
 // Listen and update the node connections
 const OverviewFlow = () => {
   const edgeUpdateSuccessful = useRef(true);
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [edges, setEdges] = useEdgesState(initialEdges);
 
   // UPDATE handlers to be able to redrag the edge to new nodes and to delete by dropp
   const onEdgeUpdateStart = useCallback(() => {
     if (soundSource) {
       soundSource.stop();
+      oscStarted = false;
     }
+
     edgeUpdateSuccessful.current = false;
   }, []);
+
+  const onEdgesChange = useCallback(
+    (changes) => {
+      if (changes[0].type === "remove") {
+        if (soundSource) {
+          soundSource.stop();
+          oscStarted = false;
+        }
+      }
+      setEdges((eds) => applyEdgeChanges(changes, eds));
+    },
+    [setEdges]
+  );
 
   const onEdgeUpdate = useCallback(
     (oldEdge, newConnection) => {
       console.log("UPDATED CONNECTION");
       edgeUpdateSuccessful.current = true;
       // soundSource.volume.value = -60;
-      if (soundSource) {
+      if (soundSource && audioStarted) {
         soundSource.start();
       }
       setEdges((els) => updateEdge(oldEdge, newConnection, els));
@@ -70,21 +88,22 @@ const OverviewFlow = () => {
     edgeUpdateSuccessful.current = true;
   }, []);
 
-  const onConnect = useCallback(
-    (params) => {
-      console.log("NEW CONNECTION");
-      const nodeType = initialNodes.find((node) => node.id === params.target);
-      console.log(nodeType);
+  const onConnect = useCallback((params) => {
+    console.log("NEW CONNECTION");
+    const nodeType = initialNodes.find((node) => node.id === params.target);
+    console.log(nodeType);
 
-      // TODO - Call path component and send params- in path component update connections
-      soundSource = Oscillator(600);
+    // TODO - Call path component and send params- in path component update connections
+    if (audioStarted && !oscStarted) {
+      soundSource = Osc(440);
+      oscStarted = true;
+      console.log(soundSource.state);
       setEdges((eds) => addEdge(params, eds));
-    },
-    [setEdges]
-  );
+    }
+  }, []);
 
   return (
-    <div style={{ height: 620 }}>
+    <div style={{ height: 650 }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
