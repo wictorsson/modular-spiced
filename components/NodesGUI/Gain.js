@@ -13,10 +13,9 @@ export default function Gain({ id, data }) {
   return (
     <div>
       <div>
-        <p>Amp</p>
+        <p>Gain</p>
 
         <label>
-          <span>Gain</span>
           <input
             className="nodrag"
             type="range"

@@ -59,6 +59,16 @@ export const useStore = create((set, get) => ({
     });
   },
 
+  // Takes an array of nodes
+  removeNodes(nodes) {
+    nodes.forEach((node) => {
+      removeAudioNode(node.id);
+    });
+    // for (const { id } of nodes) {
+    //   removeAudioNode(id);
+    // }
+  },
+
   addEdge(data) {
     connect(data.source, data.target);
     //Nano ID generates random six digit ID
@@ -68,6 +78,7 @@ export const useStore = create((set, get) => ({
     set({ edges: [edge, ...get().edges] });
   },
 
+  // AUDIO TOGGLE
   isRunning: isRunning(),
 
   toggleAudio() {

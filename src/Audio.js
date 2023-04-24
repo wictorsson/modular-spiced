@@ -23,6 +23,16 @@ export function updateAudioNode(id, data) {
   }
 }
 
+export function removeAudioNode(id) {
+  const audioNode = audioNodes[id];
+  audioNode.disconnect();
+  // audioNode.stop?.();
+  // Dispose - free garbage collection
+  audioNode.dispose();
+}
+
+//TOGGLE AUDIO - MOVE TO START PAGE LATER
+
 // Return because of async...
 export function isRunning() {
   //Check tone funciton for running
