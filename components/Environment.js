@@ -1,7 +1,7 @@
 import React from "react";
 import ReactFlow, { Background } from "reactflow";
+import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
-
 import { useStore } from "../src/store";
 import Osc from "../components/Osc";
 import Amp from "../components/Amp";

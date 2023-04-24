@@ -9,27 +9,28 @@ export default function Home() {
   const [audioStarted, setAudioStarted] = useState(false);
   const initAudio = () => {
     setAudioStarted(true);
-    Tone.start();
+    // Tone.start();
+    //const osc = new Tone.Oscillator(440, "sine").toDestination().start();
   };
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>Modular</title>
-      </Head> */}
+      </Head>
       {/* <div className="body">Header Nav</div> */}
-      {/* {!audioStarted && (
+      {!audioStarted && (
         <div className="welcome-screen">
           <button className="button" onClick={initAudio}>
             ENTER
           </button>
         </div>
-      )} */}
-      <Environment />
-      {/* {audioStarted && (
+      )}
+      {/* <Environment /> */}
+      {audioStarted && (
         <div className="environment">
           <Environment audioStarted={audioStarted} />
         </div>
-      )} */}
+      )}
       {/* <main></main> */}
     </>
   );
