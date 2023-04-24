@@ -53,6 +53,9 @@ export const GlobalStyle = createGlobalStyle`
     transition: all 0.4s ease 0s;
     }
 
+    .header{
+      margin: 50px;
+    }
 
   main{  
     

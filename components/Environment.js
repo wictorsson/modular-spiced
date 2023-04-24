@@ -22,7 +22,7 @@ import {
 
 const proOptions = { hideAttribution: true };
 // WARNING TODO - use useEffect,
-import Osc from "./Oscillator";
+import Osc from "./Audio";
 
 // USE this as sound source for user story 1
 var soundSource;
@@ -103,23 +103,25 @@ const OverviewFlow = ({ audioStarted }) => {
   }, []);
 
   return (
-    <div style={{ height: 650 }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onEdgeUpdateStart={onEdgeUpdateStart}
-        onEdgeUpdate={onEdgeUpdate}
-        onEdgeUpdateEnd={onEdgeUpdateEnd}
-        onConnect={onConnect}
-        // onInit={onInit}
-        fitView
-        proOptions={proOptions}
-      >
-        <Controls showInteractive={false} showZoom={false} />
-        <Background color="cyan" gap={50} variant={"dots"} />
-      </ReactFlow>
+    <div>
+      <div style={{ height: 650 }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onEdgeUpdateStart={onEdgeUpdateStart}
+          onEdgeUpdate={onEdgeUpdate}
+          onEdgeUpdateEnd={onEdgeUpdateEnd}
+          onConnect={onConnect}
+          // onInit={onInit}
+          fitView
+          proOptions={proOptions}
+        >
+          <Controls showInteractive={false} showZoom={false} />
+          <Background color="cyan" gap={50} variant={"dots"} />
+        </ReactFlow>
+      </div>
     </div>
   );
 };

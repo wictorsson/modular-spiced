@@ -16,6 +16,7 @@ export default function Home() {
       <Head>
         <title>Modular</title>
       </Head>
+      {<div className="header">Header Nav</div>}
       {!audioStarted && (
         <div className="welcome-screen">
           <button className="button" onClick={initAudio}>
