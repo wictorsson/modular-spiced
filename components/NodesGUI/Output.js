@@ -1,7 +1,7 @@
 import React from "react";
 import { Handle } from "reactflow";
 import { shallow } from "zustand/shallow";
-import { useStore } from "../src/store";
+import { useStore } from "../../src/store";
 
 const selector = (store) => ({
   isRunning: store.isRunning,

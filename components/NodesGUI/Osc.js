@@ -1,6 +1,6 @@
 import React from "react";
 import { Handle } from "reactflow";
-import { useStore } from "../src/store";
+import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
@@ -42,7 +42,7 @@ export default function Osc({ id, data, xPos }) {
         </label> */}
       </div>
 
-      <Handle type="source" position="bottom" />
+      <Handle type="source" position="top" />
     </div>
   );
 }

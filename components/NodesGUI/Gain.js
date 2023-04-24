@@ -1,15 +1,13 @@
 import React from "react";
 import { Handle } from "reactflow";
-import { useStore } from "../src/store";
+import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
   setGain: (e) => store.updateNode(id, { gain: e.target.value }),
 });
 
-export default function Amp({ id, data }) {
-  // console.log(id);
-  //console.log(xPos);
+export default function Gain({ id, data }) {
   const { setGain } = useStore(selector(id), shallow);
 
   return (

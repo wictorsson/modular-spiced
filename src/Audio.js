@@ -1,4 +1,5 @@
 //Create audio, no rendering is happening from this file!
+// Thread safe, (audio should not know about GUI)
 
 import * as Tone from "tone";
 
@@ -28,12 +29,14 @@ export function isRunning() {
   return Tone.context.state === "running";
 }
 
-// TEMP function to be able to use audiocontext in next.js
+// TEMP function to be able to use audiocontext in next.js. Create modules here
 export function toggleAudio() {
   if (Tone.context.state === "suspended") {
     const osc = new Tone.Oscillator(440, "sine").start();
+    const gain = new Tone.Gain(0.5);
     const out = Tone.getDestination();
     audioNodes["a"] = osc;
+    audioNodes["b"] = gain;
     audioNodes["c"] = out;
   }
   // Change here to suspend if needed later

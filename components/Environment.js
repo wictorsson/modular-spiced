@@ -3,9 +3,9 @@ import ReactFlow, { Background } from "reactflow";
 import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
-import Osc from "../components/Osc";
-import Amp from "./Gain";
-import AudioOutToggle from "./Output";
+import Osc from "./NodesGUI/Osc";
+import Gain from "./NodesGUI/Gain";
+import AudioOutToggle from "./NodesGUI/Output";
 
 // THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
@@ -23,7 +23,7 @@ const selector = (store) => ({
 //Create nodetype object, should be defined outside of app component
 const nodeTypes = {
   osc: Osc,
-  amp: Amp,
+  gain: Gain,
   audioOut: AudioOutToggle,
 };
 

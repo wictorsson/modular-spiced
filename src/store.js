@@ -9,7 +9,7 @@ import {
   disconnect,
   isRunning,
   toggleAudio,
-} from "../components/Audio";
+} from "./Audio";
 
 //Store is a hook! can include anything - primitives, objects, functions...
 export const useStore = create((set, get) => ({
@@ -18,20 +18,20 @@ export const useStore = create((set, get) => ({
       type: "osc",
       id: "a",
       data: { frequency: 220, type: "square" },
-      position: { x: 100, y: 100 },
+      position: { x: 100, y: 200 },
     },
 
-    // {
-    //   type: "amp",
-    //   id: "b",
-    //   data: { gain: -12 },
-    //   position: { x: 0, y: 50 },
-    // },
+    {
+      type: "gain",
+      id: "b",
+      data: { gain: -6 },
+      position: { x: 150, y: 50 },
+    },
     {
       type: "audioOut",
       id: "c",
       data: { label: "output" },
-      position: { x: 0, y: 50 },
+      position: { x: 150, y: -40 },
     },
     // { id: "c", data: { label: "output" }, position: { x: 50, y: 100 } },
   ],
