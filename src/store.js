@@ -5,8 +5,8 @@ import { create } from "zustand";
 import {
   updateAudioNode,
   removeAudioNode,
-  connect,
-  disconnect,
+  addAudioEdge,
+  removeAudioEdge,
   isRunning,
   toggleAudio,
 } from "./Audio";
@@ -18,13 +18,13 @@ export const useStore = create((set, get) => ({
       type: "osc",
       id: "a",
       data: { frequency: 220, type: "square" },
-      position: { x: 100, y: 200 },
+      position: { x: 220, y: 200 },
     },
 
     {
       type: "gain",
       id: "b",
-      data: { gain: -6 },
+      data: { gain: -6, numberInputs: 1 },
       position: { x: 150, y: 50 },
     },
     {
@@ -33,6 +33,14 @@ export const useStore = create((set, get) => ({
       data: { label: "output" },
       position: { x: 150, y: -40 },
     },
+
+    {
+      type: "osc",
+      id: "d",
+      data: { frequency: 320, type: "square" },
+      position: { x: -20, y: 200 },
+    },
+
     // { id: "c", data: { label: "output" }, position: { x: 50, y: 100 } },
   ],
   edges: [],
@@ -64,13 +72,22 @@ export const useStore = create((set, get) => ({
     nodes.forEach((node) => {
       removeAudioNode(node.id);
     });
-    // for (const { id } of nodes) {
-    //   removeAudioNode(id);
-    // }
+  },
+
+  removeEdges(edges) {
+    edges.forEach((edge) => {
+      removeAudioEdge(edge.source, edge.target);
+    });
   },
 
   addEdge(data) {
-    connect(data.source, data.target);
+    const targetNode = get().nodes.find((node) => node.id === data.target);
+
+    // TODO - Check handles instead!
+    if ("numberInputs" in targetNode.data) {
+      console.log(targetNode.data.numberInputs);
+    }
+    addAudioEdge(data.source, data.target);
     //Nano ID generates random six digit ID
     const id = nanoid(6);
     const edge = { id, ...data };
@@ -78,7 +95,9 @@ export const useStore = create((set, get) => ({
     set({ edges: [edge, ...get().edges] });
   },
 
+  //****************************************************/
   // AUDIO TOGGLE
+
   isRunning: isRunning(),
 
   toggleAudio() {

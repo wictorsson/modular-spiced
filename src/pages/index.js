@@ -1,11 +1,9 @@
 import Head from "next/head";
 //import { Inter } from "next/font/google";
 import Environment from "../../components/Environment";
-import * as Tone from "tone";
 //const inter = Inter({ subsets: ["latin"] });
-import { useState } from "react";
 
-// MOVE HEADER TO LAYOUT
+// TODO - MOVE HEADER TO LAYOUT
 export default function Home() {
   return (
     <>
@@ -13,7 +11,6 @@ export default function Home() {
         <title>Modular</title>
       </Head>
 
-      {/* <div className="welcome-screen">Header Nav</div> */}
       {/* {!audioStarted && (
         <div className="welcome-screen">
           <button className="button" onClick={initAudio}>
@@ -24,12 +21,6 @@ export default function Home() {
       <div className="environment">
         <Environment />
       </div>
-      {/* {audioStarted && (
-        <div className="environment">
-          <Environment audioStarted={audioStarted} />
-        </div>
-      )} */}
-      {/* <main></main> */}
     </>
   );
 }
