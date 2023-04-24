@@ -21,12 +21,12 @@ export const useStore = create((set, get) => ({
       position: { x: 100, y: 100 },
     },
 
-    {
-      type: "amp",
-      id: "b",
-      data: { gain: -12 },
-      position: { x: 0, y: 50 },
-    },
+    // {
+    //   type: "amp",
+    //   id: "b",
+    //   data: { gain: -12 },
+    //   position: { x: 0, y: 50 },
+    // },
     {
       type: "audioOut",
       id: "c",
@@ -60,6 +60,8 @@ export const useStore = create((set, get) => ({
   },
 
   addEdge(data) {
+    connect(data.source, data.target);
+    //Nano ID generates random six digit ID
     const id = nanoid(6);
     const edge = { id, ...data };
 

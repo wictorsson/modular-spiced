@@ -4,7 +4,7 @@ import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
 import Osc from "../components/Osc";
-import Amp from "../components/Amp";
+import Amp from "./Gain";
 import AudioOutToggle from "./Output";
 
 // THE viewport of the app, the nodes will go into separate components

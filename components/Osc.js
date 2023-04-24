@@ -16,17 +16,15 @@ export default function Osc({ id, data, xPos }) {
   return (
     <div>
       <div>
-        <p>Oscillator Node</p>
-        <div>
-          <button className="btn">press</button>
-        </div>
+        <p>Osc</p>
+
         <label>
           <span>Frequency</span>
           <input
             className="nodrag"
             type="range"
             min="10"
-            max="20000"
+            max="5000"
             value={data.frequency}
             onChange={setFrequency}
           />

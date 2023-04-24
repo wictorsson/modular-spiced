@@ -1,41 +1,24 @@
-//Create audio
-//const context = new AudioContext();
-import React, { useState, useEffect } from "react";
+//Create audio, no rendering is happening from this file!
+
 import * as Tone from "tone";
-//import OscAudio from "./OscAudio";
-const nodes = new Map();
 
-let osc;
+// Audionodes - empty object on init
+const audioNodes = {};
 
-//const osc = context.createOscillator();
-//const osc = new Tone.Oscillator(440, "sine").toDestination().start();
-// osc.frequency.value = 220;
-// osc.type = "square";
-// osc.start();
-
-// const amp = context.createGain();
-// amp.gain.value = 0.5;
-
-// const out = context.destination;
-
-//nodes.set("a", osc);
-// nodes.set("b", amp);
-// nodes.set("c", out);
+// Connect audio components, in/out comes from the store
+export function connect(sourceId, targetId) {
+  const audioNodeSource = audioNodes[sourceId];
+  const audioNodeTarget = audioNodes[targetId];
+  audioNodeSource.connect(audioNodeTarget);
+}
 
 // Update audio parameters
 export function updateAudioNode(id, data) {
-  const node = nodes.get(id);
-  //console.log(node);
-  //If statement might not be needed for tone.js - check value...
+  const audioNode = audioNodes[id];
+  //Check in case of error - instanceof AudioParam
   for (const [key, val] of Object.entries(data)) {
-    // if (node[key] instanceof AudioParam) {
-    //   node[key].value = val;
-    // } else {
-    //   node[key] = val;
-    // }
-    // console.log(node[key]);
-    node[key].value = val;
-    console.log(node[key].value);
+    audioNode[key].value = val;
+    console.log(audioNode[key].value);
   }
 }
 
@@ -48,9 +31,12 @@ export function isRunning() {
 // TEMP function to be able to use audiocontext in next.js
 export function toggleAudio() {
   if (Tone.context.state === "suspended") {
-    const osc = new Tone.Oscillator(440, "sine").toDestination().start();
-    nodes.set("a", osc);
+    const osc = new Tone.Oscillator(440, "sine").start();
+    const out = Tone.getDestination();
+    audioNodes["a"] = osc;
+    audioNodes["c"] = out;
   }
+  // Change here to suspend if needed later
   console.log(Tone.context.state);
   return isRunning() ? Tone.start() : Tone.start();
 }

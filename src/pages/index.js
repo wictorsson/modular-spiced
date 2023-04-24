@@ -18,19 +18,21 @@ export default function Home() {
         <title>Modular</title>
       </Head>
       {/* <div className="body">Header Nav</div> */}
-      {!audioStarted && (
+      {/* {!audioStarted && (
         <div className="welcome-screen">
           <button className="button" onClick={initAudio}>
             ENTER
           </button>
         </div>
-      )}
-      {/* <Environment /> */}
-      {audioStarted && (
+      )} */}
+      <div className="environment">
+        <Environment />
+      </div>
+      {/* {audioStarted && (
         <div className="environment">
           <Environment audioStarted={audioStarted} />
         </div>
-      )}
+      )} */}
       {/* <main></main> */}
     </>
   );
