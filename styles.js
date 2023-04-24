@@ -7,8 +7,8 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
-    font-family: system-ui;
+  .body {
+   // font-family: system-ui;
     background-color: #202020;
     color: white;
     
@@ -57,12 +57,12 @@ export const GlobalStyle = createGlobalStyle`
       margin: 50px;
     }
 
-  main{  
+  // main{  
     
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6rem;
-    min-height: 100vh;}
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   padding: 6rem;
+  //   min-height: 100vh;}
 `;

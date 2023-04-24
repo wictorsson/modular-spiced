@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
+//import { Inter } from "next/font/google";
 import Environment from "../../components/Environment";
 import * as Tone from "tone";
-const inter = Inter({ subsets: ["latin"] });
+//const inter = Inter({ subsets: ["latin"] });
 import { useState } from "react";
 
 export default function Home() {
@@ -13,23 +13,24 @@ export default function Home() {
   };
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Modular</title>
-      </Head>
-      {<div className="header">Header Nav</div>}
-      {!audioStarted && (
+      </Head> */}
+      {/* <div className="body">Header Nav</div> */}
+      {/* {!audioStarted && (
         <div className="welcome-screen">
           <button className="button" onClick={initAudio}>
             ENTER
           </button>
         </div>
-      )}
-      {audioStarted && (
+      )} */}
+      <Environment />
+      {/* {audioStarted && (
         <div className="environment">
           <Environment audioStarted={audioStarted} />
         </div>
-      )}
-      <main></main>
+      )} */}
+      {/* <main></main> */}
     </>
   );
 }
