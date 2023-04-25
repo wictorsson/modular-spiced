@@ -98,13 +98,27 @@ export const GlobalStyle = createGlobalStyle`
    
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
     justify-content: space-between;
     font-size: 10px;
     background-color: white;
-    
+    border-style: solid;
+    border-color: grey;
     border-radius: 10px;
+  }
+
+  .nodeContainer input[type=range] {
+    width: 70%; 
+    margin: 0 auto;
+  }
+
+  .waveformContainer{
+    display: flex;
+    margin:10px;
+    flex-direction: space-between;
+    gap: 10px;
+    font-size: 8px;
   }
 
   .react-flow__handle-top{
@@ -120,5 +134,6 @@ export const GlobalStyle = createGlobalStyle`
     transform: translate(0, 0);
 
   }
+
 
 `;

@@ -19,7 +19,9 @@ export default function Osc({ id, data, xPos }) {
         <p>VCO</p>
 
         <span>Freq</span>
+
         <input
+          id="slider"
           className="nodrag"
           type="range"
           min="10"
@@ -28,16 +30,46 @@ export default function Osc({ id, data, xPos }) {
           onChange={setFrequency}
         />
         {/* <span>{data.frequency}Hz</span> */}
-
-        {/* <label>
-          <span>Waveform</span>
-          <select className="nodrag" value={data.type} onChange={setType}>
-            <option value="sine">sine</option>
-            <option value="triangle">triangle</option>
-            <option value="sawtooth">sawtooth</option>
-            <option value="square">square</option>
-          </select>
-        </label> */}
+        <div className="waveformContainer">
+          <div className="nodrag">
+            <label style={{ display: "block" }}>
+              <input
+                type="radio"
+                name="type"
+                value="sine"
+                checked={data.type === "sine"}
+                onChange={setType}
+              />
+              Sine
+              <input
+                type="radio"
+                name="type"
+                value="triangle"
+                checked={data.type === "triangle"}
+                onChange={setType}
+              />
+              Triangle
+            </label>
+            <label style={{ display: "block" }}>
+              <input
+                type="radio"
+                name="type"
+                value="sawtooth"
+                checked={data.type === "sawtooth"}
+                onChange={setType}
+              />
+              Saw
+              <input
+                type="radio"
+                name="type"
+                value="square"
+                checked={data.type === "square"}
+                onChange={setType}
+              />
+              Square
+            </label>
+          </div>
+        </div>
       </div>
 
       <Handle type="source" position="top" />
