@@ -4,6 +4,7 @@ import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
 import Osc from "./NodesGUI/Osc";
+import Filter from "./NodesGUI/Filter";
 import Gain from "./NodesGUI/Gain";
 import AudioOutToggle from "./NodesGUI/Output";
 
@@ -24,6 +25,7 @@ const selector = (store) => ({
 //Create nodetype object, should be defined outside of app component
 const nodeTypes = {
   osc: Osc,
+  filter: Filter,
   gain: Gain,
   audioOut: AudioOutToggle,
 };
@@ -52,6 +54,7 @@ function Environment() {
       >
         <Panel position="left">
           <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("filter")}>Filter</button>
           <button onClick={() => store.createNode("gain")}>Gain</button>
           {/* <button onClick={() => store.createNode("osc")}>Osc</button>
           <button onClick={() => store.createNode("osc")}>Osc</button> */}

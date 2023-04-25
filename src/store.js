@@ -55,6 +55,11 @@ export const useStore = create((set, get) => ({
         position = { x: 0, y: 100 };
         break;
       }
+      case "filter": {
+        data = { frequency: 1200, type: "lowpass" };
+        position = { x: 0, y: 100 };
+        break;
+      }
     }
     set({ nodes: [...get().nodes, { type, id, data, position }] });
     createAudioNode(id, type, data);

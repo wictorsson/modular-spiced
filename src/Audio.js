@@ -21,6 +21,7 @@ export function updateAudioNode(id, data) {
 
   Object.entries(data).forEach(([key, val]) => {
     // Check if parameter is a number or textstring
+    console.log(val);
     if (isNaN(val)) {
       audioNode[key] = val;
     } else {
@@ -53,6 +54,10 @@ export function createAudioNode(id, type, data) {
     case "gain":
       const gain = new Tone.Gain(0.5);
       audioNodes[id] = gain;
+      break;
+    case "filter":
+      const filter = new Tone.Filter(1500, data.type);
+      audioNodes[id] = filter;
       break;
   }
 }
