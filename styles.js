@@ -95,7 +95,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .nodeContainer{
-   
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -111,6 +110,28 @@ export const GlobalStyle = createGlobalStyle`
   .nodeContainer input[type=range] {
     width: 70%; 
     margin: 0 auto;
+  }
+
+  .nodeContainerGain{
+    display: flex;
+    flex-direction: column;
+    padding 5px;
+    
+    //height: 150px;
+    align-items: center;
+    font-size: 10px;
+    background-color: white;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 10px;
+
+  }
+
+
+  .nodeContainerGain input[type=range] {
+   // transform: rotate(-90deg);
+    // height: 70%; /* adjust height to fit the container */
+    // width: 30px; /* adjust width to make it narrower */
   }
 
   .waveformContainer{

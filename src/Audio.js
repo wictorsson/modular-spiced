@@ -22,13 +22,7 @@ export function updateAudioNode(id, data) {
   Object.entries(data).forEach(([key, val]) => {
     // Check if parameter is a number or textstring
     if (isNaN(val)) {
-      // audioNode.stop();
-      console.log(audioNode[key]);
       audioNode[key] = val;
-      audioNode.set({
-        type: val,
-      });
-      //  audioNode.start();
     } else {
       audioNode[key].value = val;
     }
@@ -57,6 +51,8 @@ export function createAudioNode(id, type, data) {
 
       break;
     case "gain":
+      const gain = new Tone.Gain(0.5);
+      audioNodes[id] = gain;
       break;
   }
 }
@@ -73,10 +69,8 @@ export function isRunning() {
 // TEMP function to be able to use audiocontext in next.js. Create modules here
 export function toggleAudio() {
   if (Tone.context.state === "suspended") {
-    const gain = new Tone.Gain(0.5);
     const out = Tone.getDestination();
 
-    audioNodes["b"] = gain;
     audioNodes["c"] = out;
   }
   // Change here to suspend if needed later

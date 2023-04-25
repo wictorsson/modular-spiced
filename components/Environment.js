@@ -52,6 +52,7 @@ function Environment() {
       >
         <Panel position="left">
           <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("gain")}>Gain</button>
           {/* <button onClick={() => store.createNode("osc")}>Osc</button>
           <button onClick={() => store.createNode("osc")}>Osc</button> */}
         </Panel>
