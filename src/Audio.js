@@ -18,10 +18,20 @@ export function addAudioEdge(sourceId, targetId) {
 // Update audio parameters
 export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
-  //Check in case of error - instanceof AudioParam...
+
   Object.entries(data).forEach(([key, val]) => {
-    audioNode[key].value = val;
-    console.log(audioNode[key].value);
+    // Check if parameter is a number or textstring
+    if (isNaN(val)) {
+      // audioNode.stop();
+      console.log(audioNode[key]);
+      audioNode[key] = val;
+      audioNode.set({
+        type: val,
+      });
+      //  audioNode.start();
+    } else {
+      audioNode[key].value = val;
+    }
   });
 }
 
@@ -44,10 +54,9 @@ export function createAudioNode(id, type, data) {
     case "osc":
       const osc = new Tone.Oscillator(440, data.type).start();
       audioNodes[id] = osc;
-      console.log(id);
+
       break;
     case "gain":
-      console.log("Created osc");
       break;
   }
 }

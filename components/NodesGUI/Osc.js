@@ -25,7 +25,7 @@ export default function Osc({ id, data, xPos }) {
           className="nodrag"
           type="range"
           min="10"
-          max="5000"
+          max="2500"
           value={data.frequency}
           onChange={setFrequency}
         />

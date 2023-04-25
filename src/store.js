@@ -39,12 +39,13 @@ export const useStore = create((set, get) => ({
   ],
   edges: [],
 
+  // TEMPLATE MODULES
   createNode(type) {
     const id = nanoid();
 
     switch (type) {
       case "osc": {
-        const data = { frequency: 440, type: "sine" };
+        const data = { frequency: 440, type: "sawtooth" };
         const position = { x: 0, y: 0 };
         console.log(id);
 
