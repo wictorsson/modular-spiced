@@ -1,5 +1,5 @@
 import React from "react";
-import ReactFlow, { Background } from "reactflow";
+import ReactFlow, { Background, Panel } from "reactflow";
 import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
@@ -18,6 +18,7 @@ const selector = (store) => ({
   onNodesChange: store.onNodesChange,
   onEdgesChange: store.onEdgesChange,
   addEdge: store.addEdge,
+  createNode: store.createNode,
 });
 
 //Create nodetype object, should be defined outside of app component
@@ -48,6 +49,11 @@ function Environment() {
         fitView
         proOptions={proOptions}
       >
+        <Panel position="left">
+          <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("osc")}>Osc</button>
+        </Panel>
         <Background />
       </ReactFlow>
     </div>

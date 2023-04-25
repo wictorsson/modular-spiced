@@ -45,6 +45,27 @@ export const useStore = create((set, get) => ({
   ],
   edges: [],
 
+  createNode(type) {
+    const id = nanoid();
+
+    switch (type) {
+      case "osc": {
+        const data = { frequency: 440, type: "sine" };
+        const position = { x: 0, y: 0 };
+        console.log("created osc node");
+        // Call audio node here
+        break;
+      }
+      case "gain": {
+        const data = { gain: -6, numberInputs: 1 };
+        const position = { x: 0, y: 100 };
+        console.log("created gain node");
+        // Call audio node here
+        break;
+      }
+    }
+  },
+
   //Parameters changed - updateNode(id, { type: "sine" }
   updateNode(id, data) {
     updateAudioNode(id, data);

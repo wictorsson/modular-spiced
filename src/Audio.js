@@ -37,6 +37,17 @@ export function removeAudioEdge(sourceId, targetId) {
   audioNodeSource.disconnect(audioNodeTarget);
 }
 
+export function createAudioNode(id, type, data) {
+  switch (type) {
+    case "osc":
+      console.log("Created osc");
+      break;
+    case "gain":
+      console.log("Created osc");
+      break;
+  }
+}
+
 //****************************************************/
 //TOGGLE AUDIO - MOVE TO START PAGE LATER
 
