@@ -65,4 +65,26 @@ export const GlobalStyle = createGlobalStyle`
   //   align-items: center;
   //   padding: 6rem;
   //   min-height: 100vh;}
+
+  .touchdevice-flow .react-flow__handle {
+    width: 15px;
+    height: 15px;
+    border-radius: 8px;
+    border-color: cyan;
+    background-color: #2F4F4F;
+  }
+  
+  .touchdevice-flow .react-flow__handle.connecting {
+    animation: bounce 1600ms infinite ease-out;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translate(0, -50%) scale(1);
+    }
+    50% {
+      transform: translate(0, -50%) scale(1.1);
+    }
+  }
+
 `;

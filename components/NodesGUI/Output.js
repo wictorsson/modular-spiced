@@ -16,7 +16,7 @@ export default function AudioOut({ id, data }) {
       <Handle type="target" position="bottom" />
       <div>Output</div>
       <button onClick={toggleAudio}>
-        {isRunning ? <div>Unmuted</div> : <div>Muted</div>}
+        {isRunning ? <div>✅</div> : <div>Click before start!!!</div>}
       </button>
     </div>
   );

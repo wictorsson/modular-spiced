@@ -8,6 +8,8 @@ const audioNodes = {};
 
 // Connect audio components
 export function addAudioEdge(sourceId, targetId) {
+  // console.log(sourceId);
+  // console.log(targetId);
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
   audioNodeSource.connect(audioNodeTarget);
@@ -40,7 +42,9 @@ export function removeAudioEdge(sourceId, targetId) {
 export function createAudioNode(id, type, data) {
   switch (type) {
     case "osc":
-      console.log("Created osc");
+      const osc = new Tone.Oscillator(440, data.type).start();
+      audioNodes[id] = osc;
+      console.log(id);
       break;
     case "gain":
       console.log("Created osc");
@@ -60,13 +64,11 @@ export function isRunning() {
 // TEMP function to be able to use audiocontext in next.js. Create modules here
 export function toggleAudio() {
   if (Tone.context.state === "suspended") {
-    const osc = new Tone.Oscillator(440, "sine").start();
     const gain = new Tone.Gain(0.5);
     const out = Tone.getDestination();
-    audioNodes["a"] = osc;
+
     audioNodes["b"] = gain;
     audioNodes["c"] = out;
-    audioNodes["d"] = osc;
   }
   // Change here to suspend if needed later
   console.log(Tone.context.state);

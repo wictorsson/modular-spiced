@@ -48,11 +48,12 @@ function Environment() {
         onConnect={store.addEdge}
         fitView
         proOptions={proOptions}
+        className="touchdevice-flow"
       >
         <Panel position="left">
           <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("osc")}>Osc</button>
+          {/* <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("osc")}>Osc</button> */}
         </Panel>
         <Background />
       </ReactFlow>

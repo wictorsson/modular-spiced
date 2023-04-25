@@ -9,36 +9,30 @@ import {
   removeAudioEdge,
   isRunning,
   toggleAudio,
+  createAudioNode,
 } from "./Audio";
 
 //Store is a hook! can include anything - primitives, objects, functions...
 export const useStore = create((set, get) => ({
   nodes: [
-    {
-      type: "osc",
-      id: "a",
-      data: { frequency: 220, type: "square" },
-      position: { x: 220, y: 200 },
-    },
+    // {
+    //   type: "osc",
+    //   id: "a",
+    //   data: { frequency: 220, type: "square" },
+    //   position: { x: 220, y: 200 },
+    // },
 
-    {
-      type: "gain",
-      id: "b",
-      data: { gain: -6, numberInputs: 1 },
-      position: { x: 150, y: 50 },
-    },
+    // {
+    //   type: "gain",
+    //   id: "b",
+    //   data: { gain: -6, numberInputs: 1 },
+    //   position: { x: 150, y: 50 },
+    // },
     {
       type: "audioOut",
       id: "c",
       data: { label: "output" },
-      position: { x: 150, y: -40 },
-    },
-
-    {
-      type: "osc",
-      id: "d",
-      data: { frequency: 320, type: "square" },
-      position: { x: -20, y: 200 },
+      position: { x: 0, y: 0 },
     },
 
     // { id: "c", data: { label: "output" }, position: { x: 50, y: 100 } },
@@ -52,8 +46,12 @@ export const useStore = create((set, get) => ({
       case "osc": {
         const data = { frequency: 440, type: "sine" };
         const position = { x: 0, y: 0 };
-        console.log("created osc node");
+        console.log(id);
+
+        set({ nodes: [...get().nodes, { type, id, data, position }] });
         // Call audio node here
+        createAudioNode(id, type, data);
+
         break;
       }
       case "gain": {
