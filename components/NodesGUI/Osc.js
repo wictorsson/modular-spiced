@@ -15,21 +15,19 @@ export default function Osc({ id, data, xPos }) {
 
   return (
     <div>
-      <div>
-        <p>Osc</p>
+      <div className="nodeContainer">
+        <p>VCO</p>
 
-        <label>
-          <span>Frequency</span>
-          <input
-            className="nodrag"
-            type="range"
-            min="10"
-            max="5000"
-            value={data.frequency}
-            onChange={setFrequency}
-          />
-          <span>{data.frequency}Hz</span>
-        </label>
+        <span>Freq</span>
+        <input
+          className="nodrag"
+          type="range"
+          min="10"
+          max="5000"
+          value={data.frequency}
+          onChange={setFrequency}
+        />
+        {/* <span>{data.frequency}Hz</span> */}
 
         {/* <label>
           <span>Waveform</span>
