@@ -24,9 +24,10 @@ export const useStore = create((set, get) => ({
 
     {
       type: "audioOut",
-      id: "c",
+      id: "output_id",
       data: { label: "output" },
-      position: { x: 0, y: 0 },
+      position: { x: 350, y: 40 },
+      deletable: false,
     },
   ],
   edges: [],
@@ -35,8 +36,8 @@ export const useStore = create((set, get) => ({
   createNode(type) {
     const id = nanoid();
     // Position new nodes randomly so they dont hide each other
-    const randomYpos = Math.floor(Math.random() * -120);
-    const randomXpos = Math.floor(Math.random() * -100);
+    const randomYpos = Math.floor(Math.random() * 250) + 200;
+    const randomXpos = Math.floor(Math.random() * 200) + 50;
     let data, position;
     switch (type) {
       case "osc": {
@@ -93,7 +94,7 @@ export const useStore = create((set, get) => ({
     //const targetNode = get().nodes.find((node) => node.id === data.target);
     edges.forEach((edge) => {
       removeAudioEdge(edge.source, edge.target);
-      console.log(edge.target);
+      // console.log(edge.target);
       const targetNode = get().nodes.find((node) => node.id === edge.target);
       targetNode.data.inputConnected = false;
     });
@@ -102,11 +103,8 @@ export const useStore = create((set, get) => ({
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
 
-    // TODO - Check handles instead!
-    if ("numberInputs" in targetNode.data) {
-      console.log(targetNode.data.numberInputs);
-    }
-    if (!targetNode.data.inputConnected) {
+    console.log(targetNode.type);
+    if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
       targetNode.data.inputConnected = true;
       addAudioEdge(data.source, data.target);
       //Nano ID generates random six digit ID

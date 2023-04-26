@@ -14,10 +14,10 @@ export default function AudioOut({ id, data }) {
   return (
     <div>
       <Handle type="target" position="bottom" />
-      <div>Out</div>
-      <button onClick={toggleAudio}>
+      <div className="nodeContainer">Audio Out</div>
+      {/* <button onClick={toggleAudio}>
         {isRunning ? <div>✅</div> : <div>❌</div>}
-      </button>
+      </button> */}
     </div>
   );
 }

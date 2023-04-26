@@ -7,7 +7,6 @@ import Osc from "./NodesGUI/Osc";
 import Filter from "./NodesGUI/Filter";
 import Gain from "./NodesGUI/Gain";
 import AudioOutToggle from "./NodesGUI/Output";
-import { ReactFlowProvider } from "reactflow";
 
 // THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
@@ -49,7 +48,7 @@ function Environment() {
         onNodesChange={store.onNodesChange}
         onEdgesChange={store.onEdgesChange}
         onConnect={store.addEdge}
-        fitView
+        //fitView
         proOptions={proOptions}
         className="touchdevice-flow"
       >

@@ -15,7 +15,7 @@ export default function Filter({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
-        <p>VCF</p>
+        <h3>Filter</h3>
 
         <span>Freq</span>
 

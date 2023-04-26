@@ -19,8 +19,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
 
-    background: rgb(20,23,27);
-background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%);
+    background: rgb(41,35,26);
+    background: radial-gradient(circle, rgba(41,35,26,1) 0%, rgba(17,17,17,1) 83%);
     color: white;
     
   }
@@ -70,7 +70,7 @@ background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%)
 
   .environment{
     margin: 20px;
-    background-color: #202020;
+    background-color: #181818;
     border-radius: 12px;
     border-style: solid;
     border-color: #46494c;
@@ -106,34 +106,14 @@ background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%)
   .nodeContainer{
     display: flex;
     flex-direction: column;
+    padding: 15px;
     gap: 5px;
     align-items: center;
     justify-content: space-between;
     font-size: 10px;
-    background: rgb(47,47,47);
-    background: radial-gradient(circle, rgba(47,47,47,1) 38%, rgba(41,41,41,1) 100%);
-    border-style: solid;
-    border-color: grey;
-    border-radius: 5px;
-    border-width: 1px;
-    color:white;
-  }
-
-  .nodeContainer input[type=range] {
-    width: 70%; 
-    margin: 0 auto;
-  }
-
-  .nodeContainerGain{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 5px;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 10px;
-    background: rgb(47,47,47);
-    background: radial-gradient(circle, rgba(47,47,47,1) 38%, rgba(41,41,41,1) 100%);
+    background: rgb(70,41,41);
+    background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    box-shadow: 0 0 5px 0 #444;
     border-style: solid;
     border-color: grey;
     border-radius: 5px;
@@ -142,11 +122,23 @@ background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%)
   }
 
 
-  .nodeContainerGain input[type=range] {
-   // transform: rotate(-90deg);
-    // height: 70%; /* adjust height to fit the container */
-    // width: 30px; /* adjust width to make it narrower */
-  }
+  // .nodeContainerGain{
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 5px;
+  //   padding: 15px;
+  //   align-items: center;
+  //   justify-content: space-between;
+  //   font-size: 10px;
+  //   background: rgb(70,41,41);
+  //   background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+  //   border-style: solid;
+  //   border-color: grey;
+  //   border-radius: 5px;
+  //   border-width: 1px;
+  //   color:white;
+  // }
+
 
   .waveformContainer{
     display: flex;
@@ -176,7 +168,7 @@ background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%)
    
     flex-direction: column;
     gap: 10px;
-    background-color: #333533;
+    background-color: rgba(18, 18, 18, 0.5);
     // border-style: solid;
     // border-color: grey;
      border-radius: 5px;
@@ -185,7 +177,8 @@ background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%)
   }
 
   .flowPanel button {
-    background-color: #46494c; 
+    background: rgb(70,41,41);
+    background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(10,10,10,1) 100%);
     color: white; 
     border-style: solid;
     padding: 8px 10px; /* Add padding to the button */
@@ -204,6 +197,37 @@ background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%)
     color: white;
     transition: all 0.4s ease 0s;
     }
+   
 
+    // ******************* slider
+    input[type="range"] {
+      -webkit-appearance: none;
+      margin: 10px;
+     // width: 200px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 5px;
+      background-image: linear-gradient(#ff4500, #ff4500);
+      background-size: 70% 100%;
+      //background-repeat: no-repeat;
+    }
 
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 12px;
+      width: 12px;
+      border-radius: 30%;
+      background: white;
+      cursor: ew-resize;
+      box-shadow: 0 0 2px 0 #555;
+      transition: background .3s ease-in-out;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track  {
+      -webkit-appearance: none;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+    }
+    
 `;

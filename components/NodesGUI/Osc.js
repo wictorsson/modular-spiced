@@ -16,7 +16,7 @@ export default function Osc({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
-        <p>VCO</p>
+        <h3>Oscillator</h3>
 
         <span>Freq</span>
 

@@ -5,7 +5,7 @@ import * as Tone from "tone";
 
 // Initiate empty object to hold audio connections
 const audioNodes = {};
-
+var audioEnabled = false;
 // Connect audio components
 export function addAudioEdge(sourceId, targetId) {
   // console.log(sourceId);
@@ -45,6 +45,13 @@ export function removeAudioEdge(sourceId, targetId) {
 }
 
 export function createAudioNode(id, type, data) {
+  if (!audioEnabled) {
+    console.log("Enabled");
+    Tone.start();
+    audioEnabled = true;
+    const out = Tone.getDestination();
+    audioNodes["output_id"] = out;
+  }
   switch (type) {
     case "osc":
       const osc = new Tone.Oscillator(440, data.type).start();
