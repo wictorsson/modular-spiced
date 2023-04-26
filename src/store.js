@@ -45,7 +45,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "gain": {
-        data = { gain: -6, numberInputs: 1 };
+        data = { gain: -6, inputConnected: false };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -89,8 +89,13 @@ export const useStore = create((set, get) => ({
   },
 
   removeEdges(edges) {
+    //console.log({ edges });
+    //const targetNode = get().nodes.find((node) => node.id === data.target);
     edges.forEach((edge) => {
       removeAudioEdge(edge.source, edge.target);
+      console.log(edge.target);
+      const targetNode = get().nodes.find((node) => node.id === edge.target);
+      targetNode.data.inputConnected = false;
     });
   },
 
@@ -101,12 +106,15 @@ export const useStore = create((set, get) => ({
     if ("numberInputs" in targetNode.data) {
       console.log(targetNode.data.numberInputs);
     }
-    addAudioEdge(data.source, data.target);
-    //Nano ID generates random six digit ID
-    const id = nanoid(6);
-    const edge = { id, ...data };
-
-    set({ edges: [edge, ...get().edges] });
+    if (!targetNode.data.inputConnected) {
+      targetNode.data.inputConnected = true;
+      addAudioEdge(data.source, data.target);
+      //Nano ID generates random six digit ID
+      const id = nanoid(6);
+      const edge = { id, ...data };
+      console.log(targetNode.data.inputConnected);
+      set({ edges: [edge, ...get().edges] });
+    }
   },
 
   //****************************************************/
