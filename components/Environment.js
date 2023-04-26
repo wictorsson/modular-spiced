@@ -52,14 +52,14 @@ function Environment() {
         proOptions={proOptions}
         className="touchdevice-flow"
       >
-        <Panel position="left">
+        <Panel position="left" className="flowPanel">
           <button onClick={() => store.createNode("osc")}>Osc</button>
           <button onClick={() => store.createNode("filter")}>Filter</button>
           <button onClick={() => store.createNode("gain")}>Gain</button>
           {/* <button onClick={() => store.createNode("osc")}>Osc</button>
           <button onClick={() => store.createNode("osc")}>Osc</button> */}
         </Panel>
-        <Background />
+        <Background variant="dots" gap="80" color="cyan" />
       </ReactFlow>
     </div>
   );

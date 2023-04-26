@@ -9,17 +9,13 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
-  .body {
-   // font-family: system-ui;
-    background-color: #202020;
+  body {
+    background: rgb(23,23,23);
+    background: radial-gradient(circle, rgba(23,23,23,1) 0%, rgba(66,66,66,1) 96%);
     color: white;
     
   }
-  .environment{
-    margin: 20px;
-    background-color: #2E2E2E;
-    border-radius: 20px;
-  }
+  
 
   .welcome-screen{
 
@@ -59,23 +55,25 @@ export const GlobalStyle = createGlobalStyle`
       margin: 50px;
     }
 
-  // main{  
-    
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   padding: 6rem;
-  //   min-height: 100vh;}
 
 
-  // REACT FLOW
+  //***************** REACT FLOW **********************
+
+  .environment{
+    margin: 20px;
+    background-color: #202020;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #46494c;
+    border-size: 1px;
+  }
+
   .touchdevice-flow .react-flow__handle {
     width: 15px;
     height: 15px;
     border-radius: 8px;
     border-color: cyan;
-    background-color: #2F4F4F;
+    background-color: #202020;
   }
   
   .touchdevice-flow .react-flow__handle.connecting {
@@ -83,7 +81,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 15px;
     border-radius: 8px;
     border-color: cyan;
-    background-color: #2F4F4F;
+    background-color: #212121;
      animation: bounce 500ms infinite;
   }
   
@@ -103,10 +101,11 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: space-between;
     font-size: 10px;
-    background-color: white;
+    background-color: #333533;
     border-style: solid;
     border-color: grey;
-    border-radius: 10px;
+    border-radius: 5px;
+    color:white;
   }
 
   .nodeContainer input[type=range] {
@@ -122,10 +121,12 @@ export const GlobalStyle = createGlobalStyle`
     //height: 150px;
     align-items: center;
     font-size: 10px;
-    background-color: white;
+    background-color: #333533;
     border-style: solid;
     border-color: grey;
-    border-radius: 10px;
+    
+    border-radius: 5px;
+    color:white;
 
   }
 
@@ -157,6 +158,41 @@ export const GlobalStyle = createGlobalStyle`
     transform: translate(0, 0);
 
   }
+
+  .flowPanel{
+    display: flex;
+    margin:10px;
+   
+    flex-direction: column;
+    gap: 10px;
+    background-color: #333533;
+    // border-style: solid;
+    // border-color: grey;
+     border-radius: 5px;
+    color:white;
+    padding 8px;
+  }
+
+  .flowPanel button {
+    background-color: #46494c; 
+    color: white; 
+    border-style: solid;
+    padding: 8px 10px; /* Add padding to the button */
+    text-align: center; /* Center the text */
+    
+    //display: inline-block; /* Make the button inline */
+    font-size: 12px; /* Change the font size */
+    border-radius: 5px; /* Add border radius */
+  }
+  .flowPanel button:hover {
+    background: #202020;
+   //letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    color: white;
+    transition: all 0.4s ease 0s;
+    }
 
 
 `;
