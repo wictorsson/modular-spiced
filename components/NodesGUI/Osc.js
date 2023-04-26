@@ -12,7 +12,7 @@ const selector = (id) => (store) => ({
 export default function Osc({ id, data }) {
   //console.log(xPos);
   const { setFrequency, setType } = useStore(selector(id), shallow);
-
+  const typeName = id + "_type";
   return (
     <div>
       <div className="nodeContainer">
@@ -35,7 +35,7 @@ export default function Osc({ id, data }) {
             <label style={{ display: "block" }}>
               <input
                 type="radio"
-                name="type"
+                name={typeName}
                 value="sine"
                 checked={data.type === "sine"}
                 onChange={setType}
@@ -43,7 +43,7 @@ export default function Osc({ id, data }) {
               Sine
               <input
                 type="radio"
-                name="type"
+                name={typeName}
                 value="triangle"
                 checked={data.type === "triangle"}
                 onChange={setType}
@@ -53,7 +53,7 @@ export default function Osc({ id, data }) {
             <label style={{ display: "block" }}>
               <input
                 type="radio"
-                name="type"
+                name={typeName}
                 value="sawtooth"
                 checked={data.type === "sawtooth"}
                 onChange={setType}
@@ -61,7 +61,7 @@ export default function Osc({ id, data }) {
               Saw
               <input
                 type="radio"
-                name="type"
+                name={typeName}
                 value="square"
                 checked={data.type === "square"}
                 onChange={setType}

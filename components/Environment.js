@@ -1,5 +1,5 @@
 import React from "react";
-import ReactFlow, { Background, Panel } from "reactflow";
+import ReactFlow, { Background, Panel, Controls } from "reactflow";
 import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
@@ -7,6 +7,7 @@ import Osc from "./NodesGUI/Osc";
 import Filter from "./NodesGUI/Filter";
 import Gain from "./NodesGUI/Gain";
 import AudioOutToggle from "./NodesGUI/Output";
+import { ReactFlowProvider } from "reactflow";
 
 // THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
@@ -60,6 +61,7 @@ function Environment() {
           <button onClick={() => store.createNode("osc")}>Osc</button> */}
         </Panel>
         <Background variant="dots" gap="80" color="cyan" />
+        <Controls showZoom={false} showInteractive={false} />
       </ReactFlow>
     </div>
   );

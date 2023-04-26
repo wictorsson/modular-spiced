@@ -9,9 +9,18 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
+
+  .testDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6rem;
+  }
   body {
-    background: rgb(23,23,23);
-    background: radial-gradient(circle, rgba(23,23,23,1) 0%, rgba(66,66,66,1) 96%);
+
+    background: rgb(20,23,27);
+background: radial-gradient(circle, rgba(20,23,27,1) 35%, rgba(42,42,42,1) 100%);
     color: white;
     
   }
@@ -62,10 +71,10 @@ export const GlobalStyle = createGlobalStyle`
   .environment{
     margin: 20px;
     background-color: #202020;
-    border-radius: 10px;
+    border-radius: 12px;
     border-style: solid;
     border-color: #46494c;
-    border-size: 1px;
+    border-width: 1px;
   }
 
   .touchdevice-flow .react-flow__handle {
@@ -101,10 +110,12 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: space-between;
     font-size: 10px;
-    background-color: #333533;
+    background: rgb(47,47,47);
+    background: radial-gradient(circle, rgba(47,47,47,1) 38%, rgba(41,41,41,1) 100%);
     border-style: solid;
     border-color: grey;
     border-radius: 5px;
+    border-width: 1px;
     color:white;
   }
 
@@ -116,18 +127,18 @@ export const GlobalStyle = createGlobalStyle`
   .nodeContainerGain{
     display: flex;
     flex-direction: column;
-    padding 5px;
-    
-    //height: 150px;
+    gap: 5px;
+    padding: 5px;
     align-items: center;
+    justify-content: space-between;
     font-size: 10px;
-    background-color: #333533;
+    background: rgb(47,47,47);
+    background: radial-gradient(circle, rgba(47,47,47,1) 38%, rgba(41,41,41,1) 100%);
     border-style: solid;
     border-color: grey;
-    
     border-radius: 5px;
+    border-width: 1px;
     color:white;
-
   }
 
 
@@ -179,7 +190,7 @@ export const GlobalStyle = createGlobalStyle`
     border-style: solid;
     padding: 8px 10px; /* Add padding to the button */
     text-align: center; /* Center the text */
-    
+    border-width: 1px;
     //display: inline-block; /* Make the button inline */
     font-size: 12px; /* Change the font size */
     border-radius: 5px; /* Add border radius */

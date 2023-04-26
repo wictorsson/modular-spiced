@@ -10,7 +10,8 @@ const selector = (id) => (store) => ({
 
 export default function Filter({ id, data }) {
   const { setFrequency, setType } = useStore(selector(id), shallow);
-
+  //Make unique type name to avoid conflicts when using multiple intances
+  const typeName = id + "_type";
   return (
     <div>
       <div className="nodeContainer">
@@ -33,7 +34,7 @@ export default function Filter({ id, data }) {
             <label style={{ display: "block" }}>
               <input
                 type="radio"
-                name="typeFilter"
+                name={typeName}
                 value="lowpass"
                 checked={data.type === "lowpass"}
                 onChange={setType}
@@ -41,7 +42,7 @@ export default function Filter({ id, data }) {
               LPF
               <input
                 type="radio"
-                name="typeFilter"
+                name={typeName}
                 value="highpass"
                 checked={data.type === "highpass"}
                 onChange={setType}

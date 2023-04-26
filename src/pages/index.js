@@ -1,6 +1,7 @@
 import Head from "next/head";
 //import { Inter } from "next/font/google";
 import Environment from "../../components/Environment";
+
 //const inter = Inter({ subsets: ["latin"] });
 
 // TODO - MOVE HEADER TO LAYOUT
@@ -18,6 +19,7 @@ export default function Home() {
           </button>
         </div>
       )} */}
+
       <div className="environment">
         <Environment />
       </div>

@@ -22,42 +22,36 @@ export const useStore = create((set, get) => ({
     //   position: { x: 220, y: 200 },
     // },
 
-    // {
-    //   type: "gain",
-    //   id: "b",
-    //   data: { gain: -6, numberInputs: 1 },
-    //   position: { x: 150, y: 50 },
-    // },
     {
       type: "audioOut",
       id: "c",
       data: { label: "output" },
       position: { x: 0, y: 0 },
     },
-
-    // { id: "c", data: { label: "output" }, position: { x: 50, y: 100 } },
   ],
   edges: [],
 
   // TEMPLATE MODULES
   createNode(type) {
     const id = nanoid();
-
+    // Position new nodes randomly so they dont hide each other
+    const randomYpos = Math.floor(Math.random() * -120);
+    const randomXpos = Math.floor(Math.random() * -100);
     let data, position;
     switch (type) {
       case "osc": {
         data = { frequency: 440, type: "sawtooth" };
-        position = { x: 0, y: 0 };
+        position = { x: randomXpos, y: randomYpos };
         break;
       }
       case "gain": {
         data = { gain: -6, numberInputs: 1 };
-        position = { x: 0, y: 100 };
+        position = { x: randomXpos, y: randomYpos };
         break;
       }
       case "filter": {
         data = { frequency: 1200, type: "lowpass" };
-        position = { x: 0, y: 100 };
+        position = { x: randomXpos, y: randomYpos };
         break;
       }
     }
