@@ -41,6 +41,9 @@ export function removeAudioNode(id) {
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
+
+  console.log(audioNodeTarget);
+  console.log(audioNodeSource);
   audioNodeSource.disconnect(audioNodeTarget);
 }
 

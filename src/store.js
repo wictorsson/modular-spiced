@@ -37,7 +37,7 @@ export const useStore = create((set, get) => ({
     const id = nanoid();
     // Position new nodes randomly so they dont hide each other
     const randomYpos = Math.floor(Math.random() * 250) + 200;
-    const randomXpos = Math.floor(Math.random() * 200) + 50;
+    const randomXpos = Math.floor(Math.random() * 250) + 40;
     let data, position;
     switch (type) {
       case "osc": {
@@ -90,11 +90,11 @@ export const useStore = create((set, get) => ({
   },
 
   removeEdges(edges) {
-    //console.log({ edges });
-    //const targetNode = get().nodes.find((node) => node.id === data.target);
     edges.forEach((edge) => {
-      removeAudioEdge(edge.source, edge.target);
-      // console.log(edge.target);
+      // Needed to not remove twice the same connection!
+      if (edges.length < 2) {
+        removeAudioEdge(edge.source, edge.target);
+      }
       const targetNode = get().nodes.find((node) => node.id === edge.target);
       targetNode.data.inputConnected = false;
     });
