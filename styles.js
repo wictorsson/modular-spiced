@@ -77,22 +77,7 @@ export const GlobalStyle = createGlobalStyle`
     border-width: 1px;
   }
 
-  .touchdevice-flow .react-flow__handle {
-    width: 15px;
-    height: 15px;
-    border-radius: 8px;
-    border-color: cyan;
-    background-color: #202020;
-  }
-  
-  .touchdevice-flow .react-flow__handle.connecting {
-    width: 15px;
-    height: 15px;
-    border-radius: 8px;
-    border-color: cyan;
-    background-color: #212121;
-     animation: bounce 500ms infinite;
-  }
+
   
   @keyframes bounce {
     0% {
@@ -148,17 +133,36 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 8px;
   }
 
+  .touchdevice-flow .react-flow__handle {
+    width: 15px;
+    height: 15px;
+    border-radius: 8px;
+    //border-color: cyan;
+    background-color: #202020;
+  }
+  
+  .touchdevice-flow .react-flow__handle.connecting {
+    width: 15px;
+    height: 15px;
+    border-radius: 8px;
+    //border-color: cyan;
+    background-color: #212121;
+     animation: bounce 500ms infinite;
+  }
+
   .react-flow__handle-top{
     top: auto;
     left: 45%;
     top: -8px;
     transform: translate(0, 0);
+    
   }
   .react-flow__handle-bottom{
     top: auto;
     left: 45%;
     bottom: -8px;
     transform: translate(0, 0);
+    border-color: cyan;
 
   }
 
