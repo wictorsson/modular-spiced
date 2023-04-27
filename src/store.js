@@ -15,13 +15,6 @@ import {
 //Store is a hook! can include anything - primitives, objects, functions...
 export const useStore = create((set, get) => ({
   nodes: [
-    // {
-    //   type: "osc",
-    //   id: "a",
-    //   data: { frequency: 220, type: "square" },
-    //   position: { x: 220, y: 200 },
-    // },
-
     {
       type: "audioOut",
       id: "output_id",
@@ -57,7 +50,7 @@ export const useStore = create((set, get) => ({
       }
 
       case "sequence": {
-        data = { row1: new Array(8).fill(false) };
+        data = { bpm: 120, row1: new Array(16).fill(false) };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -72,6 +65,8 @@ export const useStore = create((set, get) => ({
 
   //Parameters changed - updateNode(id, { type: "sine" }
   updateNode(id, data) {
+    console.log(data);
+
     updateAudioNode(id, data);
     set({
       nodes: get().nodes.map((node) =>

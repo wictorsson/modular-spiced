@@ -7,10 +7,11 @@ const selector = (id) => (store) => ({
   setBeatArray: (e, updatedRowArray) => {
     store.updateNode(id, { row1: updatedRowArray });
   },
+  setBPM: (e) => store.updateNode(id, { bpm: e.target.value }),
 });
 
 export default function Sequencer({ id, data }) {
-  const { setBeatArray } = useStore(selector(id), shallow);
+  const { setBeatArray, setBPM } = useStore(selector(id), shallow);
 
   const handleCheckboxChange = (e, index) => {
     // Add new array here and update with zustand
@@ -26,6 +27,17 @@ export default function Sequencer({ id, data }) {
       <div className="nodeContainer">
         <h3>Sequencer</h3>
         <div>
+          <p>BPM</p>
+          <input
+            type="number"
+            required
+            min={30}
+            max={250}
+            value={data.bpm}
+            onChange={setBPM}
+          ></input>
+        </div>
+        <div>
           {data.row1.map((isChecked, index) => (
             <input
               key={index}
@@ -36,10 +48,7 @@ export default function Sequencer({ id, data }) {
           ))}
         </div>
       </div>
-
       {/* <Handle type="target" position="bottom" /> */}
-      <Handle type="source" position="top" />
-      <Handle type="source" position="top" />
       <Handle type="source" position="top" />
     </div>
   );

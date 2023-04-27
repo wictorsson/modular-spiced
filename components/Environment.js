@@ -55,11 +55,12 @@ function Environment() {
         className="touchdevice-flow"
       >
         <Panel position="left" className="flowPanel">
-          <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("filter")}>Filter</button>
           <button onClick={() => store.createNode("sequence")}>
             Sequencer
           </button>
+          <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("filter")}>Filter</button>
+
           <button onClick={() => store.createNode("gain")}>Gain</button>
           {/* <button onClick={() => store.createNode("osc")}>Osc</button>
           <button onClick={() => store.createNode("osc")}>Osc</button> */}

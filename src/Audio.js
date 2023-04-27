@@ -6,7 +6,7 @@ import * as Tone from "tone";
 // Initiate empty object to hold audio connections
 const audioNodes = {};
 var audioEnabled = false;
-//Get beatarray from nodes
+//Get beatarray from nodes, replace with intance value
 
 let beatArray = [];
 // Connect audio components
@@ -24,7 +24,11 @@ export function updateAudioNode(id, data) {
   Object.entries(data).forEach(([key, val]) => {
     if (key === "row1") {
       //audioNode.data[key] = val;
+      console.log(val);
       beatArray = val;
+    } else if (key === "bpm") {
+      console.log("changin bpm");
+      Tone.Transport.bpm.rampTo(val, 1);
     } else if (isNaN(val)) {
       audioNode[key] = val;
     } else {
@@ -47,19 +51,20 @@ export function removeAudioNode(id) {
     Tone.Transport.stop();
     Tone.Transport.cancel(0);
     beatArray.fill(false);
+    Tone.Transport.bpm.rampTo(120, 1);
   }
 }
 
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  console.log(audioNodeSource);
+  //console.log(audioNodeSource);
   if (audioNodeSource !== "sequence") {
     audioNodeSource.disconnect(audioNodeTarget);
-
-    Tone.Transport.stop();
-    Tone.Transport.cancel(0);
-    beatArray.fill(false);
+  } else {
+    //Tone.Transport.stop();
+    // Tone.Transport.cancel(0);
+    //beatArray.fill(false);
   }
 }
 
@@ -95,17 +100,17 @@ export function createAudioNode(id, type, data) {
       let step = 0;
       let index = 0;
       Tone.Transport.scheduleRepeat((time) => {
-        step = index % 8;
+        step = index % 16;
         // for (let i = 0; i < beatArray.length(); ++i) {
-        console.log(beatArray[step]);
+        // console.log(beatArray[step]);
         // }
         // use the callback time to schedule events
         if (beatArray[step] === true) {
-          //console.log("TRIGGER", beatArray[step]);
+          console.log(beatArray[step]);
           osc2.triggerAttackRelease("C2", "8n", time);
         }
         index++;
-      }, "4n");
+      }, "16n");
       // transport must be started before it starts invoking events
       Tone.Transport.start();
       //audioNodes[id] = "sequence";
