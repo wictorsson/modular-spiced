@@ -8,15 +8,14 @@ const selector = (id) => (store) => ({
   setType: (e) => store.updateNode(id, { type: e.target.value }),
 });
 
-// id and data are passed down as props from the React Flow library! Gets the data from nodeTypes
-export default function Osc({ id, data }) {
-  //console.log(xPos);
+export default function Filter({ id, data }) {
   const { setFrequency, setType } = useStore(selector(id), shallow);
+  //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
   return (
     <div>
       <div className="nodeContainer">
-        <h3>Oscillator</h3>
+        <h3>Filter</h3>
 
         <span>Freq</span>
 
@@ -36,43 +35,26 @@ export default function Osc({ id, data }) {
               <input
                 type="radio"
                 name={typeName}
-                value="sine"
-                checked={data.type === "sine"}
+                value="lowpass"
+                checked={data.type === "lowpass"}
                 onChange={setType}
               />
-              Sine
+              LPF
               <input
                 type="radio"
                 name={typeName}
-                value="triangle"
-                checked={data.type === "triangle"}
+                value="highpass"
+                checked={data.type === "highpass"}
                 onChange={setType}
               />
-              Triangle
-            </label>
-            <label style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={typeName}
-                value="sawtooth"
-                checked={data.type === "sawtooth"}
-                onChange={setType}
-              />
-              Saw
-              <input
-                type="radio"
-                name={typeName}
-                value="square"
-                checked={data.type === "square"}
-                onChange={setType}
-              />
-              Square
+              HPF
             </label>
           </div>
         </div>
       </div>
 
       <Handle type="source" position="top" />
+      <Handle type="target" position="bottom" />
     </div>
   );
 }

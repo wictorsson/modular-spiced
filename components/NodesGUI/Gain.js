@@ -12,21 +12,19 @@ export default function Gain({ id, data }) {
 
   return (
     <div>
-      <div>
-        <p>Gain</p>
+      <div className="nodeContainer">
+        <h3>Gain</h3>
 
-        <label>
-          <input
-            className="nodrag"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={data.gain}
-            onChange={setGain}
-          />
-          <span>{data.gain}dB</span>
-        </label>
+        <input
+          className="nodrag"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={data.gain}
+          onChange={setGain}
+        />
+        {/* <span>{data.gain}dB</span> */}
       </div>
 
       <Handle type="target" position="bottom" />

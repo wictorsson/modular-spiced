@@ -1,9 +1,10 @@
 import React from "react";
-import ReactFlow, { Background } from "reactflow";
+import ReactFlow, { Background, Panel, Controls } from "reactflow";
 import "reactflow/dist/style.css";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
 import Osc from "./NodesGUI/Osc";
+import Filter from "./NodesGUI/Filter";
 import Gain from "./NodesGUI/Gain";
 import AudioOutToggle from "./NodesGUI/Output";
 
@@ -18,11 +19,13 @@ const selector = (store) => ({
   onNodesChange: store.onNodesChange,
   onEdgesChange: store.onEdgesChange,
   addEdge: store.addEdge,
+  createNode: store.createNode,
 });
 
 //Create nodetype object, should be defined outside of app component
 const nodeTypes = {
   osc: Osc,
+  filter: Filter,
   gain: Gain,
   audioOut: AudioOutToggle,
 };
@@ -45,10 +48,19 @@ function Environment() {
         onNodesChange={store.onNodesChange}
         onEdgesChange={store.onEdgesChange}
         onConnect={store.addEdge}
-        fitView
+        //fitView
         proOptions={proOptions}
+        className="touchdevice-flow"
       >
-        <Background />
+        <Panel position="left" className="flowPanel">
+          <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("filter")}>Filter</button>
+          <button onClick={() => store.createNode("gain")}>Gain</button>
+          {/* <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("osc")}>Osc</button> */}
+        </Panel>
+        <Background variant="dots" gap="80" color="cyan" />
+        <Controls showZoom={false} showInteractive={false} />
       </ReactFlow>
     </div>
   );
