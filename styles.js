@@ -26,43 +26,43 @@ export const GlobalStyle = createGlobalStyle`
   }
   
 
-  .welcome-screen{
+  // .welcome-screen{
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6rem;
-    // min-height: 100vh;}
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   padding: 6rem;
+  //   // min-height: 100vh;}
 
-  }
+  // }
 
-  .button {
-    color: black;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: white;
+  // .button {
+  //   color: black;
+  //   text-transform: uppercase;
+  //   text-decoration: none;
+  //   background: white;
    
-    padding: 30px;
-    border-radius: 5px;
-    display: inline-block;
-    border: none;
-    transition: all 0.4s ease 0s;
-    }
+  //   padding: 30px;
+  //   border-radius: 5px;
+  //   display: inline-block;
+  //   border: none;
+  //   transition: all 0.4s ease 0s;
+  //   }
 
-    .button:hover {
-    background: #434343;
-    letter-spacing: 1px;
-    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-    color: white;
-    transition: all 0.4s ease 0s;
-    }
+  //   .button:hover {
+  //   background: #434343;
+  //   letter-spacing: 1px;
+  //   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  //   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  //   box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  //   color: white;
+  //   transition: all 0.4s ease 0s;
+  //   }
 
-    .header{
-      margin: 50px;
-    }
+  //   .header{
+  //     margin: 50px;
+  //   }
 
 
 
@@ -71,10 +71,11 @@ export const GlobalStyle = createGlobalStyle`
   .environment{
     margin: 20px;
     background-color: #181818;
-    border-radius: 12px;
+    border-radius: 10px;
     border-style: solid;
     border-color: #46494c;
     border-width: 1px;
+    box-shadow: 0 0 10px 0 #333;
   }
 
 
@@ -97,7 +98,8 @@ export const GlobalStyle = createGlobalStyle`
     justify-content: space-between;
     font-size: 10px;
     background: rgb(70,41,41);
-    background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
     box-shadow: 0 0 5px 0 #444;
     border-style: solid;
     border-color: grey;
@@ -136,7 +138,7 @@ export const GlobalStyle = createGlobalStyle`
   .touchdevice-flow .react-flow__handle {
     width: 15px;
     height: 15px;
-    border-radius: 8px;
+    border-radius: 50%;
     //border-color: cyan;
     background-color: #202020;
   }
@@ -144,7 +146,7 @@ export const GlobalStyle = createGlobalStyle`
   .touchdevice-flow .react-flow__handle.connecting {
     width: 15px;
     height: 15px;
-    border-radius: 8px;
+    border-radius: 50%;
     //border-color: cyan;
     background-color: #212121;
      animation: bounce 500ms infinite;
@@ -175,14 +177,14 @@ export const GlobalStyle = createGlobalStyle`
     background-color: rgba(18, 18, 18, 0.5);
     // border-style: solid;
     // border-color: grey;
-     border-radius: 5px;
+    border-radius: 5px;
     color:white;
     padding 8px;
   }
 
   .flowPanel button {
     background: rgb(70,41,41);
-    background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(10,10,10,1) 100%);
+    background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
     color: white; 
     border-style: solid;
     padding: 8px 10px; /* Add padding to the button */

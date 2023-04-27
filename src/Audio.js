@@ -8,10 +8,10 @@ const audioNodes = {};
 var audioEnabled = false;
 // Connect audio components
 export function addAudioEdge(sourceId, targetId) {
-  // console.log(sourceId);
   // console.log(targetId);
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
+  console.log(audioNodeSource);
   audioNodeSource.connect(audioNodeTarget);
 }
 
@@ -41,16 +41,15 @@ export function removeAudioNode(id) {
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-
-  console.log(audioNodeTarget);
-  console.log(audioNodeSource);
   audioNodeSource.disconnect(audioNodeTarget);
 }
 
 export function createAudioNode(id, type, data) {
   if (!audioEnabled) {
-    console.log("Enabled");
     Tone.start();
+    const gain = new Tone.Gain(0.6);
+    gain.toDestination();
+
     audioEnabled = true;
     const out = Tone.getDestination();
     audioNodes["output_id"] = out;
@@ -59,7 +58,6 @@ export function createAudioNode(id, type, data) {
     case "osc":
       const osc = new Tone.Oscillator(440, data.type).start();
       audioNodes[id] = osc;
-
       break;
     case "gain":
       const gain = new Tone.Gain(0.5);
@@ -68,6 +66,19 @@ export function createAudioNode(id, type, data) {
     case "filter":
       const filter = new Tone.Filter(1500, data.type);
       audioNodes[id] = filter;
+      break;
+    case "sequence":
+      // const sequence = Tone.Transport();
+      // audioNodes[id] = sequence;
+      const osc2 = new Tone.MembraneSynth().toDestination();
+      // repeated event every 8th note
+      Tone.Transport.scheduleRepeat((time) => {
+        // use the callback time to schedule events
+
+        osc2.triggerAttackRelease("C2", "8n", time);
+      }, "4n");
+      // transport must be started before it starts invoking events
+      Tone.Transport.start();
       break;
   }
 }

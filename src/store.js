@@ -37,11 +37,11 @@ export const useStore = create((set, get) => ({
     const id = nanoid();
     // Position new nodes randomly so they dont hide each other
     const randomYpos = Math.floor(Math.random() * 250) + 200;
-    const randomXpos = Math.floor(Math.random() * 250) + 40;
+    const randomXpos = Math.floor(Math.random() * 400) + 30;
     let data, position;
     switch (type) {
       case "osc": {
-        data = { frequency: 440, type: "sawtooth" };
+        data = { frequency: 440, type: "sawtooth", inputConnected: false };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -52,6 +52,11 @@ export const useStore = create((set, get) => ({
       }
       case "filter": {
         data = { frequency: 1200, type: "lowpass" };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "sequence": {
+        data = {};
         position = { x: randomXpos, y: randomYpos };
         break;
       }
