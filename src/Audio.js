@@ -6,6 +6,9 @@ import * as Tone from "tone";
 // Initiate empty object to hold audio connections
 const audioNodes = {};
 var audioEnabled = false;
+//Get beatarray from nodes
+
+let beatArray = [];
 // Connect audio components
 export function addAudioEdge(sourceId, targetId) {
   // console.log(targetId);
@@ -20,9 +23,10 @@ export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
 
   Object.entries(data).forEach(([key, val]) => {
-    // Check if parameter is a number or textstring
     console.log(val);
-    if (isNaN(val)) {
+    if (key === "row1") {
+      beatArray = val;
+    } else if (isNaN(val)) {
       audioNode[key] = val;
     } else {
       audioNode[key].value = val;
@@ -31,11 +35,13 @@ export function updateAudioNode(id, data) {
 }
 
 export function removeAudioNode(id) {
-  const audioNode = audioNodes[id];
-  audioNode.disconnect();
-  // audioNode.stop?.();
-  // Dispose - free garbage collection
-  audioNode.dispose();
+  if (audioNodes[id].data !== "row1") {
+    const audioNode = audioNodes[id];
+    audioNode.disconnect();
+    // audioNode.stop?.();
+    // Dispose - free garbage collection
+    audioNode.dispose();
+  }
 }
 
 export function removeAudioEdge(sourceId, targetId) {
@@ -68,17 +74,22 @@ export function createAudioNode(id, type, data) {
       audioNodes[id] = filter;
       break;
     case "sequence":
-      // const sequence = Tone.Transport();
-      // audioNodes[id] = sequence;
       const osc2 = new Tone.MembraneSynth().toDestination();
-      // repeated event every 8th note
+      let index = 0;
       Tone.Transport.scheduleRepeat((time) => {
-        // use the callback time to schedule events
+        let step = index % 8;
+        // for (let i = 0; i < beatArray.length(); ++i) {
 
-        osc2.triggerAttackRelease("C2", "8n", time);
+        // }
+        // use the callback time to schedule events
+        if (beatArray[step] === true) {
+          osc2.triggerAttackRelease("C2", "8n", time);
+        }
+        index++;
       }, "4n");
       // transport must be started before it starts invoking events
       Tone.Transport.start();
+
       break;
   }
 }

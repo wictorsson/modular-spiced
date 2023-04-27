@@ -55,14 +55,19 @@ export const useStore = create((set, get) => ({
         position = { x: randomXpos, y: randomYpos };
         break;
       }
+
       case "sequence": {
-        data = {};
+        data = { row1: new Array(8).fill(false) };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
     }
-    set({ nodes: [...get().nodes, { type, id, data, position }] });
-    createAudioNode(id, type, data);
+    // Prevent multiple sequences
+    const sequenceNode = get().nodes.find((node) => node.type === "sequence");
+    if (!sequenceNode || type !== "sequence") {
+      set({ nodes: [...get().nodes, { type, id, data, position }] });
+      createAudioNode(id, type, data);
+    }
   },
 
   //Parameters changed - updateNode(id, { type: "sine" }
@@ -90,15 +95,21 @@ export const useStore = create((set, get) => ({
   // Takes an array of nodes
   removeNodes(nodes) {
     nodes.forEach((node) => {
-      removeAudioNode(node.id);
+      if (node.type !== "sequence") {
+        removeAudioNode(node.id);
+      }
     });
   },
 
   removeEdges(edges) {
     edges.forEach((edge) => {
+      const sourceNode = get().nodes.find((node) => node.id === edge.source);
       // Needed to not remove twice the same connection!
+
       if (edges.length < 2) {
-        removeAudioEdge(edge.source, edge.target);
+        if (sourceNode.type !== "sequence") {
+          removeAudioEdge(edge.source, edge.target);
+        }
       }
       const targetNode = get().nodes.find((node) => node.id === edge.target);
       targetNode.data.inputConnected = false;
@@ -107,11 +118,15 @@ export const useStore = create((set, get) => ({
 
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
+    const sourcetNode = get().nodes.find((node) => node.id === data.source);
 
-    console.log(targetNode.type);
+    console.log(sourcetNode.type);
     if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
       targetNode.data.inputConnected = true;
-      addAudioEdge(data.source, data.target);
+
+      if (sourcetNode.type !== "sequence") {
+        addAudioEdge(data.source, data.target);
+      }
       //Nano ID generates random six digit ID
       const id = nanoid(6);
       const edge = { id, ...data };
