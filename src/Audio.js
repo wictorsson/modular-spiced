@@ -14,7 +14,6 @@ export function addAudioEdge(sourceId, targetId) {
   // console.log(targetId);
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  console.log(audioNodeSource);
   audioNodeSource.connect(audioNodeTarget);
 }
 
@@ -23,8 +22,8 @@ export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
 
   Object.entries(data).forEach(([key, val]) => {
-    console.log(val);
     if (key === "row1") {
+      //audioNode.data[key] = val;
       beatArray = val;
     } else if (isNaN(val)) {
       audioNode[key] = val;
@@ -35,19 +34,33 @@ export function updateAudioNode(id, data) {
 }
 
 export function removeAudioNode(id) {
-  if (audioNodes[id].data !== "row1") {
+  console.log(audioNodes[id]);
+  if (audioNodes[id] !== "sequence") {
     const audioNode = audioNodes[id];
     audioNode.disconnect();
     // audioNode.stop?.();
     // Dispose - free garbage collection
     audioNode.dispose();
+  } else {
+    console.log("stopped");
+
+    Tone.Transport.stop();
+    Tone.Transport.cancel(0);
+    beatArray.fill(false);
   }
 }
 
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  audioNodeSource.disconnect(audioNodeTarget);
+  console.log(audioNodeSource);
+  if (audioNodeSource !== "sequence") {
+    audioNodeSource.disconnect(audioNodeTarget);
+
+    Tone.Transport.stop();
+    Tone.Transport.cancel(0);
+    beatArray.fill(false);
+  }
 }
 
 export function createAudioNode(id, type, data) {
@@ -74,22 +87,28 @@ export function createAudioNode(id, type, data) {
       audioNodes[id] = filter;
       break;
     case "sequence":
+      audioNodes[id] = "sequence";
       const osc2 = new Tone.MembraneSynth().toDestination();
+
+      beatArray = data.row1;
+      console.log(beatArray);
+      let step = 0;
       let index = 0;
       Tone.Transport.scheduleRepeat((time) => {
-        let step = index % 8;
+        step = index % 8;
         // for (let i = 0; i < beatArray.length(); ++i) {
-
+        console.log(beatArray[step]);
         // }
         // use the callback time to schedule events
         if (beatArray[step] === true) {
+          //console.log("TRIGGER", beatArray[step]);
           osc2.triggerAttackRelease("C2", "8n", time);
         }
         index++;
       }, "4n");
       // transport must be started before it starts invoking events
       Tone.Transport.start();
-
+      //audioNodes[id] = "sequence";
       break;
   }
 }

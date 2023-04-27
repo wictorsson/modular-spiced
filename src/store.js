@@ -95,21 +95,17 @@ export const useStore = create((set, get) => ({
   // Takes an array of nodes
   removeNodes(nodes) {
     nodes.forEach((node) => {
-      if (node.type !== "sequence") {
-        removeAudioNode(node.id);
-      }
+      removeAudioNode(node.id);
     });
   },
 
   removeEdges(edges) {
     edges.forEach((edge) => {
-      const sourceNode = get().nodes.find((node) => node.id === edge.source);
+      //const sourceNode = get().nodes.find((node) => node.id === edge.source);
       // Needed to not remove twice the same connection!
 
       if (edges.length < 2) {
-        if (sourceNode.type !== "sequence") {
-          removeAudioEdge(edge.source, edge.target);
-        }
+        removeAudioEdge(edge.source, edge.target);
       }
       const targetNode = get().nodes.find((node) => node.id === edge.target);
       targetNode.data.inputConnected = false;
@@ -118,13 +114,13 @@ export const useStore = create((set, get) => ({
 
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
-    const sourcetNode = get().nodes.find((node) => node.id === data.source);
+    const sourceNode = get().nodes.find((node) => node.id === data.source);
 
-    console.log(sourcetNode.type);
+    console.log(sourceNode.type);
     if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
       targetNode.data.inputConnected = true;
 
-      if (sourcetNode.type !== "sequence") {
+      if (sourceNode.type !== "sequence") {
         addAudioEdge(data.source, data.target);
       }
       //Nano ID generates random six digit ID

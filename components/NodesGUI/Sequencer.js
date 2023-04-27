@@ -15,7 +15,9 @@ export default function Sequencer({ id, data }) {
   const handleCheckboxChange = (e, index) => {
     // Add new array here and update with zustand
     let updatedRowArray = [...data.row1];
+
     updatedRowArray[index] = e.target.checked;
+    // console.log(updatedRowArray);
     setBeatArray(index, updatedRowArray);
   };
 
