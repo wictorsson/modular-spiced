@@ -54,6 +54,11 @@ export const useStore = create((set, get) => ({
         position = { x: randomXpos, y: randomYpos };
         break;
       }
+      case "lfo": {
+        data = { frequency: "4n", min: 10, max: 20000 };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
     }
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
@@ -113,7 +118,10 @@ export const useStore = create((set, get) => ({
 
     console.log(data);
     if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
-      targetNode.data.inputConnected = true;
+      //Delete later
+      if (targetNode.type !== "filter") {
+        // targetNode.data.inputConnected = true;
+      }
 
       if (sourceNode.type !== "sequence") {
         addAudioEdge(data.source, data.target);

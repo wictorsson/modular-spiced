@@ -7,6 +7,7 @@ import Osc from "./NodesGUI/Osc";
 import Filter from "./NodesGUI/Filter";
 import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
+import Lfo from "./NodesGUI/Lfo";
 import AudioOutToggle from "./NodesGUI/Output";
 
 // THE viewport of the app, the nodes will go into separate components
@@ -30,6 +31,7 @@ const nodeTypes = {
   gain: Gain,
   audioOut: AudioOutToggle,
   sequence: Sequence,
+  lfo: Lfo,
 };
 
 const proOptions = { hideAttribution: true };
@@ -56,10 +58,11 @@ function Environment() {
       >
         <Panel position="left" className="flowPanel">
           <button onClick={() => store.createNode("sequence")}>
-            Sequencer
+            (Sequencer)
           </button>
           <button onClick={() => store.createNode("osc")}>Osc</button>
           <button onClick={() => store.createNode("filter")}>Filter</button>
+          <button onClick={() => store.createNode("lfo")}>(LFO)</button>
 
           <button onClick={() => store.createNode("gain")}>Gain</button>
           {/* <button onClick={() => store.createNode("osc")}>Osc</button>

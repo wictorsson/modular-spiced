@@ -12,9 +12,18 @@ let beatArray = [];
 // Connect audio components
 export function addAudioEdge(sourceId, targetId) {
   // console.log(targetId);
+  // console.log(sourceId);
+  console.log(audioNodes[sourceId]);
+
+  //lfoTest.connect(filter.frequency);
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  audioNodeSource.connect(audioNodeTarget);
+  if (audioNodeSource.name === "LFO") {
+    // HARDCODED to filter freq, fix this and connection validation
+    audioNodeSource.connect(audioNodeTarget.frequency);
+  } else {
+    audioNodeSource.connect(audioNodeTarget);
+  }
 }
 
 // Update audio parameters
@@ -29,23 +38,15 @@ export function updateAudioNode(id, data) {
     } else if (key === "bpm") {
       //   console.log("changin bpm");
       Tone.Transport.bpm.rampTo(val, 1);
+    }
+    //DRY!
+    else if (key === "min" || key === "max") {
+      audioNode[key] = val;
     } else if (isNaN(val)) {
       audioNode[key] = val;
     } else {
       audioNode[key].value = val;
     }
-
-    // return Tone.Offline(
-    //   () => {
-    //     // console.log("OUT");
-    //     const lfo = new Tone.LFO({ min: 400, max: 4000, amplitude: 0 })
-    //       .start()
-    //       .toDestination();
-    //   },
-    //   0.5,
-    //   1
-    // );
-    // const lfo = new Tone.LFO("4n", 400, 4000).connect(audioNode[key]).start();
   });
 }
 
@@ -93,7 +94,6 @@ export function createAudioNode(id, type, data) {
   switch (type) {
     case "osc":
       const osc = new Tone.Oscillator(440, data.type).start();
-
       audioNodes[id] = osc;
       break;
     case "gain":
@@ -102,9 +102,9 @@ export function createAudioNode(id, type, data) {
       break;
     case "filter":
       const filter = new Tone.Filter(1500, data.type);
-      let lfo = new Tone.LFO("1n", 500, 4500);
-      lfo.start();
-      lfo.connect(filter.frequency);
+      // let lfoTest = new Tone.LFO("1n", 500, 4500);
+      // lfoTest.start();
+      // lfoTest.connect(filter.frequency);
 
       audioNodes[id] = filter;
       break;
@@ -131,6 +131,14 @@ export function createAudioNode(id, type, data) {
       // transport must be started before it starts invoking events
       Tone.Transport.start();
       //audioNodes[id] = "sequence";
+      break;
+
+    case "lfo":
+      // console.log("CREATED LFO");
+      const lfo = new Tone.LFO("1n", 500, 4500);
+      lfo.start();
+
+      audioNodes[id] = lfo;
       break;
   }
 }
