@@ -39,7 +39,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "gain": {
-        data = { gain: -6, inputConnected: false };
+        data = { gain: 1, inputConnected: false };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -50,7 +50,7 @@ export const useStore = create((set, get) => ({
       }
 
       case "sequence": {
-        data = { bpm: 120, row1: new Array(16).fill(false) };
+        data = { bpm: 120, row1: new Array(16).fill(0) };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -65,7 +65,7 @@ export const useStore = create((set, get) => ({
 
   //Parameters changed - updateNode(id, { type: "sine" }
   updateNode(id, data) {
-    console.log(data);
+    //  console.log(data);
 
     updateAudioNode(id, data);
     set({

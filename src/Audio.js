@@ -24,16 +24,28 @@ export function updateAudioNode(id, data) {
   Object.entries(data).forEach(([key, val]) => {
     if (key === "row1") {
       //audioNode.data[key] = val;
-      console.log(val);
+      // console.log(val);
       beatArray = val;
     } else if (key === "bpm") {
-      console.log("changin bpm");
+      //   console.log("changin bpm");
       Tone.Transport.bpm.rampTo(val, 1);
     } else if (isNaN(val)) {
       audioNode[key] = val;
     } else {
       audioNode[key].value = val;
     }
+
+    // return Tone.Offline(
+    //   () => {
+    //     // console.log("OUT");
+    //     const lfo = new Tone.LFO({ min: 400, max: 4000, amplitude: 0 })
+    //       .start()
+    //       .toDestination();
+    //   },
+    //   0.5,
+    //   1
+    // );
+    // const lfo = new Tone.LFO("4n", 400, 4000).connect(audioNode[key]).start();
   });
 }
 
@@ -50,7 +62,7 @@ export function removeAudioNode(id) {
 
     Tone.Transport.stop();
     Tone.Transport.cancel(0);
-    beatArray.fill(false);
+    beatArray.fill(0);
     Tone.Transport.bpm.rampTo(120, 1);
   }
 }
@@ -71,24 +83,29 @@ export function removeAudioEdge(sourceId, targetId) {
 export function createAudioNode(id, type, data) {
   if (!audioEnabled) {
     Tone.start();
-    const gain = new Tone.Gain(0.6);
-    gain.toDestination();
-
     audioEnabled = true;
     const out = Tone.getDestination();
     audioNodes["output_id"] = out;
+    Tone.getDestination().volume.rampTo(-12, 1);
+    // const gain = new Tone.Gain(100);
+    // gain.toDestination();
   }
   switch (type) {
     case "osc":
       const osc = new Tone.Oscillator(440, data.type).start();
+
       audioNodes[id] = osc;
       break;
     case "gain":
-      const gain = new Tone.Gain(0.5);
+      const gain = new Tone.Gain(1);
       audioNodes[id] = gain;
       break;
     case "filter":
       const filter = new Tone.Filter(1500, data.type);
+      let lfo = new Tone.LFO("1n", 500, 4500);
+      lfo.start();
+      lfo.connect(filter.frequency);
+
       audioNodes[id] = filter;
       break;
     case "sequence":
@@ -105,9 +122,9 @@ export function createAudioNode(id, type, data) {
         // console.log(beatArray[step]);
         // }
         // use the callback time to schedule events
-        if (beatArray[step] === true) {
+        if (beatArray[step] > 0) {
           console.log(beatArray[step]);
-          osc2.triggerAttackRelease("C2", "8n", time);
+          osc2.triggerAttackRelease("C2", "8n", time, beatArray[step] / 100);
         }
         index++;
       }, "16n");

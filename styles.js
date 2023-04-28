@@ -88,7 +88,7 @@ export const GlobalStyle = createGlobalStyle`
       transform: scale(1.5);
     }
   }
-
+  //***************** CONTAINERS *********************
   .nodeContainer{
     display: flex;
     flex-direction: column;
@@ -168,6 +168,8 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
+  //***************** FLOW PANEL *********************
+
   .flowPanel{
     display: flex;
     margin:10px;
@@ -205,10 +207,11 @@ export const GlobalStyle = createGlobalStyle`
     }
    
 
-    // ******************* slider
+    // ******************* slider ****************************
     input[type="range"] {
       -webkit-appearance: none;
       margin: 10px;
+      
      // width: 200px;
       height: 3px;
       background: rgba(255, 255, 255, 0.6);
@@ -234,6 +237,51 @@ export const GlobalStyle = createGlobalStyle`
       box-shadow: none;
       border: none;
       background: transparent;
+    }
+
+    .sequenceSlider{
+      
+      display: flex;
+      height: 150px;
+  
+    }
+
+    .sequenceNodeContainer {
+      display: flex;
+      flex-direction: row;
+      
+      //align-items: center;
+      //justify-content: space-between;
+      padding: 10px;
+      margin: 5px;
+      background: radial-gradient(rgba(55, 41, 41, 1) 0%, rgba(20, 20, 20, 1) 100%);
+      box-shadow: 0 0 5px 0 #444;
+      border-style: solid;
+      border-color: grey;
+      border-radius: 5px;
+      border-width: 1px;
+      color: white;
+    }
+    
+    .sequenceNodeContainer input[type="range"] {
+      width: 30px;
+       //height: 2px;
+     
+      // -webkit-appearance: none;
+      // background-color: transparent;
+       transform: rotate(-90deg);
+   
+      // margin: 5px;
+    }
+
+    .sequenceSlider input[type="range"]::-webkit-slider-thumb {
+      // -webkit-appearance: none;
+
+    }
+
+    .sequenceSlider input[type=range]::-webkit-slider-runnable-track  {
+      // -webkit-appearance: none;
+  
     }
     
 `;

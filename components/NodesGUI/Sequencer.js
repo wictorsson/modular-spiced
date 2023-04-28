@@ -13,12 +13,12 @@ const selector = (id) => (store) => ({
 export default function Sequencer({ id, data }) {
   const { setBeatArray, setBPM } = useStore(selector(id), shallow);
 
-  const handleCheckboxChange = (e, index) => {
+  const handleSliderChange = (e, index) => {
     // Add new array here and update with zustand
     let updatedRowArray = [...data.row1];
 
-    updatedRowArray[index] = e.target.checked;
-    // console.log(updatedRowArray);
+    updatedRowArray[index] = e.target.value;
+
     setBeatArray(index, updatedRowArray);
   };
 
@@ -37,19 +37,37 @@ export default function Sequencer({ id, data }) {
             onChange={setBPM}
           ></input>
         </div>
-        <div>
+        <div className="sequenceNodeContainer">
           {data.row1.map((isChecked, index) => (
             <input
               key={index}
-              type="checkbox"
-              checked={isChecked}
-              onChange={(e) => handleCheckboxChange(e, index)}
+              orient="vertical"
+              // id={`slider-${index}`}
+              className="nodrag"
+              type="range"
+              min="0"
+              max="100"
+              value={data.row1[index]}
+              onChange={(e) => handleSliderChange(e, index)}
             />
-          ))}
+          ))}{" "}
         </div>
       </div>
       {/* <Handle type="target" position="bottom" /> */}
       <Handle type="source" position="top" />
     </div>
   );
+}
+
+{
+  /* <div>
+{data.row1.map((isChecked, index) => (
+  <input
+    key={index}
+    type="checkbox"
+    checked={isChecked}
+    onChange={(e) => handleCheckboxChange(e, index)}
+  />
+))}
+</div> */
 }
