@@ -44,7 +44,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "filter": {
-        data = { frequency: 1200, type: "lowpass" };
+        data = { frequency: 1200, type: "lowpass", rolloff: -48, Q: 1 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -56,6 +56,11 @@ export const useStore = create((set, get) => ({
       }
       case "lfo": {
         data = { frequency: "4n", min: 10, max: 20000 };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "reverb": {
+        data = { roomSize: 1000, dampening: 20000 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }

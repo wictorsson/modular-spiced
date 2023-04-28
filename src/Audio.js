@@ -40,7 +40,7 @@ export function updateAudioNode(id, data) {
       Tone.Transport.bpm.rampTo(val, 1);
     }
     //DRY!
-    else if (key === "min" || key === "max") {
+    else if (key === "min" || key === "max" || key === "dampening") {
       audioNode[key] = val;
     } else if (isNaN(val)) {
       audioNode[key] = val;
@@ -124,7 +124,7 @@ export function createAudioNode(id, type, data) {
         // use the callback time to schedule events
         if (beatArray[step] > 0) {
           console.log(beatArray[step]);
-          osc2.triggerAttackRelease("C2", "8n", time, beatArray[step] / 100);
+          osc2.triggerAttackRelease("C1", "8n", time, beatArray[step] / 100);
         }
         index++;
       }, "16n");
@@ -137,8 +137,13 @@ export function createAudioNode(id, type, data) {
       // console.log("CREATED LFO");
       const lfo = new Tone.LFO("1n", 500, 4500);
       lfo.start();
-
       audioNodes[id] = lfo;
+      break;
+
+    case "reverb":
+      const freeverb = new Tone.Freeverb();
+
+      audioNodes[id] = freeverb;
       break;
   }
 }

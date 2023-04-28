@@ -6,10 +6,14 @@ import { shallow } from "zustand/shallow";
 const selector = (id) => (store) => ({
   setFrequency: (e) => store.updateNode(id, { frequency: e.target.value }),
   setType: (e) => store.updateNode(id, { type: e.target.value }),
+  setResonance: (e) => store.updateNode(id, { Q: e.target.value }),
 });
 
 export default function Filter({ id, data }) {
-  const { setFrequency, setType } = useStore(selector(id), shallow);
+  const { setFrequency, setType, setResonance } = useStore(
+    selector(id),
+    shallow
+  );
   //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
   return (
@@ -27,6 +31,17 @@ export default function Filter({ id, data }) {
           max="2500"
           value={data.frequency}
           onChange={setFrequency}
+        />
+        <span>Res</span>
+
+        <input
+          id="slider"
+          className="nodrag"
+          type="range"
+          min="0.1"
+          max="20"
+          value={data.Q}
+          onChange={setResonance}
         />
         {/* <span>{data.frequency}Hz</span> */}
         <div className="waveformContainer">
