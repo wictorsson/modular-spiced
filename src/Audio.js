@@ -40,7 +40,7 @@ export function updateAudioNode(id, data) {
       Tone.Transport.bpm.rampTo(val, 1);
     }
     //DRY!
-    else if (key === "min" || key === "max" || key === "dampening") {
+    else if (key === "min" || key === "max") {
       audioNode[key] = val;
     } else if (isNaN(val)) {
       audioNode[key] = val;
@@ -71,13 +71,11 @@ export function removeAudioNode(id) {
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  //console.log(audioNodeSource);
-  if (audioNodeSource !== "sequence") {
+
+  if (audioNodeSource.name === "LFO") {
+    audioNodeSource.disconnect(audioNodeTarget.frequency);
+  } else if (audioNodeSource !== "sequence") {
     audioNodeSource.disconnect(audioNodeTarget);
-  } else {
-    //Tone.Transport.stop();
-    // Tone.Transport.cancel(0);
-    //beatArray.fill(false);
   }
 }
 

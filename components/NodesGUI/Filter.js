@@ -70,7 +70,7 @@ export default function Filter({ id, data }) {
 
       <Handle type="source" position="top" />
       <Handle type="target" position="bottom" />
-      <Handle type="target" position="right" id="freqHandle" />
+      <Handle type="target" position="right" id="paramHandle" />
     </div>
   );
 }

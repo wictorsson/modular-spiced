@@ -122,20 +122,17 @@ export const useStore = create((set, get) => ({
     const sourceNode = get().nodes.find((node) => node.id === data.source);
 
     console.log(data);
-    if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
-      //Delete later
-      if (targetNode.type !== "filter") {
-        // targetNode.data.inputConnected = true;
-      }
+    if (data.sourceHandle === data.targetHandle) {
+      if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
+        if (sourceNode.type !== "sequence") {
+          addAudioEdge(data.source, data.target);
+        }
+        //Nano ID generates random six digit ID
+        const id = nanoid(6);
+        const edge = { id, ...data };
 
-      if (sourceNode.type !== "sequence") {
-        addAudioEdge(data.source, data.target);
+        set({ edges: [edge, ...get().edges] });
       }
-      //Nano ID generates random six digit ID
-      const id = nanoid(6);
-      const edge = { id, ...data };
-
-      set({ edges: [edge, ...get().edges] });
     }
   },
 
