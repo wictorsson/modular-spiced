@@ -168,6 +168,17 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
+  .react-flow__handle-right{
+    //top: auto;
+    top: 50%;
+    left: 95%;
+    //bottom: 12px;
+   
+    transform: translate(0, 0);
+    border-color: cyan;
+
+  }
+
   //***************** FLOW PANEL *********************
 
   .flowPanel{

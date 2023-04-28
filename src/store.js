@@ -111,7 +111,7 @@ export const useStore = create((set, get) => ({
     const targetNode = get().nodes.find((node) => node.id === data.target);
     const sourceNode = get().nodes.find((node) => node.id === data.source);
 
-    console.log(sourceNode.type);
+    console.log(data);
     if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
       targetNode.data.inputConnected = true;
 
@@ -121,7 +121,7 @@ export const useStore = create((set, get) => ({
       //Nano ID generates random six digit ID
       const id = nanoid(6);
       const edge = { id, ...data };
-      console.log(targetNode.data.inputConnected);
+
       set({ edges: [edge, ...get().edges] });
     }
   },
