@@ -1,9 +1,9 @@
 //Create audio, no rendering is happening from this file!
-// Thread safe, (audio should not know about GUI)
 
 import * as Tone from "tone";
 
 // Initiate empty object to hold audio connections
+
 const audioNodes = {};
 var audioEnabled = false;
 //Get beatarray from nodes, replace with intance value
@@ -79,7 +79,7 @@ export function removeAudioEdge(sourceId, targetId) {
   }
 }
 
-export function createAudioNode(id, type, data) {
+export function createAudioNode(id, type, data, toggle) {
   if (!audioEnabled) {
     Tone.start();
     audioEnabled = true;
@@ -109,25 +109,31 @@ export function createAudioNode(id, type, data) {
     case "sequence":
       audioNodes[id] = "sequence";
       const osc2 = new Tone.MembraneSynth().toDestination();
-
+      //osc2.pitchDecay = 0.4;
       beatArray = data.row1;
       console.log(beatArray);
       let step = 0;
       let index = 0;
       Tone.Transport.scheduleRepeat((time) => {
         step = index % 16;
+        Tone.Draw.schedule(function () {
+          toggle();
+          //this callback is invoked from a requestAnimationFrame
+          //and will be invoked close to AudioContext time
+        }, time);
         // for (let i = 0; i < beatArray.length(); ++i) {
         // console.log(beatArray[step]);
         // }
         // use the callback time to schedule events
         if (beatArray[step] > 0) {
           console.log(beatArray[step]);
-          osc2.triggerAttackRelease("C1", "8n", time, beatArray[step] / 100);
+          osc2.triggerAttackRelease("C0", "4n", time, beatArray[step] / 50);
         }
         index++;
       }, "16n");
       // transport must be started before it starts invoking events
-      Tone.Transport.start();
+      Tone.Transport.start("+0.1");
+
       //audioNodes[id] = "sequence";
       break;
 

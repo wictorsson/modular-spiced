@@ -68,8 +68,6 @@ function Environment() {
 
           <button onClick={() => store.createNode("gain")}>Gain</button>
           <button onClick={() => store.createNode("reverb")}>Reverb</button>
-          {/* <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("osc")}>Osc</button> */}
         </Panel>
         <Background variant="dots" gap="80" color="cyan" />
         <Controls showZoom={false} showInteractive={false} />

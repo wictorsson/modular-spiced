@@ -12,6 +12,7 @@ const selector = (id) => (store) => ({
 
 export default function Sequencer({ id, data }) {
   const { setBeatArray, setBPM } = useStore(selector(id), shallow);
+  const { isButtonClicked, toggleButton } = useStore();
 
   const handleSliderChange = (e, index) => {
     // Add new array here and update with zustand
@@ -25,6 +26,9 @@ export default function Sequencer({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
+        <button onClick={toggleButton}>
+          {isButtonClicked ? "Clicked" : "Not clicked"}
+        </button>
         <h3>Sequencer</h3>
         <div>
           <p>BPM</p>

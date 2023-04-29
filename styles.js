@@ -5,7 +5,9 @@ export const GlobalStyle = createGlobalStyle`
   *::before,
   *::after {
     box-sizing: border-box;
-    font-family: "Helvetica Neue", "Arial", sans-serif;
+    font-family: "proxima-nova", "Arial", sans-serif;
+  
+ 
 
   }
 
@@ -97,6 +99,7 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: space-between;
     font-size: 10px;
+  
     background: rgb(70,41,41);
    // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
     background: radial-gradient(rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
