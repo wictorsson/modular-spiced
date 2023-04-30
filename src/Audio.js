@@ -13,7 +13,6 @@ let beatArray = [];
 export function addAudioEdge(sourceId, targetId) {
   // console.log(targetId);
   // console.log(sourceId);
-  console.log(audioNodes[sourceId]);
 
   //lfoTest.connect(filter.frequency);
   const audioNodeSource = audioNodes[sourceId];
@@ -22,6 +21,9 @@ export function addAudioEdge(sourceId, targetId) {
     // HARDCODED to filter freq, fix this and connection validation
     audioNodeSource.connect(audioNodeTarget.frequency);
   } else {
+    console.log(audioNodeSource);
+    console.log(audioNodeTarget);
+    console.log("OUT");
     audioNodeSource.connect(audioNodeTarget);
   }
 }
@@ -79,7 +81,7 @@ export function removeAudioEdge(sourceId, targetId) {
   }
 }
 
-export function createAudioNode(id, type, data, toggle) {
+export function createAudioNode(id, type, data, setLampIndex) {
   if (!audioEnabled) {
     Tone.start();
     audioEnabled = true;
@@ -117,7 +119,7 @@ export function createAudioNode(id, type, data, toggle) {
       Tone.Transport.scheduleRepeat((time) => {
         step = index % 16;
         Tone.Draw.schedule(function () {
-          toggle();
+          setLampIndex(step);
           //this callback is invoked from a requestAnimationFrame
           //and will be invoked close to AudioContext time
         }, time);
@@ -145,9 +147,14 @@ export function createAudioNode(id, type, data, toggle) {
       break;
 
     case "reverb":
-      const freeverb = new Tone.Freeverb();
+      const reverb = new Tone.Freeverb();
+      audioNodes[id] = reverb;
+      break;
 
-      audioNodes[id] = freeverb;
+    case "noise":
+      const noise = new Tone.Noise(data.type).start();
+      audioNodes[id] = noise;
+      console.log("noise");
       break;
   }
 }

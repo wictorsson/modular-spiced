@@ -9,6 +9,7 @@ import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
 import Lfo from "./NodesGUI/Lfo";
 import Reverb from "./NodesGUI/Reverb";
+import Noise from "./NodesGUI/Noise";
 import AudioOutToggle from "./NodesGUI/Output";
 
 // THE viewport of the app, the nodes will go into separate components
@@ -34,6 +35,7 @@ const nodeTypes = {
   sequence: Sequence,
   lfo: Lfo,
   reverb: Reverb,
+  noise: Noise,
 };
 
 const proOptions = { hideAttribution: true };
@@ -63,6 +65,7 @@ function Environment() {
             (Sequencer)
           </button>
           <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("noise")}>Noise</button>
           <button onClick={() => store.createNode("filter")}>Filter</button>
           <button onClick={() => store.createNode("lfo")}>(LFO)</button>
 

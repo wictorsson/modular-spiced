@@ -13,6 +13,7 @@ const selector = (id) => (store) => ({
 export default function Sequencer({ id, data }) {
   const { setBeatArray, setBPM } = useStore(selector(id), shallow);
   const { isButtonClicked, toggleButton } = useStore();
+  const { lampIndex } = useStore();
 
   const handleSliderChange = (e, index) => {
     // Add new array here and update with zustand
@@ -26,10 +27,11 @@ export default function Sequencer({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
-        <button onClick={toggleButton}>
+        {/* <button onClick={toggleButton}>
           {isButtonClicked ? "Clicked" : "Not clicked"}
-        </button>
+        </button> */}
         <h3>Sequencer</h3>
+        <h3>{lampIndex}</h3>
         <div>
           <p>BPM</p>
           <input
@@ -42,7 +44,24 @@ export default function Sequencer({ id, data }) {
           ></input>
         </div>
         <div className="sequenceNodeContainer">
-          {data.row1.map((isChecked, index) => (
+          {data.row1.map((slider, index) => (
+            <input
+              key={index}
+              orient="vertical"
+              // id={`slider-${index}`}
+              className="nodrag"
+              type="range"
+              min="0"
+              max="100"
+              //value={data.row1[index]}
+              readOnly
+              value={index === lampIndex ? "100" : "0"}
+              //onChange={(e) => handleSliderChange(e, index)}
+            />
+          ))}{" "}
+        </div>
+        <div className="sequenceNodeContainer">
+          {data.row1.map((slider, index) => (
             <input
               key={index}
               orient="vertical"

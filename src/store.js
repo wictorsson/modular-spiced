@@ -25,9 +25,10 @@ export const useStore = create((set, get) => ({
   ],
   edges: [],
   lampIndex: 0, // initial value
-  isButtonClicked: false,
-  toggleButton: () =>
-    set((state) => ({ isButtonClicked: !state.isButtonClicked })),
+  //isButtonClicked: false,
+  setLampIndex: (beatIndex) => set({ lampIndex: beatIndex }),
+  // toggleButton: () =>
+  //  set((state) => ({ isButtonClicked: !state.isButtonClicked })),
 
   // TEMPLATE MODULES
   createNode(type) {
@@ -68,13 +69,18 @@ export const useStore = create((set, get) => ({
         position = { x: randomXpos, y: randomYpos };
         break;
       }
+      case "noise": {
+        data = { type: "pink" };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
     }
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
     if (!sequenceNode || type !== "sequence") {
       set({ nodes: [...get().nodes, { type, id, data, position }] });
       // CReate node send function here to update bool
-      createAudioNode(id, type, data, get().toggleButton);
+      createAudioNode(id, type, data, get().setLampIndex);
     }
   },
 
