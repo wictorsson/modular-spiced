@@ -46,7 +46,7 @@ function Environment() {
   const store = useStore(selector, shallow);
 
   return (
-    <div style={{ height: 650 }}>
+    <div style={{ height: 550 }}>
       <ReactFlow
         onEdgesDelete={store.onEdgesDelete}
         onNodesDelete={store.onNodesDelete}
@@ -61,16 +61,18 @@ function Environment() {
         className="touchdevice-flow"
       >
         <Panel position="left" className="flowPanel">
+          {/* button load patch() */}
+          <button onClick={() => store.createNode("osc")}>Osc</button>
+          <button onClick={() => store.createNode("noise")}>Noise</button>
+          <hr></hr>
+          <button onClick={() => store.createNode("gain")}>Gain</button>
+          <button onClick={() => store.createNode("reverb")}>Reverb</button>
+          <button onClick={() => store.createNode("filter")}>Filter</button>
+          <hr></hr>
+          <button onClick={() => store.createNode("lfo")}>(LFO)</button>
           <button onClick={() => store.createNode("sequence")}>
             (Sequencer)
           </button>
-          <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("noise")}>Noise</button>
-          <button onClick={() => store.createNode("filter")}>Filter</button>
-          <button onClick={() => store.createNode("lfo")}>(LFO)</button>
-
-          <button onClick={() => store.createNode("gain")}>Gain</button>
-          <button onClick={() => store.createNode("reverb")}>Reverb</button>
         </Panel>
         <Background variant="dots" gap="80" color="cyan" />
         <Controls showZoom={false} showInteractive={false} />

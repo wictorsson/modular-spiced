@@ -1,18 +1,22 @@
 import Head from "next/head";
 import useSWR from "swr";
-//import { Inter } from "next/font/google";
+import { shallow } from "zustand/shallow";
+import { useStore } from "../store";
 import Environment from "../../components/Environment";
-import styled from "styled-components";
-
-//const inter = Inter({ subsets: ["latin"] });
 
 // TODO - MOVE HEADER TO LAYOUT
+
+const selector = (store) => ({
+  readPatch: store.readPatch,
+});
+
 export default function Home() {
   const { data } = useSWR("/api/patches", { fallbackData: [] });
+  const store = useStore(selector, shallow);
 
-  console.log(data);
-  let names = data.map((item) => item.name);
-  console.log(names);
+  //console.log(data);
+  let patches = data.map((patch) => patch);
+  console.log(patches);
   return (
     <>
       <Head>
@@ -33,8 +37,11 @@ export default function Home() {
       }
 
       <ul>
+        Load a patch from db
         {data.map((patch) => (
-          <li key={patch._id}>From db - Patchname: {patch.name}</li>
+          <li key={patch._id}>
+            <button onClick={() => store.readPatch(patch)}>{patch.name}</button>{" "}
+          </li>
         ))}
       </ul>
     </>

@@ -182,6 +182,28 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
+  button {
+    background: rgb(70,41,41);
+    background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
+    color: white; 
+    border-style: solid;
+    padding: 8px 10px; /* Add padding to the button */
+    text-align: center; /* Center the text */
+    border-width: 1px;
+    //display: inline-block; /* Make the button inline */
+    font-size: 12px; /* Change the font size */
+    border-radius: 5px; /* Add border radius */
+  }
+  button:hover {
+    background: #202020;
+   //letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    color: white;
+    transition: all 0.4s ease 0s;
+    }
+
   //***************** FLOW PANEL *********************
 
   .flowPanel{
@@ -198,6 +220,7 @@ export const GlobalStyle = createGlobalStyle`
     padding 8px;
   }
 
+  
   .flowPanel button {
     background: rgb(70,41,41);
     background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
