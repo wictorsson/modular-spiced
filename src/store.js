@@ -133,6 +133,7 @@ export const useStore = create((set, get) => ({
     const sourceNode = get().nodes.find((node) => node.id === data.source);
 
     console.log(data);
+    //Check if it is a parameter connection. Handle is set to null if non paprameter
     if (data.sourceHandle === data.targetHandle) {
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
         if (sourceNode.type !== "sequence") {
