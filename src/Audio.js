@@ -90,15 +90,15 @@ export function createAudioNode(id, type, data, setLampIndex) {
   }
   switch (type) {
     case "osc":
-      const osc = new Tone.Oscillator(440, data.type).start();
+      const osc = new Tone.Oscillator(data.frequency, data.type).start();
       audioNodes[id] = osc;
       break;
     case "gain":
-      const gain = new Tone.Gain(1);
+      const gain = new Tone.Gain(data.gain);
       audioNodes[id] = gain;
       break;
     case "filter":
-      const filter = new Tone.Filter(1500, data.type);
+      const filter = new Tone.Filter(data.frequency, data.type);
       // let lfoTest = new Tone.LFO("1n", 500, 4500);
       // lfoTest.start();
       // lfoTest.connect(filter.frequency);
@@ -138,7 +138,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
 
     case "lfo":
       // console.log("CREATED LFO");
-      const lfo = new Tone.LFO("1n", 500, 4500);
+      const lfo = new Tone.LFO("1n", data.min, data.max);
       lfo.start();
       audioNodes[id] = lfo;
       break;
