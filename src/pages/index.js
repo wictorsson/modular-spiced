@@ -10,20 +10,22 @@ const selector = (store) => ({
 });
 
 export default function Home() {
-  //const { data } = useSWR("/api/patches", { fallbackData: [] });
   const patches = useSWR("/api/patches", { fallbackData: [] });
   const data = patches.data;
   const store = useStore(selector, shallow);
-  // const patches = useSWR("/api/patches");
-  console.log(data);
-  //let patches = data.map((patch) => patch);
-  console.log(patches);
 
+  const { nodes, edges } = useStore();
   async function savePatch(patch) {
-    const formData = new FormData(patch.target);
-    const patchData = Object.fromEntries(formData);
+    const patchData = {
+      nodes: nodes,
+      edges: edges,
+    };
 
-    const response = await fetch("api/places", {
+    const formData = new FormData(patch.target);
+    const formDataObject = Object.fromEntries(formData);
+    // Merge formdata with nodes and edges from Zustand store
+    Object.assign(patchData, formDataObject);
+    const response = await fetch("/api/patches", {
       method: "POST",
       body: JSON.stringify(patchData),
       headers: {
@@ -62,7 +64,6 @@ export default function Home() {
           <Environment />
         </div>
       }
-
       <ul>
         Load a patch from db
         {data.map((patch) => (

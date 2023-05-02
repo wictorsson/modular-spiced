@@ -1,30 +1,16 @@
-import styled from "styled-components";
 import React from "react";
-
-// const FormContainer = styled.form`
-//   display: grid;
-//   gap: 0.5rem;
-// `;
-
-// const Input = styled.input`
-//   padding: 0.5rem;
-//   font-size: inherit;
-//   border: 3px solid black;
-//   border-radius: 0.5rem;
-// `;
-
-// const Label = styled.label`
-//   font-weight: bold;
-// `;
+import { useRouter } from "next/router.js";
 
 export default function SaveForm({ onSubmit }) {
+  const router = useRouter();
   function handleSubmit(event) {
     event.preventDefault();
 
     onSubmit(event);
   }
+
   return (
-    <div onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <label>Patchname: </label>
       <input
         id="name"
@@ -32,10 +18,12 @@ export default function SaveForm({ onSubmit }) {
         type="text"
         defaultValue={`${new Date().toLocaleString()}`}
       />
+      {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
+      <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
       <button type="submit">
         Save
         {/* {defaultData ? "Update place" : "Add place"} */}
       </button>
-    </div>
+    </form>
   );
 }
