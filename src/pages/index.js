@@ -23,7 +23,7 @@ export default function Home() {
 
     const formData = new FormData(patch.target);
     const formDataObject = Object.fromEntries(formData);
-    // Merge formdata with nodes and edges from Zustand store
+    // Merge formdata (patchname) with nodes and edges from Zustand store
     Object.assign(patchData, formDataObject);
     const response = await fetch("/api/patches", {
       method: "POST",
@@ -46,6 +46,16 @@ export default function Home() {
     }
   }
 
+  async function deletePatch(patchId) {
+    //TODO CREATE LOOP FIND BY ID
+    await fetch(`/api/patches/${patchId}`, {
+      method: "DELETE",
+    });
+    // Delete patch from the list of patches
+    const newPatchList = data.filter((p) => p._id !== patchId);
+    patches.mutate(newPatchList);
+  }
+
   return (
     <>
       <Head>
@@ -65,10 +75,11 @@ export default function Home() {
         </div>
       }
       <ul>
-        Load a patch from db
+        Patches from db
         {data.map((patch) => (
           <li key={patch._id}>
             <button onClick={() => store.readPatch(patch)}>{patch.name}</button>{" "}
+            <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
           </li>
         ))}
       </ul>

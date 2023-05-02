@@ -21,7 +21,7 @@ export default function SaveForm({ onSubmit }) {
       {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
       <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
       <button type="submit">
-        Save
+        Save New
         {/* {defaultData ? "Update place" : "Add place"} */}
       </button>
     </form>

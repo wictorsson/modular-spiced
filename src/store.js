@@ -152,16 +152,31 @@ export const useStore = create((set, get) => ({
   //********************** db **********************
 
   readPatch(patch) {
-    console.log("PATCH");
+    // TODO - CLEAR ALL AUDIO
+    //deleteAllSoundNodes();
+    console.log("READ PATCH");
+    get().nodes.forEach((node) => {
+      console.log(node.id);
+      if (node.id !== "output_id") removeAudioNode(node.id);
+    });
     // TODO also add toDestination module
     // Extract the `nodes` array from the `patch` object or default to an empty array
     const { nodes = [] } = patch;
-    console.log(nodes);
-    // Update the `nodes` state with the extracted array
-    set({ nodes: [...nodes] });
+    const { edges = [] } = patch;
 
+    //Update the `nodes` state with the extracted array
+    set({ nodes: [...nodes] });
     nodes.forEach(({ id, type, data }) => {
+      console.log("CREATE NEW NODE");
       createAudioNode(id, type, data, get().setLampIndex);
+    });
+
+    set({ edges: [...edges] });
+    edges.forEach(({ source, target }) => {
+      console.log("CREATE NEW EDGE");
+      console.log(source);
+      console.log(target);
+      addAudioEdge(source, target);
     });
   },
 

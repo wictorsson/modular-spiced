@@ -4,7 +4,7 @@ import * as Tone from "tone";
 
 // Initiate empty object to hold audio connections
 
-const audioNodes = {};
+let audioNodes = {};
 var audioEnabled = false;
 //Get beatarray from nodes, replace with intance value
 
@@ -14,16 +14,12 @@ export function addAudioEdge(sourceId, targetId) {
   // console.log(targetId);
   // console.log(sourceId);
 
-  //lfoTest.connect(filter.frequency);
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
   if (audioNodeSource.name === "LFO") {
     // HARDCODED to filter freq, fix this and connection validation
     audioNodeSource.connect(audioNodeTarget.frequency);
   } else {
-    console.log(audioNodeSource);
-    console.log(audioNodeTarget);
-    console.log("OUT");
     audioNodeSource.connect(audioNodeTarget);
   }
 }
@@ -54,16 +50,16 @@ export function updateAudioNode(id, data) {
 }
 
 export function removeAudioNode(id) {
-  console.log(audioNodes[id]);
-  if (audioNodes[id] !== "sequence") {
+  //console.log(audioNodes[id]);
+  if (audioNodes[id] !== "sequence" && Object.keys(audioNodes).length > 1) {
+    console.log("DISCONNECTING");
     const audioNode = audioNodes[id];
     audioNode.disconnect();
     // audioNode.stop?.();
     // Dispose - free garbage collection
     audioNode.dispose();
+    console.log(Tone.context.state);
   } else {
-    console.log("stopped");
-
     Tone.Transport.stop();
     Tone.Transport.cancel(0);
     beatArray.fill(0);
@@ -114,7 +110,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       const osc2 = new Tone.MembraneSynth().toDestination();
       //osc2.pitchDecay = 0.4;
       beatArray = data.row1;
-      console.log(beatArray);
+      //console.log(beatArray);
       let step = 0;
       let index = 0;
       Tone.Transport.scheduleRepeat((time) => {
@@ -155,7 +151,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
     case "noise":
       const noise = new Tone.Noise(data.type).start();
       audioNodes[id] = noise;
-      console.log("noise");
+
       break;
   }
 }

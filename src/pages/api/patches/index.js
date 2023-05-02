@@ -4,10 +4,10 @@ import Patch from "../../../../db/models/Patch";
 
 export default async function handler(request, response) {
   await dbConnect();
+  const { id } = request.query;
 
   if (request.method === "GET") {
     const patches = await Patch.find();
-
     return response.status(200).json(patches);
   }
 
