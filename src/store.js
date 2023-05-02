@@ -87,8 +87,6 @@ export const useStore = create((set, get) => ({
 
   //Parameters changed - updateNode(id, { type: "sine" }
   updateNode(id, data) {
-    //  console.log(data);
-
     updateAudioNode(id, data);
     set({
       nodes: get().nodes.map((node) =>
@@ -133,7 +131,7 @@ export const useStore = create((set, get) => ({
     const targetNode = get().nodes.find((node) => node.id === data.target);
     const sourceNode = get().nodes.find((node) => node.id === data.source);
 
-    console.log(data);
+    //console.log(data);
     //Check if it is a parameter connection. Handle is set to null if non paprameter
     if (data.sourceHandle === data.targetHandle) {
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
@@ -154,9 +152,8 @@ export const useStore = create((set, get) => ({
   readPatch(patch) {
     // TODO - CLEAR ALL AUDIO
     //deleteAllSoundNodes();
-    console.log("READ PATCH");
+
     get().nodes.forEach((node) => {
-      console.log(node.id);
       if (node.id !== "output_id") removeAudioNode(node.id);
     });
     // TODO also add toDestination module
@@ -167,19 +164,16 @@ export const useStore = create((set, get) => ({
     //Update the `nodes` state with the extracted array
     set({ nodes: [...nodes] });
     nodes.forEach(({ id, type, data }) => {
-      console.log("CREATE NEW NODE");
       createAudioNode(id, type, data, get().setLampIndex);
     });
 
     set({ edges: [...edges] });
     edges.forEach(({ source, target }) => {
-      console.log("CREATE NEW EDGE");
-      console.log(source);
-      console.log(target);
       addAudioEdge(source, target);
     });
   },
-
+  currentPatch: "645104adbb037381f6ef4b5e",
+  setCurrentPatch: (patch) => set({ currentPatch: patch }),
   //****************************************************/
   // AUDIO TOGGLE temp
 

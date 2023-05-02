@@ -12,7 +12,7 @@ const selector = (id) => (store) => ({
 
 export default function Sequencer({ id, data }) {
   const { setBeatArray, setBPM } = useStore(selector(id), shallow);
-  const { isButtonClicked, toggleButton } = useStore();
+  //const { isButtonClicked, toggleButton } = useStore();
   const { lampIndex } = useStore();
 
   const handleSliderChange = (e, index) => {
