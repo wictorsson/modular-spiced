@@ -32,6 +32,7 @@ export function addAudioEdge(sourceId, targetId) {
 export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
 
+  //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
     if (key === "row1") {
       //audioNode.data[key] = val;

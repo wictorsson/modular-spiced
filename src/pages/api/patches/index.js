@@ -17,4 +17,16 @@ export default async function handler(request, response) {
 
     return response.status(200).json(patches);
   }
+
+  if (request.method === "POST") {
+    try {
+      const patchData = request.body;
+      const patch = new Patch(patchData);
+      await patch.save();
+      return response.status(201).json({ status: "Patch created." });
+    } catch (error) {
+      console.error(error);
+      return response.status(400).json({ error: error.message });
+    }
+  }
 }

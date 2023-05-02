@@ -24,20 +24,6 @@ export const useStore = create((set, get) => ({
     },
   ],
 
-  readPatch(patch) {
-    console.log("PATCH");
-    // TODO also add toDestination module
-    // Extract the `nodes` array from the `patch` object or default to an empty array
-    const { nodes = [] } = patch;
-    console.log(nodes);
-    // Update the `nodes` state with the extracted array
-    set({ nodes: [...nodes] });
-
-    nodes.forEach(({ id, type, data }) => {
-      createAudioNode(id, type, data, get().setLampIndex);
-    });
-  },
-
   edges: [],
   lampIndex: 0, // initial value
   //isButtonClicked: false,
@@ -163,8 +149,24 @@ export const useStore = create((set, get) => ({
     }
   },
 
+  //********************** db **********************
+
+  readPatch(patch) {
+    console.log("PATCH");
+    // TODO also add toDestination module
+    // Extract the `nodes` array from the `patch` object or default to an empty array
+    const { nodes = [] } = patch;
+    console.log(nodes);
+    // Update the `nodes` state with the extracted array
+    set({ nodes: [...nodes] });
+
+    nodes.forEach(({ id, type, data }) => {
+      createAudioNode(id, type, data, get().setLampIndex);
+    });
+  },
+
   //****************************************************/
-  // AUDIO TOGGLE
+  // AUDIO TOGGLE temp
 
   isRunning: isRunning(),
 
