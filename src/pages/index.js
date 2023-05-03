@@ -21,7 +21,7 @@ export default function Home() {
   let data = patches.data;
   const store = useStore(selector, shallow);
   const { nodes, edges, currentPatch } = useStore();
-
+  console.log("FIRST", currentPatch);
   let userData;
   if (session) {
     userData = data.filter(
@@ -31,27 +31,33 @@ export default function Home() {
   // else {
   //   userData = data.filter((patch) => patch.email === "public123!@noemail.com");
   // }
-  data = data.filter((patch) => patch.user_email === "public123!@noemail.com");
+  // Get all patches that are not private user patches
+  data = data.filter((patch) => patch.publicPatch === "true");
 
   //************************************/
   async function savePatch(patch) {
     let userEmail;
+    let isPublic;
     if (session) {
-      console.log("SET user email");
+      // console.log("SET user email");
       userEmail = session.user.email;
+      isPublic = "false";
     } else {
       userEmail = "public123!@noemail.com";
+      isPublic = "true";
     }
+
     //console.log(session.user.id);
     const patchData = {
       nodes: nodes,
       edges: edges,
       user_email: userEmail,
+      publicPatch: isPublic,
     };
 
     const formData = new FormData(patch.target);
     const formDataObject = Object.fromEntries(formData);
-    // Merge formdata (patchname) with nodes and edges from Zustand store
+    // Merge formdata (patchname) with nodes and edges from Zustand store and email
     Object.assign(patchData, formDataObject);
     const response = await fetch("/api/patches", {
       method: "POST",
@@ -75,7 +81,7 @@ export default function Home() {
   }
   //************************************/
   async function editPatch(url, { arg }) {
-    console.log(arg);
+    console.log("EDIT PATCH");
     const response = await fetch(url, {
       method: "PATCH",
       body: JSON.stringify(arg),
@@ -102,8 +108,8 @@ export default function Home() {
     const patchData = {
       nodes: nodes,
       edges: edges,
+      publicPatch: "true",
     };
-
     Object.assign(patchData);
 
     await trigger(patchData);
@@ -155,7 +161,6 @@ export default function Home() {
             <button
               onClick={() => {
                 store.setCurrentPatch(patch._id);
-                console.log("CURRENT PATCH", currentPatch);
                 store.readPatch(patch);
               }}
             >
@@ -183,13 +188,22 @@ export default function Home() {
                 <button
                   onClick={() => {
                     store.setCurrentPatch(patch._id);
-                    console.log("CURRENT PATCH", currentPatch);
+                    // console.log("CURRENT PATCH", currentPatch);
                     store.readPatch(patch);
                   }}
                 >
                   {patch.name}
                 </button>{" "}
                 <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
+                {/* <button
+                  onClick={() => {
+                    store.setCurrentPatch(patch._id);
+                    //console.log(patch._id);
+                    handleEditPatch("true", true);
+                  }}
+                >
+                  Make public
+                </button> */}
               </li>
             ))}
           </ul>

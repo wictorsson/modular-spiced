@@ -26,6 +26,17 @@ export default function SaveForm({ onSubmit }) {
     <form onSubmit={handleSubmit}>
       <label>Patchname: </label>
       <input id="name" name="name" type="text" defaultValue={defaultDate} />
+      <label>
+        Public patch:
+        <input
+          name="publicPatch"
+          type="checkbox"
+          defaultChecked={false}
+          onChange={(event) => {
+            event.target.value = event.target.checked ? "true" : "false";
+          }}
+        />
+      </label>
       {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
       <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
       <button type="submit">
