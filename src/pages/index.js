@@ -15,13 +15,11 @@ const selector = (store) => ({
 export default function Home() {
   const { data: session } = useSession();
 
-  // console.log(session);
-
   const patches = useSWR("/api/patches", { fallbackData: [] });
   let data = patches.data;
   const store = useStore(selector, shallow);
   const { nodes, edges, currentPatch } = useStore();
-  console.log("FIRST", currentPatch);
+
   let userData;
   if (session) {
     userData = data.filter(
@@ -81,7 +79,6 @@ export default function Home() {
   }
   //************************************/
   async function editPatch(url, { arg }) {
-    console.log("EDIT PATCH");
     const response = await fetch(url, {
       method: "PATCH",
       body: JSON.stringify(arg),
@@ -195,15 +192,6 @@ export default function Home() {
                   {patch.name}
                 </button>{" "}
                 <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
-                {/* <button
-                  onClick={() => {
-                    store.setCurrentPatch(patch._id);
-                    //console.log(patch._id);
-                    handleEditPatch("true", true);
-                  }}
-                >
-                  Make public
-                </button> */}
               </li>
             ))}
           </ul>
