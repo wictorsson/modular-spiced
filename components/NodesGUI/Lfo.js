@@ -5,21 +5,18 @@ import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
   setFrequency: (e) => store.updateNode(id, { frequency: e.target.value }),
-  setType: (e) => store.updateNode(id, { type: e.target.value }),
-  setResonance: (e) => store.updateNode(id, { Q: e.target.value }),
+  setMin: (e) => store.updateNode(id, { min: e.target.value }),
+  setMax: (e) => store.updateNode(id, { max: e.target.value }),
 });
 
-export default function Filter({ id, data }) {
-  const { setFrequency, setType, setResonance } = useStore(
-    selector(id),
-    shallow
-  );
+export default function Lfo({ id, data }) {
+  const { setFrequency, setMin, setMax } = useStore(selector(id), shallow);
   //Make unique type name to avoid conflicts when using multiple intances
-  const typeName = id + "_type";
+  // const typeName = id + "_type";
   return (
     <div>
       <div className="nodeContainer">
-        <h3>Filter</h3>
+        <h3>LFO</h3>
 
         <span>Freq</span>
 
@@ -27,24 +24,38 @@ export default function Filter({ id, data }) {
           id="slider"
           className="nodrag"
           type="range"
-          min="10"
-          max="2500"
+          min="0.1"
+          max="20"
+          step="0.01"
           value={data.frequency}
           onChange={setFrequency}
         />
-        <span>Res</span>
+
+        <span>Min</span>
 
         <input
           id="slider"
           className="nodrag"
           type="range"
-          min="0.1"
-          max="20"
-          value={data.Q}
-          onChange={setResonance}
+          min="10"
+          max="20000"
+          value={data.min}
+          onChange={setMin}
         />
-        {/* <span>{data.frequency}Hz</span> */}
-        <div className="waveformContainer">
+
+        <span>Max</span>
+
+        <input
+          id="slider"
+          className="nodrag"
+          type="range"
+          min="10"
+          max="20000"
+          value={data.max}
+          onChange={setMax}
+        />
+
+        {/* <div className="waveformContainer">
           <div className="nodrag">
             <label style={{ display: "block" }}>
               <input
@@ -54,7 +65,7 @@ export default function Filter({ id, data }) {
                 checked={data.type === "lowpass"}
                 onChange={setType}
               />
-              LPF
+              SINE
               <input
                 type="radio"
                 name={typeName}
@@ -62,15 +73,15 @@ export default function Filter({ id, data }) {
                 checked={data.type === "highpass"}
                 onChange={setType}
               />
-              HPF
+              SAW
             </label>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      <Handle type="source" position="top" />
-      <Handle type="target" position="bottom" />
-      <Handle type="target" position="right" id="paramHandle" />
+      <Handle type="source" position="top" id="paramHandle" />
+      {/* <Handle type="target" position="bottom" /> */}
+      {/* <Handle type="target" position="right" id="freqHandle" /> */}
     </div>
   );
 }

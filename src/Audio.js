@@ -1,28 +1,47 @@
 //Create audio, no rendering is happening from this file!
-// Thread safe, (audio should not know about GUI)
 
 import * as Tone from "tone";
 
 // Initiate empty object to hold audio connections
-const audioNodes = {};
+
+let audioNodes = {};
 var audioEnabled = false;
+//Get beatarray from nodes, replace with intance value
+
+let beatArray = [];
 // Connect audio components
 export function addAudioEdge(sourceId, targetId) {
-  // console.log(sourceId);
   // console.log(targetId);
+  // console.log(sourceId);
+
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  audioNodeSource.connect(audioNodeTarget);
+  if (audioNodeSource.name === "LFO") {
+    // HARDCODED to filter freq, fix this and connection validation
+    audioNodeSource.connect(audioNodeTarget.frequency);
+  } else {
+    audioNodeSource.connect(audioNodeTarget);
+  }
 }
 
 // Update audio parameters
 export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
 
+  //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
-    // Check if parameter is a number or textstring
-    console.log(val);
-    if (isNaN(val)) {
+    if (key === "row1") {
+      //audioNode.data[key] = val;
+      // console.log(val);
+      beatArray = val;
+    } else if (key === "bpm") {
+      //   console.log("changin bpm");
+      Tone.Transport.bpm.rampTo(val, 1);
+    }
+    //DRY!
+    else if (key === "min" || key === "max") {
+      audioNode[key] = val;
+    } else if (isNaN(val)) {
       audioNode[key] = val;
     } else {
       audioNode[key].value = val;
@@ -31,43 +50,108 @@ export function updateAudioNode(id, data) {
 }
 
 export function removeAudioNode(id) {
-  const audioNode = audioNodes[id];
-  audioNode.disconnect();
-  // audioNode.stop?.();
-  // Dispose - free garbage collection
-  audioNode.dispose();
+  //console.log(audioNodes[id]);
+  if (audioNodes[id] !== "sequence" && Object.keys(audioNodes).length > 1) {
+    console.log("DISCONNECTING");
+    const audioNode = audioNodes[id];
+    audioNode.disconnect();
+    // audioNode.stop?.();
+    // Dispose - free garbage collection
+    audioNode.dispose();
+    console.log(Tone.context.state);
+  } else {
+    Tone.Transport.stop();
+    Tone.Transport.cancel(0);
+    beatArray.fill(0);
+    Tone.Transport.bpm.rampTo(120, 1);
+  }
 }
 
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
 
-  console.log(audioNodeTarget);
-  console.log(audioNodeSource);
-  audioNodeSource.disconnect(audioNodeTarget);
+  if (audioNodeSource.name === "LFO") {
+    audioNodeSource.disconnect(audioNodeTarget.frequency);
+  } else if (audioNodeSource !== "sequence") {
+    audioNodeSource.disconnect(audioNodeTarget);
+  }
 }
 
-export function createAudioNode(id, type, data) {
+export function createAudioNode(id, type, data, setLampIndex) {
   if (!audioEnabled) {
-    console.log("Enabled");
     Tone.start();
     audioEnabled = true;
     const out = Tone.getDestination();
     audioNodes["output_id"] = out;
+    Tone.getDestination().volume.rampTo(-12, 1);
+    // const gain = new Tone.Gain(100);
+    // gain.toDestination();
   }
   switch (type) {
     case "osc":
-      const osc = new Tone.Oscillator(440, data.type).start();
+      const osc = new Tone.Oscillator(data.frequency, data.type).start();
       audioNodes[id] = osc;
-
       break;
     case "gain":
-      const gain = new Tone.Gain(0.5);
+      const gain = new Tone.Gain(data.gain);
       audioNodes[id] = gain;
       break;
     case "filter":
-      const filter = new Tone.Filter(1500, data.type);
+      const filter = new Tone.Filter(data.frequency, data.type);
+      // let lfoTest = new Tone.LFO("1n", 500, 4500);
+      // lfoTest.start();
+      // lfoTest.connect(filter.frequency);
+
       audioNodes[id] = filter;
+      break;
+    case "sequence":
+      audioNodes[id] = "sequence";
+      const osc2 = new Tone.MembraneSynth().toDestination();
+      //osc2.pitchDecay = 0.4;
+      beatArray = data.row1;
+      //console.log(beatArray);
+      let step = 0;
+      let index = 0;
+      Tone.Transport.scheduleRepeat((time) => {
+        step = index % 16;
+        Tone.Draw.schedule(function () {
+          setLampIndex(step);
+          //this callback is invoked from a requestAnimationFrame
+          //and will be invoked close to AudioContext time
+        }, time);
+        // for (let i = 0; i < beatArray.length(); ++i) {
+        // console.log(beatArray[step]);
+        // }
+        // use the callback time to schedule events
+        if (beatArray[step] > 0) {
+          console.log(beatArray[step]);
+          osc2.triggerAttackRelease("C0", "4n", time, beatArray[step] / 50);
+        }
+        index++;
+      }, "16n");
+      // transport must be started before it starts invoking events
+      Tone.Transport.start("+0.1");
+
+      //audioNodes[id] = "sequence";
+      break;
+
+    case "lfo":
+      // console.log("CREATED LFO");
+      const lfo = new Tone.LFO("1n", data.min, data.max);
+      lfo.start();
+      audioNodes[id] = lfo;
+      break;
+
+    case "reverb":
+      const reverb = new Tone.Freeverb();
+      audioNodes[id] = reverb;
+      break;
+
+    case "noise":
+      const noise = new Tone.Noise(data.type).start();
+      audioNodes[id] = noise;
+
       break;
   }
 }

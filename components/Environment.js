@@ -5,7 +5,11 @@ import { shallow } from "zustand/shallow";
 import { useStore } from "../src/store";
 import Osc from "./NodesGUI/Osc";
 import Filter from "./NodesGUI/Filter";
+import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
+import Lfo from "./NodesGUI/Lfo";
+import Reverb from "./NodesGUI/Reverb";
+import Noise from "./NodesGUI/Noise";
 import AudioOutToggle from "./NodesGUI/Output";
 
 // THE viewport of the app, the nodes will go into separate components
@@ -28,6 +32,10 @@ const nodeTypes = {
   filter: Filter,
   gain: Gain,
   audioOut: AudioOutToggle,
+  sequence: Sequence,
+  lfo: Lfo,
+  reverb: Reverb,
+  noise: Noise,
 };
 
 const proOptions = { hideAttribution: true };
@@ -38,7 +46,7 @@ function Environment() {
   const store = useStore(selector, shallow);
 
   return (
-    <div style={{ height: 650 }}>
+    <div style={{ height: 550 }}>
       <ReactFlow
         onEdgesDelete={store.onEdgesDelete}
         onNodesDelete={store.onNodesDelete}
@@ -53,11 +61,18 @@ function Environment() {
         className="touchdevice-flow"
       >
         <Panel position="left" className="flowPanel">
+          {/* button load patch() */}
           <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("filter")}>Filter</button>
+          <button onClick={() => store.createNode("noise")}>Noise</button>
+          <hr></hr>
           <button onClick={() => store.createNode("gain")}>Gain</button>
-          {/* <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("osc")}>Osc</button> */}
+          <button onClick={() => store.createNode("reverb")}>Reverb</button>
+          <button onClick={() => store.createNode("filter")}>Filter</button>
+          <hr></hr>
+          <button onClick={() => store.createNode("lfo")}>(LFO)</button>
+          <button onClick={() => store.createNode("sequence")}>
+            (Sequencer)
+          </button>
         </Panel>
         <Background variant="dots" gap="80" color="cyan" />
         <Controls showZoom={false} showInteractive={false} />
