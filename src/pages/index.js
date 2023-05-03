@@ -2,6 +2,7 @@ import Head from "next/head";
 import useSWR from "swr";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../store";
+import { useSession, signIn, signOut } from "next-auth/react";
 import Environment from "../../components/Environment";
 import SaveForm from "../../components/SaveForm";
 import useSWRMutation from "swr/mutation";
@@ -12,6 +13,10 @@ const selector = (store) => ({
 });
 
 export default function Home() {
+  const { data: session } = useSession();
+
+  console.log(session);
+
   const patches = useSWR("/api/patches", { fallbackData: [] });
   const data = patches.data;
   const store = useStore(selector, shallow);
@@ -95,49 +100,65 @@ export default function Home() {
     patches.mutate(newPatchList);
   }
 
+  if (session) {
+    return (
+      <>
+        Signed in as {session.user._id} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
   return (
     <>
-      <Head>
-        <title>Modular</title>
-      </Head>
-      {/* {!audioStarted && (
-        <div className="welcome-screen">
-          <button className="button" onClick={initAudio}>
-            ENTER
-          </button>
-        </div>
-      )} */}
-      {
-        <div className="environment">
-          <Environment />
-        </div>
-      }
-      <ul>
-        Patches from db
-        {data.map((patch) => (
-          <li key={patch._id}>
-            <button
-              onClick={() => {
-                store.setCurrentPatch(patch._id);
-
-                console.log("CURRENT PATCH", currentPatch);
-                store.readPatch(patch);
-              }}
-            >
-              {patch.name}
-            </button>{" "}
-            <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
-          </li>
-        ))}
-      </ul>
-      <SaveForm onSubmit={savePatch} />
-      <button
-        onClick={() => {
-          handleEditPatch();
-        }}
-      >
-        Save current patch
-      </button>{" "}
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
     </>
   );
 }
+
+//   return (
+//     <>
+//       <Head>
+//         <title>Modular</title>
+//       </Head>
+//       {/* {!audioStarted && (
+//         <div className="welcome-screen">
+//           <button className="button" onClick={initAudio}>
+//             ENTER
+//           </button>
+//         </div>
+//       )} */}
+//       {
+//         <div className="environment">
+//           <Environment />
+//         </div>
+//       }
+//       <ul>
+//         Patches from db
+//         {data.map((patch) => (
+//           <li key={patch._id}>
+//             <button
+//               onClick={() => {
+//                 store.setCurrentPatch(patch._id);
+
+//                 console.log("CURRENT PATCH", currentPatch);
+//                 store.readPatch(patch);
+//               }}
+//             >
+//               {patch.name}
+//             </button>{" "}
+//             <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
+//           </li>
+//         ))}
+//       </ul>
+//       <SaveForm onSubmit={savePatch} />
+//       <button
+//         onClick={() => {
+//           handleEditPatch();
+//         }}
+//       >
+//         Save current patch
+//       </button>{" "}
+//     </>
+//   );
+// }
