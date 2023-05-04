@@ -7,8 +7,6 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: "proxima-nova", "Arial", sans-serif;
   
- 
-
   }
 
 
@@ -19,13 +17,88 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     padding: 6rem;
   }
-  body {
 
+.Headline{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: fixed;
+  color: grey;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: #181818;
+  background: radial-gradient(
+    circle,
+    rgba(34, 30, 26, 1) 0%,
+    rgba(19, 19, 19, 1) 83%
+  );
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  top: 0px;
+}
+
+.Footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: fixed;
+  color: grey;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: #181818;
+  background: radial-gradient(
+    circle,
+    rgba(34, 30, 26, 1) 0%,
+    rgba(19, 19, 19, 1) 83%
+  );
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  bottom: 0px;
+}
+  body {
+   // background: rgb(109, 109, 109);
+      background: rgb(41, 35, 26);
+      background: rgba(19, 19, 19, 1);
+     // background: radial-gradient(circle, rgba(40, 35, 26, 1) 0%, rgba(19, 19, 19, 1) 83%);
+      margin: 0; /* Add this line */
+      color:white;
+  }
+
+  .main {
     background: rgb(41,35,26);
     background: radial-gradient(circle, rgba(41,35,26,1) 0%, rgba(17,17,17,1) 83%);
-    color: white;
-    
   }
+
+.PatchList{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: fixed;
+  color: grey;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: #181818;
+  background: radial-gradient(
+    circle,
+    rgba(34, 30, 26, 1) 0%,
+    rgba(19, 19, 19, 1) 83%
+  );
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  //bottom: 0px;
+}
   
 
   // .welcome-screen{
@@ -70,15 +143,20 @@ export const GlobalStyle = createGlobalStyle`
 
   //***************** REACT FLOW **********************
 
-  .environment{
+  .environment {
+    z-index: 0;
     margin: 20px;
+    // margin-top: 4rem;
     background-color: #181818;
     border-radius: 10px;
     border-style: solid;
     border-color: #46494c;
     border-width: 1px;
     box-shadow: 0 0 10px 0 #333;
+    position: relative; 
+    top: 80px; 
   }
+  
 
 
   

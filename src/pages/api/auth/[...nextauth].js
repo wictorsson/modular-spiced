@@ -6,6 +6,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../../lib/mongoose.js";
 
 export const authOptions = {
+  secret: process.env.SECRET,
   providers: [
     EmailProvider({
       server: {
