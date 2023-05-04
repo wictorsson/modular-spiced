@@ -18,16 +18,22 @@ export default function SaveForm({ onSubmit }) {
     hour12: false,
     timeZone: "UTC",
   };
-  const defaultDate = new Date()
-    .toLocaleString("en-US", options)
-    .replace(/ /g, "-")
-    .replace(",", "");
+  const defaultDate =
+    "Name-" +
+    new Date()
+      .toLocaleString("en-US", options)
+      .replace(/ /g, "-")
+      .replace(",", "");
   return (
     <form onSubmit={handleSubmit}>
-      <label>Patchname: </label>
+      <button type="submit">
+        Save as
+        {/* {defaultData ? "Update place" : "Add place"} */}
+      </button>
+      <label> </label>
       <input id="name" name="name" type="text" defaultValue={defaultDate} />
       <label>
-        Public patch:
+        Public
         <input
           name="publicPatch"
           type="checkbox"
@@ -39,10 +45,6 @@ export default function SaveForm({ onSubmit }) {
       </label>
       {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
       <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
-      <button type="submit">
-        Save New
-        {/* {defaultData ? "Update place" : "Add place"} */}
-      </button>
     </form>
   );
 }

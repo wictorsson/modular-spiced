@@ -18,7 +18,51 @@ export const GlobalStyle = createGlobalStyle`
     padding: 6rem;
   }
 
+.Headline{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: fixed;
+  color: grey;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: #181818;
+  background: radial-gradient(
+    circle,
+    rgba(34, 30, 26, 1) 0%,
+    rgba(19, 19, 19, 1) 83%
+  );
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  top: 0px;
+}
 
+.Footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: fixed;
+  color: grey;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: #181818;
+  background: radial-gradient(
+    circle,
+    rgba(34, 30, 26, 1) 0%,
+    rgba(19, 19, 19, 1) 83%
+  );
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  bottom: 0px;
+}
   body {
    // background: rgb(109, 109, 109);
       background: rgb(41, 35, 26);
@@ -33,7 +77,28 @@ export const GlobalStyle = createGlobalStyle`
     background: radial-gradient(circle, rgba(41,35,26,1) 0%, rgba(17,17,17,1) 83%);
   }
 
-
+.PatchList{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: fixed;
+  color: grey;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  background-color: #181818;
+  background: radial-gradient(
+    circle,
+    rgba(34, 30, 26, 1) 0%,
+    rgba(19, 19, 19, 1) 83%
+  );
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  //bottom: 0px;
+}
   
 
   // .welcome-screen{
