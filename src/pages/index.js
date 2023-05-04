@@ -2,10 +2,12 @@ import Head from "next/head";
 import useSWR from "swr";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../store";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Environment from "../../components/Environment";
 import SaveForm from "../../components/SaveForm";
 import useSWRMutation from "swr/mutation";
+import Header from "../../components/Header";
+import Footerfunction from "../../components/Footer";
 
 const selector = (store) => ({
   readPatch: store.readPatch,
@@ -26,10 +28,6 @@ export default function Home() {
       (userPatch) => userPatch.user_email === session.user.email
     );
   }
-  // else {
-  //   userData = data.filter((patch) => patch.email === "public123!@noemail.com");
-  // }
-  // Get all patches that are not private user patches
   data = data.filter((patch) => patch.publicPatch === "true");
 
   //************************************/
@@ -37,7 +35,6 @@ export default function Home() {
     let userEmail;
     let isPublic;
     if (session) {
-      // console.log("SET user email");
       userEmail = session.user.email;
       isPublic = "false";
     } else {
@@ -45,7 +42,6 @@ export default function Home() {
       isPublic = "true";
     }
 
-    //console.log(session.user.id);
     const patchData = {
       nodes: nodes,
       edges: edges,
@@ -135,17 +131,7 @@ export default function Home() {
           </button>
         </div>
       )} */}
-      {session ? (
-        <>
-          Signed in as {session.user.name} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+      <Header></Header>
       {
         <div className="environment">
           <Environment />
@@ -199,6 +185,7 @@ export default function Home() {
           ": Login required"
         )}
       </div>
+      <Footerfunction></Footerfunction>
     </>
   );
 }
