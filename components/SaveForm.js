@@ -32,19 +32,48 @@ export default function SaveForm({ onSubmit }) {
       </button>
       <label> </label>
       <input id="name" name="name" type="text" defaultValue={defaultDate} />
-      <label>
-        Public
-        <input
-          name="publicPatch"
-          type="checkbox"
-          defaultChecked={false}
-          onChange={(event) => {
-            event.target.value = event.target.checked ? "true" : "false";
-          }}
-        />
-      </label>
+      <div>
+        <label>
+          <input
+            type="radio"
+            name="publicPatch"
+            value="false"
+            defaultChecked
+            onChange={(event) => {
+              event.target.value = event.target.checked ? "false" : "";
+            }}
+          />
+          Private
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="publicPatch"
+            value="true"
+            onChange={(event) => {
+              event.target.value = event.target.checked ? "true" : "";
+            }}
+          />
+          Public
+        </label>
+      </div>
+
       {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
       <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
     </form>
   );
+}
+
+{
+  /* <label>
+Public
+<input
+  name="publicPatch"
+  type="checkbox"
+  defaultChecked={false}
+  onChange={(event) => {
+    event.target.value = event.target.checked ? "true" : "false";
+  }}
+/>
+</label> */
 }

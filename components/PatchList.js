@@ -58,7 +58,7 @@ export default function PatchList() {
               ))}
             </ul>
           ) : (
-            ": Login required"
+            "Sign in required"
           )}
         </div>
         <div>

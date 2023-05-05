@@ -46,10 +46,10 @@ export const GlobalStyle = createGlobalStyle`
 
 
 
-.Login{
-  // justify-content: center;
-  // align-items: center;
-}
+// .Login{
+//   // justify-content: center;
+//   // align-items: center;
+// }
 
 
 
@@ -78,9 +78,9 @@ export const GlobalStyle = createGlobalStyle`
 }
   body {
    // background: rgb(109, 109, 109);
-      background: rgb(41, 35, 26);
-      background: rgba(19, 19, 19, 1);
-      background: rgb(81,81,81);
+      // background: rgb(41, 35, 26);
+      // background: rgba(19, 19, 19, 1);
+      background: rgb(41,41,41);
      // background: radial-gradient(circle, rgba(40, 35, 26, 1) 0%, rgba(19, 19, 19, 1) 83%);
       margin: 0; /* Add this line */
       color:white;
@@ -92,7 +92,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .PatchList {
-    background: rgb(51,51,51);
+    background: rgb(41,35,26);
+    background: radial-gradient(circle, rgba(51,55,56,1) 0%, rgba(17,17,17,1) 83%);
+    height: 80%;
     color: white;
     display: flex;
     justify-content: center;
@@ -105,13 +107,14 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 10px;
     position: fixed;
 
-    gap: 100px;
-    top: 120px;
+    gap: 120px;
+    top: 65px;
     left: 20%;
     right: 20%;
     z-index: 9999;
     max-height: calc(80vh - 150px); /* set max height to 100% of viewport height minus 200px */
     overflow-y: scroll; /* add vertical scrollbar */
+    opacity: 0.9;
   }
 
   .PatchList ul{
