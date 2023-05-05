@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 const selector = (store) => ({
   readPatch: store.readPatch,
   setCurrentPatch: store.setCurrentPatch,
-  togglePatchList: store.togglePatchList,
+  //   togglePatchList: store.togglePatchList,
 });
 
 export default function PatchList() {

@@ -46,7 +46,7 @@ function Environment() {
   const store = useStore(selector, shallow);
 
   return (
-    <div style={{ height: 630 }}>
+    <div style={{ height: 650 }}>
       <ReactFlow
         onEdgesDelete={store.onEdgesDelete}
         onNodesDelete={store.onNodesDelete}

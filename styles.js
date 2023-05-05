@@ -122,8 +122,29 @@ export const GlobalStyle = createGlobalStyle`
   
   }
   
- 
+ .SaveSection{
+  display: flex;
+  justify-content: space-between;
+
+ }
   
+ .SaveForm{
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  gap: 10px;
+
+ }
+
+ .Form-Radiobuttons{
+  display: flex;
+  flex-direction: column;
+ }
+
+ .Textbox{
+  border-radius: 5px;
+  padding: 0.4rem;
+ }
  
 
 

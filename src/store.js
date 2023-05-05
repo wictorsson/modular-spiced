@@ -31,6 +31,9 @@ export const useStore = create((set, get) => ({
   isPatchListClicked: false,
   togglePatchList: () =>
     set((state) => ({ isPatchListClicked: !state.isPatchListClicked })),
+  isSaveAsClicked: false,
+  toggleSaveAs: () =>
+    set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
 
   // TEMPLATE MODULES
   createNode(type) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router.js";
 
+
 export default function SaveForm({ onSubmit }) {
   const router = useRouter();
   function handleSubmit(event) {
@@ -18,21 +19,24 @@ export default function SaveForm({ onSubmit }) {
     hour12: false,
     timeZone: "UTC",
   };
-  const defaultDate =
-    "Name-" +
-    new Date()
-      .toLocaleString("en-US", options)
-      .replace(/ /g, "-")
-      .replace(",", "");
+  const defaultDate = "Project_name";
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="SaveForm">
       <button type="submit">
         Save as
         {/* {defaultData ? "Update place" : "Add place"} */}
       </button>
-      <label> </label>
-      <input id="name" name="name" type="text" defaultValue={defaultDate} />
+
       <div>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          defaultValue={defaultDate}
+          className="Textbox"
+        />
+      </div>
+      <div className="Form-Radiobuttons">
         <label>
           <input
             type="radio"
