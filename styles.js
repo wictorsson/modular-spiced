@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 150px;
+  gap: 130px;
   padding: 1rem;
   position: fixed;
   color: grey;
@@ -108,7 +108,7 @@ export const GlobalStyle = createGlobalStyle`
     position: fixed;
 
     gap: 120px;
-    top: 65px;
+    top: 15px;
     left: 20%;
     right: 20%;
     z-index: 9999;
@@ -122,17 +122,18 @@ export const GlobalStyle = createGlobalStyle`
   
   }
   
- .SaveSection{
-  display: flex;
-  justify-content: space-between;
+//  .SaveSection{
+//   display: flex;
+//   justify-content: space-between;
 
- }
+//  }
   
  .SaveForm{
   display: flex;
+  flex-direction: column;
+
+  gap: 25px;
   justify-content: center;
-  justify-content: space-between;
-  gap: 10px;
 
  }
 
@@ -142,10 +143,35 @@ export const GlobalStyle = createGlobalStyle`
  }
 
  .Textbox{
-  border-radius: 5px;
+  border-radius: 10px;
+
   padding: 0.4rem;
  }
  
+ .SaveAsPopup {
+  background: rgb(41,35,26);
+  background: radial-gradient(circle, rgba(51,55,56,1) 0%, rgba(17,17,17,1) 83%);
+  height: 10%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+ 
+  text-align: left;
+  justify-content: center;
+  border-style: solid;
+  border-color: #46494c;
+  border-width: 1px;
+  border-radius: 10px;
+  position: fixed;
+  padding: 10%;
+  gap: 20px;
+  top: 15px;
+  left: 50%;
+  right: 20%;
+  opacity: 0.9;
+  z-index: 1;
+}
+
 
 
   // .welcome-screen{

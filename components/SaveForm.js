@@ -1,8 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router.js";
+import { useStore } from "../src/store";
+import { shallow } from "zustand/shallow";
 
+const selector = (store) => ({
+  toggleSaveAs: store.toggleSaveAs,
+});
 
 export default function SaveForm({ onSubmit }) {
+  const store = useStore(selector, shallow);
   const router = useRouter();
   function handleSubmit(event) {
     event.preventDefault();
@@ -22,11 +28,6 @@ export default function SaveForm({ onSubmit }) {
   const defaultDate = "Project_name";
   return (
     <form onSubmit={handleSubmit} className="SaveForm">
-      <button type="submit">
-        Save as
-        {/* {defaultData ? "Update place" : "Add place"} */}
-      </button>
-
       <div>
         <input
           id="name"
@@ -61,23 +62,12 @@ export default function SaveForm({ onSubmit }) {
           Public
         </label>
       </div>
-
-      {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
-      <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
+      <button type="submit" onClick={() => store.toggleSaveAs()}>
+        Save as
+      </button>
+      <button type="button" onClick={() => store.toggleSaveAs()}>
+        ❌
+      </button>
     </form>
   );
-}
-
-{
-  /* <label>
-Public
-<input
-  name="publicPatch"
-  type="checkbox"
-  defaultChecked={false}
-  onChange={(event) => {
-    event.target.value = event.target.checked ? "true" : "false";
-  }}
-/>
-</label> */
 }

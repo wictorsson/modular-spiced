@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 const selector = (store) => ({
   readPatch: store.readPatch,
   setCurrentPatch: store.setCurrentPatch,
-  //   togglePatchList: store.togglePatchList,
+  togglePatchList: store.togglePatchList,
 });
 
 export default function PatchList() {
@@ -39,6 +39,9 @@ export default function PatchList() {
   return (
     isPatchListClicked && (
       <div className="PatchList">
+        <button type="button" onClick={() => store.togglePatchList()}>
+          ❌
+        </button>
         <div>
           <h2>My projects</h2>
           {session ? (
@@ -74,7 +77,7 @@ export default function PatchList() {
                 >
                   {patch.name}
                 </button>{" "}
-                <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
+                {/* <button onClick={() => deletePatch(patch._id)}>❌</button>{" "} */}
               </li>
             ))}
           </ul>

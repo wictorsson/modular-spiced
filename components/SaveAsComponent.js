@@ -71,7 +71,7 @@ export default function PatchList() {
   }
   return (
     isSaveAsClicked && (
-      <div className="PatchList">
+      <div className="SaveAsPopup">
         <SaveForm onSubmit={savePatch} />
       </div>
     )
