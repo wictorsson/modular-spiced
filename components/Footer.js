@@ -105,15 +105,6 @@ export default function Footerfunction() {
     patches.mutate();
     //push("/");
   }
-  //************************************/
-  async function deletePatch(patchId) {
-    await fetch(`/api/patches/${patchId}`, {
-      method: "DELETE",
-    });
-    // Delete patch from the list of patches
-    const newPatchList = data.filter((p) => p._id !== patchId);
-    patches.mutate(newPatchList);
-  }
 
   return (
     <div className="Footer">

@@ -1,45 +1,34 @@
-import styled from "styled-components";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useStore } from "../src/store";
+//import { shallow } from "zustand/shallow";
 
-// const Headline = styled.header`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 1rem;
-//   position: fixed;
-//   color: grey;
-//   gap: 10px;
-//   width: 100%;
-//   text-align: center;
-//   z-index: 1;
-//   background-color: #181818;
-//   background: radial-gradient(
-//     circle,
-//     rgba(34, 30, 26, 1) 0%,
-//     rgba(19, 19, 19, 1) 83%
-//   );
-//   border-style: solid;
-//   border-color: #46494c;
-//   border-width: 1px;
-//   top: 0px;
-// `;
+// const selector = (store) => ({
+//   togglePatchList: store.togglePatchList,
+// });
 
 export default function Header() {
+  const store = useStore();
   const { data: session } = useSession();
   return (
-    <div className="Headline">
-      {session ? (
-        <>
-          Signed in | {session.user.name} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-      ) : (
-        <>
-          <br />
-          <button onClick={() => signIn()}>Sign in</button> to save and browse
-          patches
-        </>
-      )}
+    <div className="Header">
+      <div className="Login">
+        {session ? (
+          <>
+            {/* Signed in | {session.user.name} <br /> */}
+            <button onClick={() => signOut()}>Sign out</button>
+          </>
+        ) : (
+          <>
+            <br />
+            <button onClick={() => signIn()}>Sign in</button>
+            {/* to save and browse
+            projects */}
+          </>
+        )}
+      </div>
+      <div>Unsaved Project</div>
+      <button onClick={() => store.togglePatchList()}>Projects</button>
+      <div>SAVE | SAVE AS</div>
     </div>
   );
 }

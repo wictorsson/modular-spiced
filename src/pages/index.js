@@ -139,8 +139,7 @@ export default function Home() {
           <Environment />
         </div>
       }
-      <PatchList>asdasdas</PatchList>
-
+      <PatchList></PatchList>
       <Footerfunction></Footerfunction>
     </>
   );

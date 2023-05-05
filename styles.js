@@ -18,14 +18,16 @@ export const GlobalStyle = createGlobalStyle`
     padding: 6rem;
   }
 
-.Headline{
+
+.Header{
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 150px;
   padding: 1rem;
   position: fixed;
   color: grey;
-  gap: 10px;
+ 
   width: 100%;
   text-align: center;
   z-index: 1;
@@ -39,7 +41,18 @@ export const GlobalStyle = createGlobalStyle`
   border-color: #46494c;
   border-width: 1px;
   top: 0px;
+  
 }
+
+
+
+.Login{
+  // justify-content: center;
+  // align-items: center;
+}
+
+
+
 
 .Footer{
   display: flex;
@@ -67,6 +80,7 @@ export const GlobalStyle = createGlobalStyle`
    // background: rgb(109, 109, 109);
       background: rgb(41, 35, 26);
       background: rgba(19, 19, 19, 1);
+      background: rgb(81,81,81);
      // background: radial-gradient(circle, rgba(40, 35, 26, 1) 0%, rgba(19, 19, 19, 1) 83%);
       margin: 0; /* Add this line */
       color:white;
@@ -77,29 +91,38 @@ export const GlobalStyle = createGlobalStyle`
     background: radial-gradient(circle, rgba(41,35,26,1) 0%, rgba(17,17,17,1) 83%);
   }
 
-.PatchList{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  position: fixed;
-  color: grey;
-  gap: 10px;
-  width: 100%;
-  text-align: center;
-  z-index: 1;
-  background-color: #181818;
-  background: radial-gradient(
-    circle,
-    rgba(34, 30, 26, 1) 0%,
-    rgba(19, 19, 19, 1) 83%
-  );
-  border-style: solid;
-  border-color: #46494c;
-  border-width: 1px;
-  //bottom: 0px;
-}
+  .PatchList {
+    background: rgb(51,51,51);
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    margin-left: 0px;
+    text-align: center;
+    border-style: solid;
+    border-color: #46494c;
+    border-width: 1px;
+    border-radius: 10px;
+    position: fixed;
+
+    gap: 100px;
+    top: 120px;
+    left: 20%;
+    right: 20%;
+    z-index: 9999;
+    max-height: calc(80vh - 150px); /* set max height to 100% of viewport height minus 200px */
+    overflow-y: scroll; /* add vertical scrollbar */
+  }
+
+  .PatchList ul{
+    list-style: none;
   
+  }
+  
+ 
+  
+ 
+
 
   // .welcome-screen{
 
@@ -148,7 +171,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 20px;
     // margin-top: 4rem;
     background-color: #181818;
-    border-radius: 10px;
+    border-radius: 5px;
     border-style: solid;
     border-color: #46494c;
     border-width: 1px;

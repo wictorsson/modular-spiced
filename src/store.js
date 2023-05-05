@@ -26,10 +26,11 @@ export const useStore = create((set, get) => ({
 
   edges: [],
   lampIndex: 0, // initial value
-  //isButtonClicked: false,
+
   setLampIndex: (beatIndex) => set({ lampIndex: beatIndex }),
-  // toggleButton: () =>
-  //  set((state) => ({ isButtonClicked: !state.isButtonClicked })),
+  isPatchListClicked: false,
+  togglePatchList: () =>
+    set((state) => ({ isPatchListClicked: !state.isPatchListClicked })),
 
   // TEMPLATE MODULES
   createNode(type) {
