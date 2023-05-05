@@ -39,7 +39,11 @@ export default function PatchList() {
   return (
     isPatchListClicked && (
       <div className="PatchList">
-        <button type="button" onClick={() => store.togglePatchList()}>
+        <button
+          type="button"
+          className="CloseButton"
+          onClick={() => store.togglePatchList()}
+        >
           ❌
         </button>
         <div>
@@ -52,6 +56,7 @@ export default function PatchList() {
                     onClick={() => {
                       store.setCurrentPatch(patch._id);
                       store.readPatch(patch);
+                      store.togglePatchList();
                     }}
                   >
                     {patch.name}

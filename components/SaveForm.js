@@ -14,6 +14,7 @@ export default function SaveForm({ onSubmit }) {
     event.preventDefault();
 
     onSubmit(event);
+    store.toggleSaveAs();
   }
 
   const options = {
@@ -62,10 +63,12 @@ export default function SaveForm({ onSubmit }) {
           Public
         </label>
       </div>
-      <button type="submit" onClick={() => store.toggleSaveAs()}>
-        Save as
-      </button>
-      <button type="button" onClick={() => store.toggleSaveAs()}>
+      <button type="submit">Save as</button>
+      <button
+        type="button"
+        className="CloseButton"
+        onClick={() => store.toggleSaveAs()}
+      >
         ❌
       </button>
     </form>

@@ -80,7 +80,7 @@ export const GlobalStyle = createGlobalStyle`
    // background: rgb(109, 109, 109);
       // background: rgb(41, 35, 26);
       // background: rgba(19, 19, 19, 1);
-      background: rgb(41,41,41);
+      background: rgb(31,31,31);
      // background: radial-gradient(circle, rgba(40, 35, 26, 1) 0%, rgba(19, 19, 19, 1) 83%);
       margin: 0; /* Add this line */
       color:white;
@@ -108,9 +108,9 @@ export const GlobalStyle = createGlobalStyle`
     position: fixed;
 
     gap: 120px;
-    top: 15px;
-    left: 20%;
-    right: 20%;
+    top: 85px;
+    left: 25%;
+    right: 25%;
     z-index: 9999;
     max-height: calc(80vh - 150px); /* set max height to 100% of viewport height minus 200px */
     overflow-y: scroll; /* add vertical scrollbar */
@@ -120,6 +120,12 @@ export const GlobalStyle = createGlobalStyle`
   .PatchList ul{
     list-style: none;
   
+  }
+
+  .CloseButton{
+    position: absolute; 
+    left: 15px;
+    top: 15px;
   }
   
 //  .SaveSection{
@@ -165,9 +171,9 @@ export const GlobalStyle = createGlobalStyle`
   position: fixed;
   padding: 10%;
   gap: 20px;
-  top: 15px;
-  left: 50%;
-  right: 20%;
+  top: 85px;
+  left: 35%;
+  right: 35%;
   opacity: 0.9;
   z-index: 1;
 }
