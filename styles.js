@@ -5,7 +5,8 @@ export const GlobalStyle = createGlobalStyle`
   *::before,
   *::after {
     box-sizing: border-box;
-    font-family: "proxima-nova", "Arial", sans-serif;
+    font-family: "Roboto","Noto",sans-serif;
+    //font-family: "proxima-nova", "Arial", sans-serif;
   
   }
 
@@ -119,7 +120,6 @@ export const GlobalStyle = createGlobalStyle`
 
   .PatchList ul{
     list-style: none;
-  
   }
 
   .CloseButton{
@@ -128,19 +128,12 @@ export const GlobalStyle = createGlobalStyle`
     top: 15px;
   }
   
-//  .SaveSection{
-//   display: flex;
-//   justify-content: space-between;
-
-//  }
-  
  .SaveForm{
   display: flex;
   flex-direction: column;
-
+  align-content: center;
   gap: 25px;
   justify-content: center;
-
  }
 
  .Form-Radiobuttons{
@@ -149,31 +142,44 @@ export const GlobalStyle = createGlobalStyle`
  }
 
  .Textbox{
-  border-radius: 8px;
-  background: rgb(41,35,26);
-  padding: 0.8rem;
+  border: 10px;
+  width: 100%;
+  height: 100%;
+  background: rgba(161,161,161,0.1);
+  padding: 1.6rem;
+  padding-top: 1.9rem;
+  color:black;
+  border-radius: 5px;
+  border-color: white;
+  width: 100%; 
+  color: white;
+  font-size: 1.0rem; /* increase font size */
+  line-height: 1.5; /* increase line height */
+}
+
+ .Textbox-label{
+  font-size: 0.7rem;
+  position: absolute;
+  padding: 5px;
+  color: white;
  }
+
  
  .SaveAsPopup {
   background: rgb(41,35,26);
   background: radial-gradient(circle, rgba(51,55,56,1) 0%, rgba(17,17,17,1) 83%);
-  height: 10%;
   color: white;
   display: flex;
-  flex-direction: column;
- 
-  text-align: left;
   justify-content: center;
   border-style: solid;
   border-color: #46494c;
   border-width: 1px;
   border-radius: 10px;
   position: fixed;
-  padding: 10%;
-  gap: 20px;
+  padding: 4%;
   top: 85px;
-  left: 35%;
-  right: 35%;
+  left: 30%;
+  right: 30%;
   opacity: 0.9;
   z-index: 1;
 }

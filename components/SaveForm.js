@@ -37,6 +37,9 @@ export default function SaveForm({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit} className="SaveForm">
       <div>
+        <label htmlFor="name" className="Textbox-label">
+          Title (required)
+        </label>
         <input
           id="name"
           name="name"
