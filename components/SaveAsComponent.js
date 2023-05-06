@@ -5,27 +5,18 @@ import { useSession } from "next-auth/react";
 import SaveForm from "./SaveForm";
 
 const selector = (store) => ({
-  readPatch: store.readPatch,
-  setCurrentPatch: store.setCurrentPatch,
+  // readPatch: store.readPatch,
+  setCurrentPatchName: store.setCurrentPatchName,
   //   togglePatchList: store.togglePatchList,
 });
 
 export default function PatchList() {
-  const { isSaveAsClicked } = useStore();
-
-  const patches = useSWR("/api/patches", { fallbackData: [] });
-  let data = patches.data;
+  //REFACTOR PUT IN SELECTOR?????????????????????????????????????
+  const { isSaveAsClicked, nodes, edges } = useStore();
   const store = useStore(selector, shallow);
-  const { nodes, edges, currentPatch } = useStore();
+  const patches = useSWR("/api/patches", { fallbackData: [] });
+
   const { data: session } = useSession();
-  let userData;
-  if (session) {
-    userData = data.filter(
-      (userPatch) => userPatch.user_email === session.user.email
-    );
-  }
-  data = data.filter((patch) => patch.publicPatch === "true");
-  //const store = useStore();
 
   async function savePatch(patch) {
     let userEmail;
@@ -62,6 +53,8 @@ export default function PatchList() {
       await response.json();
 
       patches.mutate();
+      store.setCurrentPatchName(patchData.name);
+
       // router.push("/");
       // event.target.reset();
     } else {

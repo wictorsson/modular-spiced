@@ -176,8 +176,11 @@ export const useStore = create((set, get) => ({
       addAudioEdge(source, target);
     });
   },
-  currentPatch: "645104adbb037381f6ef4b5e",
+  currentPatch: "untitled",
   setCurrentPatch: (patch) => set({ currentPatch: patch }),
+
+  currentPatchName: "Untitled Project",
+  setCurrentPatchName: (patch) => set({ currentPatchName: patch }),
   //****************************************************/
   // AUDIO TOGGLE temp
 

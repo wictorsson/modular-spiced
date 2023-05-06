@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router.js";
+// import { useRouter } from "next/router.js";
 import { useStore } from "../src/store";
 import { shallow } from "zustand/shallow";
 
@@ -9,7 +9,8 @@ const selector = (store) => ({
 
 export default function SaveForm({ onSubmit }) {
   const store = useStore(selector, shallow);
-  const router = useRouter();
+  //const router = useRouter();
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -23,10 +24,16 @@ export default function SaveForm({ onSubmit }) {
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
+    second: "2-digit",
     hour12: false,
     timeZone: "UTC",
   };
-  const defaultDate = "Project_name";
+
+  const now = new Date();
+  const formattedDate = now.toLocaleString("en-US", options);
+  const dateWithoutTime = formattedDate.split(", ")[0];
+  const defaultTitle = "New Project " + dateWithoutTime;
+
   return (
     <form onSubmit={handleSubmit} className="SaveForm">
       <div>
@@ -34,7 +41,7 @@ export default function SaveForm({ onSubmit }) {
           id="name"
           name="name"
           type="text"
-          defaultValue={defaultDate}
+          defaultValue={defaultTitle}
           className="Textbox"
         />
       </div>

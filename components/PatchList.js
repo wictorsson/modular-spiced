@@ -16,6 +16,7 @@ export default function PatchList() {
   const patches = useSWR("/api/patches", { fallbackData: [] });
 
   let data = patches.data;
+
   const store = useStore(selector, shallow);
 
   let userData;
@@ -78,6 +79,7 @@ export default function PatchList() {
                   onClick={() => {
                     store.setCurrentPatch(patch._id);
                     store.readPatch(patch);
+                    store.togglePatchList();
                   }}
                 >
                   {patch.name}

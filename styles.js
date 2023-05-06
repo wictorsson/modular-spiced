@@ -149,9 +149,9 @@ export const GlobalStyle = createGlobalStyle`
  }
 
  .Textbox{
-  border-radius: 10px;
-
-  padding: 0.4rem;
+  border-radius: 8px;
+  background: rgb(41,35,26);
+  padding: 0.8rem;
  }
  
  .SaveAsPopup {
