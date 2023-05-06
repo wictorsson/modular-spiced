@@ -14,7 +14,14 @@ export default function Header() {
   const patches = useSWR("/api/patches", { fallbackData: [] });
   let data = patches.data;
   const store = useStore(selector, shallow);
-  const { nodes, edges, currentPatch, currentPatchName } = useStore();
+  const {
+    nodes,
+    edges,
+    currentPatch,
+    currentPatchName,
+    isPatchListClicked,
+    isSaveAsClicked,
+  } = useStore();
   const { data: session } = useSession();
   let userData;
 
@@ -69,25 +76,37 @@ export default function Header() {
       {session ? (
         <>
           {/* Signed in | {session.user.name} <br /> */}
-          <button onClick={() => signOut()}>Sign out</button>
+          <button onClick={() => signOut()}>Sign Out</button>
         </>
       ) : (
         <>
           <br />
-          <button onClick={() => signIn()}>Sign in</button>
+          <button onClick={() => signIn()}>Sign In</button>
           {/* to save and browse
             projects */}
         </>
       )}
 
       {/* <div>Unsaved Project</div> */}
-      <button onClick={() => store.togglePatchList()}>Projects</button>
+      <button
+        onClick={() => {
+          if (isSaveAsClicked) {
+            store.toggleSaveAs();
+          }
+          store.togglePatchList();
+        }}
+      >
+        Projects
+      </button>
       <div>{currentPatchName}</div>
 
       <div className="SaveSection">
         <button
           onClick={() => {
             {
+              if (isPatchListClicked) {
+                store.togglePatchList();
+              }
               currentPatchName === "Untitled Project"
                 ? store.toggleSaveAs()
                 : handleEditPatch();
@@ -97,7 +116,16 @@ export default function Header() {
           Save
         </button>
 
-        <button onClick={() => store.toggleSaveAs()}>Save As</button>
+        <button
+          onClick={() => {
+            if (isPatchListClicked) {
+              store.togglePatchList();
+            }
+            store.toggleSaveAs();
+          }}
+        >
+          Save As
+        </button>
       </div>
     </div>
   );

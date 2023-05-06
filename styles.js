@@ -20,30 +20,29 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
-.Header{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 130px;
-  padding: 1rem;
-  position: fixed;
-  color: grey;
- 
-  width: 100%;
-  text-align: center;
-  z-index: 1;
-  background-color: #181818;
-  background: radial-gradient(
-    circle,
-    rgba(34, 30, 26, 1) 0%,
-    rgba(19, 19, 19, 1) 83%
-  );
-  border-style: solid;
-  border-color: #46494c;
-  border-width: 1px;
-  top: 0px;
-  
-}
+  .Header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4%;
+    padding: 1rem;
+    position: fixed;
+    color: grey;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    background-color: #181818;
+    background: radial-gradient(
+      circle,
+      rgba(34, 30, 26, 1) 0%,
+      rgba(19, 19, 19, 1) 83%
+    );
+    border-style: solid;
+    border-color: #46494c;
+    border-width: 1px;
+    top: 0px;
+    height: 50px; 
+  }
 
 
 
@@ -78,10 +77,8 @@ export const GlobalStyle = createGlobalStyle`
   bottom: 0px;
 }
   body {
-   // background: rgb(109, 109, 109);
-      // background: rgb(41, 35, 26);
-      // background: rgba(19, 19, 19, 1);
-      background: rgb(31,31,31);
+ 
+      background: rgb(191,191,191);
      // background: radial-gradient(circle, rgba(40, 35, 26, 1) 0%, rgba(19, 19, 19, 1) 83%);
       margin: 0; /* Add this line */
       color:white;
@@ -115,7 +112,7 @@ export const GlobalStyle = createGlobalStyle`
     z-index: 9999;
     max-height: calc(80vh - 150px); /* set max height to 100% of viewport height minus 200px */
     overflow-y: scroll; /* add vertical scrollbar */
-    opacity: 0.9;
+    opacity: 1;
   }
 
   .PatchList ul{
@@ -180,7 +177,7 @@ export const GlobalStyle = createGlobalStyle`
   top: 85px;
   left: 30%;
   right: 30%;
-  opacity: 0.9;
+  opacity: 1;
   z-index: 1;
 }
 
@@ -239,7 +236,7 @@ export const GlobalStyle = createGlobalStyle`
     border-width: 1px;
     box-shadow: 0 0 10px 0 #333;
     position: relative; 
-    top: 80px; 
+    top: 60px; 
   }
   
 
@@ -483,5 +480,35 @@ export const GlobalStyle = createGlobalStyle`
       // -webkit-appearance: none;
   
     }
-    
+
+    .Header button {
+      background: rgb(70,41,41,0);
+     //background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
+      color: lightgrey; 
+      border-style: solid;
+      //padding: 8px 10px; /* Add padding to the button */
+      text-align: center; /* Center the text */
+      border-width: 1px;
+      //display: inline-block; /* Make the button inline */
+      font-size: 14px; /* Change the font size */
+      border-radius: 1px; /* Add border radius */
+      height: 50px;
+      border-color: #46494c;
+    }
+   .Header button:hover {
+    color: white; 
+      background: #202020;
+     //letter-spacing: 1px;
+      -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+      -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+      box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+      color: white;
+      transition: all 0.4s ease 0s;
+      }
+
+      .SaveSection{
+        display: flex;
+   
+        gap: 15px;
+      }
 `;
