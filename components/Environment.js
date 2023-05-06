@@ -11,7 +11,7 @@ import Lfo from "./NodesGUI/Lfo";
 import Reverb from "./NodesGUI/Reverb";
 import Noise from "./NodesGUI/Noise";
 import AudioOutToggle from "./NodesGUI/Output";
-
+import { useState } from "react";
 // THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
 //TODO - send node chain to audio chain. Remove soundSource here
@@ -44,7 +44,10 @@ const proOptions = { hideAttribution: true };
 
 function Environment() {
   const store = useStore(selector, shallow);
+  const [panelClass, setPanelClass] = useState("flowPanel");
+  const [panelBool, setPanelBool] = useState(true);
 
+  function togglePanel() {}
   return (
     <div style={{ height: 680 }}>
       <ReactFlow
@@ -60,20 +63,35 @@ function Environment() {
         proOptions={proOptions}
         className="touchdevice-flow"
       >
-        <Panel position="left" className="flowPanel">
+        <Panel position="left" className={panelClass}>
           {/* button load patch() */}
-          <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("noise")}>Noise</button>
-          <hr></hr>
-          <button onClick={() => store.createNode("gain")}>Gain</button>
-          <button onClick={() => store.createNode("reverb")}>Reverb</button>
-          <button onClick={() => store.createNode("filter")}>Filter</button>
-          <hr></hr>
-          <button onClick={() => store.createNode("lfo")}>(LFO)</button>
-          <button onClick={() => store.createNode("sequence")}>
-            (Sequencer)
+
+          <div className="flowPanel-panelModules">
+            <button onClick={() => store.createNode("osc")}>Osc</button>
+            <button onClick={() => store.createNode("noise")}>Noise</button>
+            <hr></hr>
+            <button onClick={() => store.createNode("gain")}>Gain</button>
+            <button onClick={() => store.createNode("reverb")}>Reverb</button>
+            <button onClick={() => store.createNode("filter")}>Filter</button>
+            <hr></hr>
+            <button onClick={() => store.createNode("lfo")}>(LFO)</button>
+            <button onClick={() => store.createNode("sequence")}>
+              (Sequencer)
+            </button>
+          </div>
+          <button
+            className="flowPanel-closeButton"
+            onClick={() => {
+              panelBool === true
+                ? setPanelClass("flowPanel-after")
+                : setPanelClass("flowPanel");
+              setPanelBool(!panelBool);
+            }}
+          >
+            ◀️
           </button>
         </Panel>
+
         <Background variant="dots" gap="80" color="cyan" />
         <Controls showZoom={false} showInteractive={false} />
       </ReactFlow>

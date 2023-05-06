@@ -366,21 +366,57 @@ export const GlobalStyle = createGlobalStyle`
 
   //***************** FLOW PANEL *********************
 
-  .flowPanel{
+
+  .flowPanel {
     display: flex;
-    margin:10px;
-   
-    flex-direction: column;
-    gap: 10px;
-    background-color: rgba(18, 18, 18, 0.5);
-    // border-style: solid;
-    // border-color: grey;
+    // margin-left: -10%;
+    flex-direction: row;
+    //gap: 10px;
+    background-color: rgba(18, 18, 18, 1);
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
     border-radius: 5px;
-    color:white;
-    padding 8px;
+    color: white;
+    padding: 8px;
+   
   }
 
+  .flowPanel-after {
+    display: flex;
+     margin-left: -10%;
+    flex-direction: row;
+    //gap: 10px;
+    background-color: rgba(18, 18, 18, 1);
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
+    border-radius: 5px;
+    color: white;
+    padding: 8px;
+   
+  }
+
+
+
+
+
   
+  .flowPanel-panelModules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    width: 120px; /* set a fixed width */
+  }
+  
+  .flowPanel-panelModules > hr {
+    width: 100%; /* make sure hr takes up full width */
+    border: none; /* remove default hr border */
+    border-top: 1px solid grey; /* add custom border */
+    margin: 10px 0; /* add margin top and bottom */
+  }
+  
+
   .flowPanel button {
     background: rgb(70,41,41);
     background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
@@ -403,6 +439,8 @@ export const GlobalStyle = createGlobalStyle`
     transition: all 0.4s ease 0s;
     }
    
+
+
 
     // ******************* slider ****************************
     input[type="range"] {
@@ -491,7 +529,7 @@ export const GlobalStyle = createGlobalStyle`
       border-width: 1px;
       //display: inline-block; /* Make the button inline */
       font-size: 14px; /* Change the font size */
-      border-radius: 1px; /* Add border radius */
+      border-radius: 2px; /* Add border radius */
       height: 50px;
       border-color: #46494c;
     }
