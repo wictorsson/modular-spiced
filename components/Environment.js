@@ -10,6 +10,7 @@ import Gain from "./NodesGUI/Gain";
 import Lfo from "./NodesGUI/Lfo";
 import Reverb from "./NodesGUI/Reverb";
 import Noise from "./NodesGUI/Noise";
+import Channel from "./NodesGUI/Channel";
 import AudioOutToggle from "./NodesGUI/Output";
 import { useState } from "react";
 // THE viewport of the app, the nodes will go into separate components
@@ -36,6 +37,7 @@ const nodeTypes = {
   lfo: Lfo,
   reverb: Reverb,
   noise: Noise,
+  channel: Channel,
 };
 
 const proOptions = { hideAttribution: true };
@@ -69,6 +71,7 @@ function Environment() {
             <button onClick={() => store.createNode("osc")}>Osc</button>
             <button onClick={() => store.createNode("noise")}>Noise</button>
             <hr></hr>
+            <button onClick={() => store.createNode("channel")}>Channel</button>
             <button onClick={() => store.createNode("gain")}>Gain</button>
             <button onClick={() => store.createNode("reverb")}>Reverb</button>
             <button onClick={() => store.createNode("filter")}>Filter</button>

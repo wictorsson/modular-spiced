@@ -48,7 +48,7 @@ export default function Osc({ id, data }) {
               Sine
               <input
                 type="radio"
-                name={typeName}
+                name={typeName + "sine"}
                 value="triangle"
                 checked={data.type === "triangle"}
                 onChange={setType}
@@ -58,7 +58,7 @@ export default function Osc({ id, data }) {
             <label style={{ display: "block" }}>
               <input
                 type="radio"
-                name={typeName}
+                name={typeName + "triangle"}
                 value="sawtooth"
                 checked={data.type === "sawtooth"}
                 onChange={setType}
@@ -66,7 +66,7 @@ export default function Osc({ id, data }) {
               Saw
               <input
                 type="radio"
-                name={typeName}
+                name={typeName + "square"}
                 value="square"
                 checked={data.type === "square"}
                 onChange={setType}

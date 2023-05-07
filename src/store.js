@@ -49,7 +49,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "gain": {
-        data = { gain: 1, inputConnected: false };
+        data = { gain: 1, inputConnected: false, TypeName: "decibels" };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -76,6 +76,11 @@ export const useStore = create((set, get) => ({
       }
       case "noise": {
         data = { type: "pink" };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "channel": {
+        data = { volume: 0, pan: 0, solo: false, mute: false };
         position = { x: randomXpos, y: randomYpos };
         break;
       }

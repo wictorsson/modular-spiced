@@ -31,8 +31,6 @@ export function updateAudioNode(id, data) {
 
   //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
-    console.log(key);
-
     if (key === "row1") {
       //audioNode.data[key] = val;
       // console.log(val);
@@ -44,7 +42,7 @@ export function updateAudioNode(id, data) {
     //DRY!
     else if (key === "min" || key === "max") {
       audioNode[key] = val;
-    } else if (isNaN(val)) {
+    } else if (isNaN(val) || typeof val === "boolean") {
       audioNode[key] = val;
     } else {
       audioNode[key].value = val;
@@ -152,6 +150,16 @@ export function createAudioNode(id, type, data, setLampIndex) {
       const noise = new Tone.Noise(data.type).start();
       audioNodes[id] = noise;
 
+      break;
+
+    case "channel":
+      const channel = new Tone.Channel(
+        data.volume,
+        data.pan,
+        data.solo,
+        data.mute
+      );
+      audioNodes[id] = channel;
       break;
   }
 }
