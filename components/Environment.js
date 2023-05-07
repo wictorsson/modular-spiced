@@ -47,7 +47,6 @@ function Environment() {
   const [panelClass, setPanelClass] = useState("flowPanel");
   const [panelBool, setPanelBool] = useState(true);
 
-  function togglePanel() {}
   return (
     <div style={{ height: 680 }}>
       <ReactFlow

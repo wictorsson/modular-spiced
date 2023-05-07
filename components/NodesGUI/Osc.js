@@ -13,6 +13,8 @@ export default function Osc({ id, data }) {
   //console.log(xPos);
   const { setFrequency, setType } = useStore(selector(id), shallow);
   const typeName = id + "_type";
+  const scewedParam = 20000 * Math.pow(data.frequency / 100, 4);
+  const roundedScewParam = parseFloat(scewedParam.toFixed(0));
   return (
     <div>
       <div className="nodeContainer">
@@ -24,12 +26,12 @@ export default function Osc({ id, data }) {
           id="slider"
           className="nodrag"
           type="range"
-          min="10"
-          max="2500"
+          min="0"
+          max="100"
           value={data.frequency}
           onChange={setFrequency}
         />
-        {/* <span>{data.frequency}Hz</span> */}
+        <span>{roundedScewParam}Hz</span>
         <div className="waveformContainer">
           <div className="nodrag">
             <label style={{ display: "block" }}>

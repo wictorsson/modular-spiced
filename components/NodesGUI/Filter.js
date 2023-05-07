@@ -2,9 +2,12 @@ import React from "react";
 import { Handle } from "reactflow";
 import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
+import { useState, useEffect } from "react";
 
 const selector = (id) => (store) => ({
-  setFrequency: (e) => store.updateNode(id, { frequency: e.target.value }),
+  setFrequency: (e) => {
+    store.updateNode(id, { frequency: e.target.value });
+  },
   setType: (e) => store.updateNode(id, { type: e.target.value }),
   setResonance: (e) => store.updateNode(id, { Q: e.target.value }),
 });
@@ -14,6 +17,19 @@ export default function Filter({ id, data }) {
     selector(id),
     shallow
   );
+
+  // const [roundedResult, setRoundedResult] = useState(
+  //   parseFloat((20000 * Math.pow(data.frequency / 100, 2)).toFixed(0))
+  // );
+
+  // useEffect(() => {
+  //   // Update the rounded result whenever the frequency value changes
+  //   setRoundedResult(
+  //     parseFloat((20000 * Math.pow(data.frequency / 100, 2)).toFixed(0))
+  //   );
+  // }, [data.frequency]);
+  const scewedParam = 20000 * Math.pow(data.frequency / 100, 4);
+  const roundedScewParam = parseFloat(scewedParam.toFixed(0));
   //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
   return (
@@ -27,11 +43,13 @@ export default function Filter({ id, data }) {
           id="slider"
           className="nodrag"
           type="range"
-          min="10"
-          max="2500"
+          min="0"
+          max="100"
           value={data.frequency}
           onChange={setFrequency}
         />
+        {/* const exponentialValue = Math.pow(baseValue, (linearValue - 1) / (baseMax - 1)) * exponentialMax; */}
+        <div>Hz: {roundedScewParam}</div>
         <span>Res</span>
 
         <input
@@ -43,7 +61,7 @@ export default function Filter({ id, data }) {
           value={data.Q}
           onChange={setResonance}
         />
-        {/* <span>{data.frequency}Hz</span> */}
+
         <div className="waveformContainer">
           <div className="nodrag">
             <label style={{ display: "block" }}>
