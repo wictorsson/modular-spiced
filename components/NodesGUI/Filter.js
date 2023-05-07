@@ -6,7 +6,10 @@ import { useState, useEffect } from "react";
 
 const selector = (id) => (store) => ({
   setFrequency: (e) => {
-    store.updateNode(id, { frequency: e.target.value });
+    //Add 0.0001 to avoid pop from filter turning off and on
+    const scewedParam = 20000 * Math.pow(e.target.value / 100, 4) + 0.0001;
+
+    store.updateNode(id, { frequency: scewedParam });
   },
   setType: (e) => store.updateNode(id, { type: e.target.value }),
   setResonance: (e) => store.updateNode(id, { Q: e.target.value }),
@@ -28,8 +31,10 @@ export default function Filter({ id, data }) {
   //     parseFloat((20000 * Math.pow(data.frequency / 100, 2)).toFixed(0))
   //   );
   // }, [data.frequency]);
-  const scewedParam = 20000 * Math.pow(data.frequency / 100, 4);
-  const roundedScewParam = parseFloat(scewedParam.toFixed(0));
+
+  const linearValue = 100 * Math.pow(data.frequency / 20000, 1 / 4);
+  const roundedLinearValue = parseFloat(linearValue.toFixed(0));
+
   //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
   return (
@@ -43,13 +48,13 @@ export default function Filter({ id, data }) {
           id="slider"
           className="nodrag"
           type="range"
-          min="0"
+          min="1"
           max="100"
-          value={data.frequency}
+          value={roundedLinearValue}
           onChange={setFrequency}
         />
         {/* const exponentialValue = Math.pow(baseValue, (linearValue - 1) / (baseMax - 1)) * exponentialMax; */}
-        <div>Hz: {roundedScewParam}</div>
+        <div> {data.frequency.toFixed(0)} Hz</div>
         <span>Res</span>
 
         <input

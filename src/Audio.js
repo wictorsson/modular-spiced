@@ -18,6 +18,7 @@ export function addAudioEdge(sourceId, targetId) {
   const audioNodeTarget = audioNodes[targetId];
   if (audioNodeSource.name === "LFO") {
     // HARDCODED to filter freq, fix this and connection validation
+    // Check what id the target has, freq, amp etc
     audioNodeSource.connect(audioNodeTarget.frequency);
   } else {
     audioNodeSource.connect(audioNodeTarget);
@@ -32,11 +33,6 @@ export function updateAudioNode(id, data) {
   Object.entries(data).forEach(([key, val]) => {
     console.log(key);
 
-    if (key === "frequency") {
-      const scewedParam = 20000 * Math.pow(val / 100, 4);
-      const roundedScewParam = parseFloat(scewedParam.toFixed(0));
-      audioNode[key].value = roundedScewParam;
-    }
     if (key === "row1") {
       //audioNode.data[key] = val;
       // console.log(val);
@@ -50,7 +46,7 @@ export function updateAudioNode(id, data) {
       audioNode[key] = val;
     } else if (isNaN(val)) {
       audioNode[key] = val;
-    } else if (key !== "frequency") {
+    } else {
       audioNode[key].value = val;
     }
   });
@@ -92,9 +88,9 @@ export function createAudioNode(id, type, data, setLampIndex) {
     const out = Tone.getDestination();
     audioNodes["output_id"] = out;
     Tone.getDestination().volume.rampTo(-12, 1);
-    // const gain = new Tone.Gain(100);
-    // gain.toDestination();
   }
+  let scewedParam;
+  let roundedScewParam;
   switch (type) {
     case "osc":
       const osc = new Tone.Oscillator(data.frequency, data.type).start();
@@ -105,21 +101,16 @@ export function createAudioNode(id, type, data, setLampIndex) {
       audioNodes[id] = gain;
       break;
     case "filter":
-      const scewedParam = 20000 * Math.pow(data.frequency / 100, 4);
-      const roundedScewParam = parseFloat(scewedParam.toFixed(0));
-      const filter = new Tone.Filter(roundedScewParam, data.type);
-      // let lfoTest = new Tone.LFO("1n", 500, 4500);
-      // lfoTest.start();
-      // lfoTest.connect(filter.frequency);
+      const filter = new Tone.Filter(data.frequency, data.type);
 
       audioNodes[id] = filter;
       break;
     case "sequence":
       audioNodes[id] = "sequence";
       const osc2 = new Tone.MembraneSynth().toDestination();
-      //osc2.pitchDecay = 0.4;
+
       beatArray = data.row1;
-      //console.log(beatArray);
+
       let step = 0;
       let index = 0;
       Tone.Transport.scheduleRepeat((time) => {

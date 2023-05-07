@@ -4,17 +4,20 @@ import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
-  setFrequency: (e) => store.updateNode(id, { frequency: e.target.value }),
+  setFrequency: (e) => {
+    const scewedParam = 20000 * Math.pow(e.target.value / 100, 4);
+    const roundedScewParam = parseFloat(scewedParam.toFixed(0));
+    store.updateNode(id, { frequency: roundedScewParam });
+  },
   setType: (e) => store.updateNode(id, { type: e.target.value }),
 });
 
 // id and data are passed down as props from the React Flow library! Gets the data from nodeTypes
 export default function Osc({ id, data }) {
-  //console.log(xPos);
   const { setFrequency, setType } = useStore(selector(id), shallow);
   const typeName = id + "_type";
-  const scewedParam = 20000 * Math.pow(data.frequency / 100, 4);
-  const roundedScewParam = parseFloat(scewedParam.toFixed(0));
+  const linearValue = 100 * Math.pow(data.frequency / 20000, 1 / 4);
+  const roundedLinearValue = parseFloat(linearValue.toFixed(0));
   return (
     <div>
       <div className="nodeContainer">
@@ -28,10 +31,10 @@ export default function Osc({ id, data }) {
           type="range"
           min="0"
           max="100"
-          value={data.frequency}
+          value={roundedLinearValue}
           onChange={setFrequency}
         />
-        <span>{roundedScewParam}Hz</span>
+        <span>{data.frequency} Hz</span>
         <div className="waveformContainer">
           <div className="nodrag">
             <label style={{ display: "block" }}>

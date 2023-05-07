@@ -54,7 +54,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "filter": {
-        data = { frequency: 100, type: "lowpass", rolloff: -48, Q: 1 };
+        data = { frequency: 440, type: "lowpass", rolloff: -48, Q: 1 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }

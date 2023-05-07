@@ -4,7 +4,10 @@ import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
-  setGain: (e) => store.updateNode(id, { gain: e.target.value }),
+  setGain: (e) => {
+    store.updateNode(id, { gain: e.target.value });
+    console.log(e.target.value);
+  },
 });
 
 export default function Gain({ id, data }) {
