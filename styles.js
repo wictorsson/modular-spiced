@@ -369,44 +369,53 @@ export const GlobalStyle = createGlobalStyle`
 
   .flowPanel {
     display: flex;
-    // margin-left: -10%;
+    width: 140px;
     flex-direction: row;
-    //gap: 10px;
     background-color: rgba(18, 18, 18, 1);
     border-style: solid;
     border-color: grey;
     border-width: 1px;
     border-radius: 5px;
     color: white;
-    padding: 8px;
-   
+    position: relative;
   }
+  
+  .flowPanel-closeButton {
+    position: absolute;
+    right: 100px;
+    top: 110px;
+    bottom: 0;
+    left: 100px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
 
   .flowPanel-after {
+  
     display: flex;
-     margin-left: -10%;
+    margin-left: -100px;
+    width: 140px;
     flex-direction: row;
-    //gap: 10px;
     background-color: rgba(18, 18, 18, 1);
     border-style: solid;
     border-color: grey;
     border-width: 1px;
     border-radius: 5px;
     color: white;
-    padding: 8px;
    
   }
-
-
-
-
 
   
   .flowPanel-panelModules {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
-    width: 120px; /* set a fixed width */
+    //gap: 5px;
+    //margin: 3px;
+    width: 140px; /* set a fixed width */
   }
   
   .flowPanel-panelModules > hr {
@@ -418,18 +427,22 @@ export const GlobalStyle = createGlobalStyle`
   
 
   .flowPanel button {
-    background: rgb(70,41,41);
-    background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
-    color: white; 
-    border-style: solid;
-    padding: 8px 10px; /* Add padding to the button */
-    text-align: center; /* Center the text */
-    border-width: 1px;
-    //display: inline-block; /* Make the button inline */
-    font-size: 12px; /* Change the font size */
-    border-radius: 5px; /* Add border radius */
+    background: rgb(70,41,41,0);
+    //background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
+     color: lightgrey; 
+     border-style: solid;
+     padding: 8px 10px; /* Add padding to the button */
+     text-align: center; /* Center the text */
+     border-width: 1px;
+     //display: inline-block; /* Make the button inline */
+     font-size: 14px; /* Change the font size */
+     border-radius: 2px; /* Add border radius */
+     height: 30px;
+     width: 140px;
+     border-color: #46494c;
   }
   .flowPanel button:hover {
+    color: white; 
     background: #202020;
    //letter-spacing: 1px;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
@@ -438,9 +451,17 @@ export const GlobalStyle = createGlobalStyle`
     color: white;
     transition: all 0.4s ease 0s;
     }
+
+
+
+
+
+    .SaveSection{
+      display: flex;
+ 
+      gap: 15px;
+    }
    
-
-
 
     // ******************* slider ****************************
     input[type="range"] {
@@ -549,4 +570,7 @@ export const GlobalStyle = createGlobalStyle`
    
         gap: 15px;
       }
+
+
+
 `;

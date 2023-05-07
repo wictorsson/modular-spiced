@@ -53,7 +53,6 @@ export function updateAudioNode(id, data) {
 export function removeAudioNode(id) {
   //console.log(audioNodes[id]);
   if (audioNodes[id] !== "sequence" && Object.keys(audioNodes).length > 1) {
-    console.log("DISCONNECTING");
     const audioNode = audioNodes[id];
     audioNode.disconnect();
     // audioNode.stop?.();
@@ -118,9 +117,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
           //this callback is invoked from a requestAnimationFrame
           //and will be invoked close to AudioContext time
         }, time);
-        // for (let i = 0; i < beatArray.length(); ++i) {
-        // console.log(beatArray[step]);
-        // }
+
         // use the callback time to schedule events
         if (beatArray[step] > 0) {
           console.log(beatArray[step]);
