@@ -84,8 +84,8 @@ function Environment() {
           <button
             className="flowPanel-closeButton"
             onClick={() => {
-              panelBool === true
-                ? setPanelClass("flowPanel-after")
+              panelBool
+                ? setPanelClass("flowPanel-hidden")
                 : setPanelClass("flowPanel");
               setPanelBool(!panelBool);
             }}

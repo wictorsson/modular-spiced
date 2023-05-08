@@ -10,16 +10,20 @@ var audioEnabled = false;
 
 let beatArray = [];
 // Connect audio components
-export function addAudioEdge(sourceId, targetId) {
-  // console.log(targetId);
-  // console.log(sourceId);
-
+export function addAudioEdge(sourceId, targetId, targetHandle) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  if (audioNodeSource.name === "LFO") {
-    // HARDCODED to filter freq, fix this and connection validation
-    // Check what id the target has, freq, amp etc
-    audioNodeSource.connect(audioNodeTarget.frequency);
+  console.log(targetHandle);
+
+  if (targetHandle) {
+    switch (targetHandle) {
+      case "paramFrequency":
+        console.log(audioNodeTarget.frequency);
+        console.log("CONNECTING", audioNodeTarget.frequency);
+        audioNodeSource.connect(audioNodeTarget.frequency);
+
+        break;
+    }
   } else {
     audioNodeSource.connect(audioNodeTarget);
   }
@@ -31,9 +35,11 @@ export function updateAudioNode(id, data) {
 
   //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
+    // console.log(id);
+    // console.log(val);
     if (key === "row1") {
       //audioNode.data[key] = val;
-      // console.log(val);
+
       beatArray = val;
     } else if (key === "bpm") {
       //   console.log("changin bpm");
@@ -45,7 +51,12 @@ export function updateAudioNode(id, data) {
     } else if (isNaN(val) || typeof val === "boolean") {
       audioNode[key] = val;
     } else {
+      console.log(key);
+      console.log(val);
+
       audioNode[key].value = val;
+
+      console.log(audioNode[key].value);
     }
   });
 }
@@ -54,6 +65,7 @@ export function removeAudioNode(id) {
   //console.log(audioNodes[id]);
   if (audioNodes[id] !== "sequence" && Object.keys(audioNodes).length > 1) {
     const audioNode = audioNodes[id];
+
     audioNode.disconnect();
     // audioNode.stop?.();
     // Dispose - free garbage collection
@@ -69,10 +81,16 @@ export function removeAudioNode(id) {
 
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
-  const audioNodeTarget = audioNodes[targetId];
-
+  let audioNodeTarget = audioNodes[targetId];
   if (audioNodeSource.name === "LFO") {
-    audioNodeSource.disconnect(audioNodeTarget.frequency);
+    console.log("DISCONNECTING");
+
+    console.log(audioNodeTarget.frequency);
+    audioNodeTarget.frequency.cancelScheduledValues();
+    audioNodeSource.stop();
+    //audioNodeSource.disconnect(audioNodeTarget.frequency);
+    //audioNodeSource.stop();
+    //audioNodeTarget.frequency.setValueAtTime(440, 0);
   } else if (audioNodeSource !== "sequence") {
     audioNodeSource.disconnect(audioNodeTarget);
   }
@@ -86,8 +104,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
     audioNodes["output_id"] = out;
     Tone.getDestination().volume.rampTo(-12, 1);
   }
-  let scewedParam;
-  let roundedScewParam;
+
   switch (type) {
     case "osc":
       const osc = new Tone.Oscillator(data.frequency, data.type).start();
@@ -133,7 +150,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
 
     case "lfo":
       // console.log("CREATED LFO");
-      const lfo = new Tone.LFO("1n", data.min, data.max);
+      const lfo = new Tone.LFO(data.frequency, data.min, data.max);
       lfo.start();
       audioNodes[id] = lfo;
       break;

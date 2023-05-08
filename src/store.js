@@ -54,7 +54,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "filter": {
-        data = { frequency: 440, type: "lowpass", rolloff: -48, Q: 1 };
+        data = { frequency: 400, type: "lowpass", rolloff: -48, Q: 1 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -125,9 +125,7 @@ export const useStore = create((set, get) => ({
 
   removeEdges(edges) {
     edges.forEach((edge) => {
-      //const sourceNode = get().nodes.find((node) => node.id === edge.source);
-      // Needed to not remove twice the same connection!
-
+      // Avoid removing twice the same connection!
       if (edges.length < 2) {
         removeAudioEdge(edge.source, edge.target);
       }
@@ -139,13 +137,18 @@ export const useStore = create((set, get) => ({
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
     const sourceNode = get().nodes.find((node) => node.id === data.source);
+    // Check if connection is parameter connection
+    let twoParamHandles = false;
+    if (data.sourceHandle && data.targetHandle)
+      if (data.sourceHandle[0] === "p" && data.targetHandle[0] === "p") {
+        twoParamHandles = true;
+      }
 
-    //console.log(data);
-    //Check if it is a parameter connection. Handle is set to null if non paprameter
-    if (data.sourceHandle === data.targetHandle) {
+    if (data.sourceHandle === data.targetHandle || twoParamHandles) {
+      //Check if it is a parameter connection. Handle is set to null if non paprameter
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
         if (sourceNode.type !== "sequence") {
-          addAudioEdge(data.source, data.target);
+          addAudioEdge(data.source, data.target, data.targetHandle);
         }
         //Nano ID generates random six digit ID
         const id = nanoid(6);

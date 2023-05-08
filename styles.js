@@ -342,34 +342,34 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
-  button {
-    background: rgb(70,41,41);
-    background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
-    color: white; 
-    border-style: solid;
-    padding: 8px 10px; /* Add padding to the button */
-    text-align: center; /* Center the text */
-    border-width: 1px;
-    //display: inline-block; /* Make the button inline */
-    font-size: 12px; /* Change the font size */
-    border-radius: 5px; /* Add border radius */
-  }
-  button:hover {
-    background: #202020;
-   //letter-spacing: 1px;
-    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-    color: white;
-    transition: all 0.4s ease 0s;
-    }
+  // button {
+  //   background: rgb(70,41,41);
+  //   background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
+  //   color: white; 
+  //   border-style: solid;
+  //   padding: 8px 10px; /* Add padding to the button */
+  //   text-align: center; /* Center the text */
+  //   border-width: 1px;
+  //   //display: inline-block; /* Make the button inline */
+  //   font-size: 12px; /* Change the font size */
+  //   border-radius: 5px; /* Add border radius */
+  // }
+  // button:hover {
+  //   background: #202020;
+  //  //letter-spacing: 1px;
+  //   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  //   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  //   box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  //   color: white;
+  //   transition: all 0.4s ease 0s;
+  //   }
 
   //***************** FLOW PANEL *********************
 
 
   .flowPanel {
     display: flex;
-    width: 140px;
+    width: 100px;
     flex-direction: row;
     background-color: rgba(18, 18, 18, 1);
     border-style: solid;
@@ -377,70 +377,41 @@ export const GlobalStyle = createGlobalStyle`
     border-width: 1px;
     border-radius: 5px;
     color: white;
-    position: relative;
-  }
-  
-  .flowPanel-closeButton {
-    position: absolute;
-    right: 100px;
-    top: 110px;
-    bottom: 0;
-    left: 100px;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-  }
-
-
-  .flowPanel-after {
-  
-    display: flex;
-    margin-left: -100px;
-    width: 140px;
-    flex-direction: row;
-    background-color: rgba(18, 18, 18, 1);
-    border-style: solid;
-    border-color: grey;
-    border-width: 1px;
-    border-radius: 5px;
-    color: white;
+    //position: relative;
    
   }
 
+  .flowPanel-hidden {
   
-  .flowPanel-panelModules {
     display: flex;
-    flex-wrap: wrap;
-    //gap: 5px;
-    //margin: 3px;
-    width: 140px; /* set a fixed width */
+    margin-left: -100px;
+    width: 100px;
+    flex-direction: row;
+    background-color: rgba(18, 18, 18, 1);
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
+    border-radius: 5px;
+    color: white;
+   // position: relative;
+    
   }
-  
-  .flowPanel-panelModules > hr {
-    width: 100%; /* make sure hr takes up full width */
-    border: none; /* remove default hr border */
-    border-top: 1px solid grey; /* add custom border */
-    margin: 10px 0; /* add margin top and bottom */
-  }
-  
 
   .flowPanel button {
     background: rgb(70,41,41,0);
-    //background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
      color: lightgrey; 
      border-style: solid;
      padding: 8px 10px; /* Add padding to the button */
      text-align: center; /* Center the text */
      border-width: 1px;
-     //display: inline-block; /* Make the button inline */
-     font-size: 14px; /* Change the font size */
+     font-size: 10px; /* Change the font size */
      border-radius: 2px; /* Add border radius */
      height: 30px;
-     width: 140px;
+     width: 100px;
      border-color: #46494c;
   }
+
+  
   .flowPanel button:hover {
     color: white; 
     background: #202020;
@@ -453,7 +424,55 @@ export const GlobalStyle = createGlobalStyle`
     }
 
 
+    .flowPanel-hidden button{
+      background: rgb(70,41,41,0);
+       color: lightgrey; 
+       border-style: solid;
+       padding: 8px 10px; /* Add padding to the button */
+       text-align: center; /* Center the text */
+       border-width: 1px;
+       font-size: 10px; /* Change the font size */
+       border-radius: 2px; /* Add border radius */
+       height: 30px;
+       width: 100px;
+       border-color: #46494c;
+    }
 
+    .flowPanel-closeButton {
+      height: 280px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  
+  .flowPanel-panelModules {
+    //  display: flex;
+    //  flex-wrap: wrap;
+    //   gap: 3px;
+  
+  }
+  
+  .flowPanel-panelModules > hr {
+    // width: 100%; /* make sure hr takes up full width */
+    // border: none; /* remove default hr border */
+    // border-top: 1px solid grey; /* add custom border */
+    // margin: 10px 0; /* add margin top and bottom */
+  }
+  
+  // .flowPanel-after flowPanel-panelModules{
+
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   //gap: 5px;
+  //   //margin: 3px;
+  //   width: 140px; /* set a fixed width */
+
+  // }
+
+
+
+    
 
 
     .SaveSection{

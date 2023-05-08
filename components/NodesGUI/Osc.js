@@ -78,6 +78,7 @@ export default function Osc({ id, data }) {
       </div>
 
       <Handle type="source" position="top" />
+      <Handle type="target" position="right" id="paramFrequency" />
     </div>
   );
 }

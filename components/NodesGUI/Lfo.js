@@ -80,6 +80,7 @@ export default function Lfo({ id, data }) {
       </div>
 
       <Handle type="source" position="top" id="paramHandle" />
+      <Handle type="target" position="right" id="paramFrequency" />
       {/* <Handle type="target" position="bottom" /> */}
       {/* <Handle type="target" position="right" id="freqHandle" /> */}
     </div>
