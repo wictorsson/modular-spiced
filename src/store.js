@@ -60,7 +60,12 @@ export const useStore = create((set, get) => ({
       }
 
       case "sequence": {
-        data = { bpm: 120, row1: new Array(16).fill(0) };
+        data = {
+          bpm: 120,
+          row1: new Array(16).fill(0),
+          kickFrequency: 55,
+          kickLength: 100,
+        };
         position = { x: randomXpos, y: randomYpos };
         break;
       }

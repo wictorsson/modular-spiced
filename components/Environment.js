@@ -12,6 +12,7 @@ import Reverb from "./NodesGUI/Reverb";
 import Noise from "./NodesGUI/Noise";
 import Channel from "./NodesGUI/Channel";
 import AudioOutToggle from "./NodesGUI/Output";
+import Membsynth from "./NodesGUI/Membsynth";
 import { useState } from "react";
 // THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
@@ -37,6 +38,7 @@ const nodeTypes = {
   lfo: Lfo,
   reverb: Reverb,
   noise: Noise,
+  membsynth: Membsynth,
   channel: Channel,
 };
 
@@ -79,6 +81,9 @@ function Environment() {
             <button onClick={() => store.createNode("lfo")}>(LFO)</button>
             <button onClick={() => store.createNode("sequence")}>
               (Sequencer)
+            </button>
+            <button onClick={() => store.createNode("membsynth")}>
+              Kick Synth
             </button>
           </div>
           <button

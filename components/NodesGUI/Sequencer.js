@@ -4,6 +4,12 @@ import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
+  setKickFrequency: (e) => {
+    store.updateNode(id, { kickFrequency: e.target.value });
+  },
+  setKickLength: (e) => {
+    store.updateNode(id, { kickLength: e.target.value });
+  },
   setBeatArray: (e, updatedRowArray) => {
     store.updateNode(id, { row1: updatedRowArray });
   },
@@ -11,8 +17,10 @@ const selector = (id) => (store) => ({
 });
 
 export default function Sequencer({ id, data }) {
-  const { setBeatArray, setBPM } = useStore(selector(id), shallow);
-  //const { isButtonClicked, toggleButton } = useStore();
+  const { setBeatArray, setBPM, setKickFrequency, setKickLength } = useStore(
+    selector(id),
+    shallow
+  );
   const { lampIndex } = useStore();
 
   const handleSliderChange = (e, index) => {
@@ -32,6 +40,31 @@ export default function Sequencer({ id, data }) {
         </button> */}
         <h3>Sequencer</h3>
         <h3>{lampIndex}</h3>
+        <span>Kick Pitch</span>
+
+        <input
+          id="slider"
+          className="nodrag"
+          type="range"
+          min="0"
+          max="100"
+          value={data.kickFrequency}
+          onChange={setKickFrequency}
+        />
+        <span>{data.kickFrequency} </span>
+        <span>Kick Length</span>
+
+        <input
+          id="slider"
+          className="nodrag"
+          type="range"
+          min="0.1"
+          max="0.5"
+          step="0.001"
+          value={data.kickLength}
+          onChange={setKickLength}
+        />
+
         <div>
           <p>BPM</p>
           <input
