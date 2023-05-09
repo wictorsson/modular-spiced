@@ -48,9 +48,9 @@ function Environment() {
   const store = useStore(selector, shallow);
   const [panelClass, setPanelClass] = useState("flowPanel");
   const [panelBool, setPanelBool] = useState(true);
-
+  const [closeIcon, setCloseIcon] = useState("╳");
   return (
-    <div style={{ height: 680 }}>
+    <div style={{ height: 660 }}>
       <ReactFlow
         onEdgesDelete={store.onEdgesDelete}
         onNodesDelete={store.onNodesDelete}
@@ -88,9 +88,10 @@ function Environment() {
                 ? setPanelClass("flowPanel-hidden")
                 : setPanelClass("flowPanel");
               setPanelBool(!panelBool);
+              setCloseIcon(closeIcon === "╳" ? "↱" : "╳");
             }}
           >
-            ◀️
+            {closeIcon}
           </button>
         </Panel>
 

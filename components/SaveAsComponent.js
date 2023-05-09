@@ -17,7 +17,7 @@ export default function PatchList() {
   const patches = useSWR("/api/patches", { fallbackData: [] });
 
   const { data: session } = useSession();
-
+  const isSession = session;
   async function savePatch(patch) {
     let userEmail;
     let isPublic;
@@ -64,9 +64,9 @@ export default function PatchList() {
   }
   return (
     isSaveAsClicked && (
-      <div className="overlayContainer">
+      <div className="overlayContainer animated">
         <div className="SaveAsPopup">
-          <SaveForm onSubmit={savePatch} />
+          <SaveForm onSubmit={savePatch} isSession={isSession} />
         </div>
       </div>
     )

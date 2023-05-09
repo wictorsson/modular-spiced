@@ -99,6 +99,21 @@ export const GlobalStyle = createGlobalStyle`
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
+
+  .overlayContainer.animated {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards; /* keep the last keyframe state after animation ends */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   
   .PatchList {
     position: absolute;
@@ -118,7 +133,7 @@ export const GlobalStyle = createGlobalStyle`
     border-width: 1px;
     border-radius: 10px;
     position: absolute;
-    gap: 150px;
+    gap: 40px;
     top: 35%;
     left: 50%;
   }
@@ -131,7 +146,7 @@ export const GlobalStyle = createGlobalStyle`
      text-align: center; /* Center the text */
      border-width: 1px;
      font-size: 10px; /* Change the font size */
-     border-radius: 2px; /* Add border radius */
+     border-radius: 4px; /* Add border radius */
      height: 40px;
      width: 120px;
      border-color: #46494c;
@@ -149,6 +164,43 @@ export const GlobalStyle = createGlobalStyle`
     transition: all 0.4s ease 0s;
     }
 
+
+
+  .patchListColumn{
+    width: 200px;
+   
+    //background: grey;
+    display: flex;
+    flex-direction: column;
+   // align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+  }
+
+
+  .PatchList ul{
+   
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .deleteButtonContainer{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .patchDeleteButton{
+    width: 35px !important;
+
+  }
+
+
     .CloseButton {
       background: rgb(70,41,41,0);
        color: lightgrey; 
@@ -159,9 +211,9 @@ export const GlobalStyle = createGlobalStyle`
        font-size: 8px; /* Change the font size */
        border-radius: 2px; /* Add border radius */
        width: 35px !important;
-       width: 35px !important;
+       height: 35px !important;
        border-color: #46494c;
-      position: absolute; 
+       position: absolute; 
        left: 15px;
        top: 15px;
     }
@@ -179,9 +231,8 @@ export const GlobalStyle = createGlobalStyle`
       }
   
 
-  .PatchList ul{
-    list-style: none;
-  }
+  
+
 
  
   
@@ -195,8 +246,12 @@ export const GlobalStyle = createGlobalStyle`
 
  .Form-Radiobuttons{
   display: flex;
-  flex-direction: column;
- }
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 12px;
+}
 
  .Textbox{
   border: 10px;
@@ -230,7 +285,7 @@ export const GlobalStyle = createGlobalStyle`
   text-align: center; /* Center the text */
   border-width: 1px;
   font-size: 12px; /* Change the font size */
-  border-radius: 2px; /* Add border radius */
+  border-radius: 4px; /* Add border radius */
   height: 40px;
   //width: 120px;
   border-color: #46494c;
@@ -363,22 +418,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
-  // .nodeContainerGain{
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 5px;
-  //   padding: 15px;
-  //   align-items: center;
-  //   justify-content: space-between;
-  //   font-size: 10px;
-  //   background: rgb(70,41,41);
-  //   background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
-  //   border-style: solid;
-  //   border-color: grey;
-  //   border-radius: 5px;
-  //   border-width: 1px;
-  //   color:white;
-  // }
+ 
 
 
   .waveformContainer{
@@ -433,27 +473,7 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
-  // button {
-  //   background: rgb(70,41,41);
-  //   background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
-  //   color: white; 
-  //   border-style: solid;
-  //   padding: 8px 10px; /* Add padding to the button */
-  //   text-align: center; /* Center the text */
-  //   border-width: 1px;
-  //   //display: inline-block; /* Make the button inline */
-  //   font-size: 12px; /* Change the font size */
-  //   border-radius: 5px; /* Add border radius */
-  // }
-  // button:hover {
-  //   background: #202020;
-  //  //letter-spacing: 1px;
-  //   -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  //   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  //   box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-  //   color: white;
-  //   transition: all 0.4s ease 0s;
-  //   }
+
 
   //***************** FLOW PANEL *********************
 
@@ -526,10 +546,8 @@ export const GlobalStyle = createGlobalStyle`
 
     .flowPanel-closeButton {
       height: 240px !important;
-      width: 25px !important;
-      // display: flex;
-      // align-items: center;
-      // justify-content: center;
+      width: 35px !important;
+ 
     }
 
 
@@ -623,11 +641,11 @@ export const GlobalStyle = createGlobalStyle`
      //background: radial-gradient(circle, rgba(65,41,41,1) 0%, rgba(10,10,10,1) 100%);
       color: lightgrey; 
       border-style: solid;
-      //padding: 8px 10px; /* Add padding to the button */
+      padding: 8px 10px; /* Add padding to the button */
       text-align: center; /* Center the text */
       border-width: 1px;
       //display: inline-block; /* Make the button inline */
-      font-size: 14px; /* Change the font size */
+      font-size: 12px; /* Change the font size */
       border-radius: 2px; /* Add border radius */
       height: 50px;
       border-color: #46494c;

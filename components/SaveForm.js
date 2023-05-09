@@ -7,7 +7,7 @@ const selector = (store) => ({
   toggleSaveAs: store.toggleSaveAs,
 });
 
-export default function SaveForm({ onSubmit }) {
+export default function SaveForm({ onSubmit, isSession }) {
   const store = useStore(selector, shallow);
   //const router = useRouter();
 
@@ -33,6 +33,21 @@ export default function SaveForm({ onSubmit }) {
   const formattedDate = now.toLocaleString("en-US", options);
   const dateWithoutTime = formattedDate.split(", ")[0];
   const defaultTitle = "New Project " + dateWithoutTime;
+
+  if (!isSession) {
+    return (
+      <div>
+        <button
+          type="button"
+          className="CloseButton"
+          onClick={() => store.toggleSaveAs()}
+        >
+          ╳
+        </button>
+        <p>Login Required</p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="SaveForm">
@@ -81,7 +96,7 @@ export default function SaveForm({ onSubmit }) {
         className="CloseButton"
         onClick={() => store.toggleSaveAs()}
       >
-        ❌
+        ╳
       </button>
     </form>
   );

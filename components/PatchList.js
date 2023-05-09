@@ -39,31 +39,38 @@ export default function PatchList() {
 
   return (
     isPatchListClicked && (
-      <div className="overlayContainer">
+      <div className="overlayContainer animated">
         <div className="PatchList">
           <button
             type="button"
             className="CloseButton"
             onClick={() => store.togglePatchList()}
           >
-            ❌
+            ╳
           </button>
-          <div>
+          <div className="patchListColumn">
             <h3>My projects</h3>
             {session ? (
               <ul>
                 {userData.map((patch) => (
                   <li key={patch._id}>
-                    <button
-                      onClick={() => {
-                        store.setCurrentPatch(patch._id);
-                        store.readPatch(patch);
-                        store.togglePatchList();
-                      }}
-                    >
-                      {patch.name}
-                    </button>{" "}
-                    <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
+                    <div className="deleteButtonContainer">
+                      <button
+                        className="patchDeleteButton"
+                        onClick={() => deletePatch(patch._id)}
+                      >
+                        ╳
+                      </button>{" "}
+                      <button
+                        onClick={() => {
+                          store.setCurrentPatch(patch._id);
+                          store.readPatch(patch);
+                          store.togglePatchList();
+                        }}
+                      >
+                        {patch.name}
+                      </button>{" "}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -71,7 +78,7 @@ export default function PatchList() {
               "Sign in required"
             )}
           </div>
-          <div>
+          <div className="patchListColumn">
             <h3>Public projects</h3>
             <ul>
               {data.map((patch) => (
@@ -85,7 +92,7 @@ export default function PatchList() {
                   >
                     {patch.name}
                   </button>{" "}
-                  {/* <button onClick={() => deletePatch(patch._id)}>❌</button>{" "} */}
+                  {/* <button onClick={() => deletePatch(patch._id)}>❌╳</button>{" "} */}
                 </li>
               ))}
             </ul>
