@@ -39,19 +39,42 @@ export default function PatchList() {
 
   return (
     isPatchListClicked && (
-      <div className="PatchList">
-        <button
-          type="button"
-          className="CloseButton"
-          onClick={() => store.togglePatchList()}
-        >
-          ❌
-        </button>
-        <div>
-          <h2>My projects</h2>
-          {session ? (
+      <div className="overlayContainer">
+        <div className="PatchList">
+          <button
+            type="button"
+            className="CloseButton"
+            onClick={() => store.togglePatchList()}
+          >
+            ❌
+          </button>
+          <div>
+            <h3>My projects</h3>
+            {session ? (
+              <ul>
+                {userData.map((patch) => (
+                  <li key={patch._id}>
+                    <button
+                      onClick={() => {
+                        store.setCurrentPatch(patch._id);
+                        store.readPatch(patch);
+                        store.togglePatchList();
+                      }}
+                    >
+                      {patch.name}
+                    </button>{" "}
+                    <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              "Sign in required"
+            )}
+          </div>
+          <div>
+            <h3>Public projects</h3>
             <ul>
-              {userData.map((patch) => (
+              {data.map((patch) => (
                 <li key={patch._id}>
                   <button
                     onClick={() => {
@@ -62,32 +85,11 @@ export default function PatchList() {
                   >
                     {patch.name}
                   </button>{" "}
-                  <button onClick={() => deletePatch(patch._id)}>❌</button>{" "}
+                  {/* <button onClick={() => deletePatch(patch._id)}>❌</button>{" "} */}
                 </li>
               ))}
             </ul>
-          ) : (
-            "Sign in required"
-          )}
-        </div>
-        <div>
-          <h2>Public projects</h2>
-          <ul>
-            {data.map((patch) => (
-              <li key={patch._id}>
-                <button
-                  onClick={() => {
-                    store.setCurrentPatch(patch._id);
-                    store.readPatch(patch);
-                    store.togglePatchList();
-                  }}
-                >
-                  {patch.name}
-                </button>{" "}
-                {/* <button onClick={() => deletePatch(patch._id)}>❌</button>{" "} */}
-              </li>
-            ))}
-          </ul>
+          </div>
         </div>
       </div>
     )

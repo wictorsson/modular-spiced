@@ -89,47 +89,107 @@ export const GlobalStyle = createGlobalStyle`
     background: radial-gradient(circle, rgba(41,35,26,1) 0%, rgba(17,17,17,1) 83%);
   }
 
+
+  .overlayContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
   .PatchList {
-    background: rgb(41,35,26);
+    position: absolute;
     background: radial-gradient(circle, rgba(51,55,56,1) 0%, rgba(17,17,17,1) 83%);
-    height: 80%;
-    color: white;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    max-height: calc(80vh - 150px);
+    overflow-y: auto;
+    z-index: 2;
     display: flex;
     justify-content: center;
-    padding: 1rem;
-    margin-left: 0px;
+    padding: 3rem;
     text-align: center;
     border-style: solid;
     border-color: #46494c;
     border-width: 1px;
     border-radius: 10px;
-    position: fixed;
-
-    gap: 120px;
-    top: 85px;
-    left: 25%;
-    right: 25%;
-    z-index: 9999;
-    max-height: calc(80vh - 150px); /* set max height to 100% of viewport height minus 200px */
-    overflow-y: scroll; /* add vertical scrollbar */
-    opacity: 1;
+    position: absolute;
+    gap: 150px;
+    top: 35%;
+    left: 50%;
   }
+  
+  .PatchList button {
+    background: rgb(70,41,41,0);
+     color: lightgrey; 
+     border-style: solid;
+     padding: 8px 10px; /* Add padding to the button */
+     text-align: center; /* Center the text */
+     border-width: 1px;
+     font-size: 10px; /* Change the font size */
+     border-radius: 2px; /* Add border radius */
+     height: 40px;
+     width: 120px;
+     border-color: #46494c;
+  }
+
+  
+  .PatchList button:hover {
+    color: white; 
+    background: #202020;
+   //letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    color: white;
+    transition: all 0.4s ease 0s;
+    }
+
+    .CloseButton {
+      background: rgb(70,41,41,0);
+       color: lightgrey; 
+       border-style: solid;
+       padding: 8px 10px; /* Add padding to the button */
+       text-align: center; /* Center the text */
+       border-width: 1px;
+       font-size: 8px; /* Change the font size */
+       border-radius: 2px; /* Add border radius */
+       width: 35px !important;
+       width: 35px !important;
+       border-color: #46494c;
+      position: absolute; 
+       left: 15px;
+       top: 15px;
+    }
+  
+    
+    .CloseButton:hover {
+      color: white; 
+      background: #202020;
+     //letter-spacing: 1px;
+      -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+      -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+      box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+      color: white;
+      transition: all 0.4s ease 0s;
+      }
+  
 
   .PatchList ul{
     list-style: none;
   }
 
-  .CloseButton{
-    position: absolute; 
-    left: 15px;
-    top: 15px;
-  }
+ 
   
  .SaveForm{
   display: flex;
   flex-direction: column;
   align-content: center;
-  gap: 25px;
+  gap: 35px;
   justify-content: center;
  }
 
@@ -154,6 +214,7 @@ export const GlobalStyle = createGlobalStyle`
   line-height: 1.5; /* increase line height */
 }
 
+
  .Textbox-label{
   font-size: 0.7rem;
   position: absolute;
@@ -161,24 +222,54 @@ export const GlobalStyle = createGlobalStyle`
   color: white;
  }
 
+ .Form-SaveButton{
+  background: rgb(70,41,41,0);
+  color: lightgrey; 
+  border-style: solid;
+  padding: 8px 10px; /* Add padding to the button */
+  text-align: center; /* Center the text */
+  border-width: 1px;
+  font-size: 12px; /* Change the font size */
+  border-radius: 2px; /* Add border radius */
+  height: 40px;
+  //width: 120px;
+  border-color: #46494c;
+  
+ }
+
+ .Form-SaveButton:hover {
+  color: white; 
+  background: #202020;
+ //letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  color: white;
+  transition: all 0.4s ease 0s;
+  }
+
  
  .SaveAsPopup {
-  background: rgb(41,35,26);
+  position: absolute;
   background: radial-gradient(circle, rgba(51,55,56,1) 0%, rgba(17,17,17,1) 83%);
-  color: white;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  max-height: calc(80vh - 150px);
+  overflow-y: auto;
+  z-index: 2;
   display: flex;
   justify-content: center;
+  padding: 3rem;
+  text-align: center;
   border-style: solid;
   border-color: #46494c;
   border-width: 1px;
   border-radius: 10px;
-  position: fixed;
-  padding: 4%;
-  top: 85px;
-  left: 30%;
-  right: 30%;
-  opacity: 1;
-  z-index: 1;
+  position: absolute;
+  gap: 150px;
+  top: 35%;
+  left: 50%;
 }
 
 
@@ -372,17 +463,12 @@ export const GlobalStyle = createGlobalStyle`
     width: 100px;
     flex-direction: row;
     background-color: rgba(18, 18, 18, 1);
-    border-style: solid;
     border-color: grey;
-    border-width: 1px;
-    border-radius: 5px;
     color: white;
-    //position: relative;
-   
+    transition: margin-left 0.5s ease-in-out; /* add transition property */
   }
-
-  .flowPanel-hidden {
   
+  .flowPanel-hidden {
     display: flex;
     margin-left: -100px;
     width: 100px;
@@ -393,9 +479,9 @@ export const GlobalStyle = createGlobalStyle`
     border-width: 1px;
     border-radius: 5px;
     color: white;
-   // position: relative;
-    
+    transition: margin-left 0.5s ease-in-out; /* add transition property */
   }
+  
 
   .flowPanel button {
     background: rgb(70,41,41,0);
@@ -439,40 +525,13 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .flowPanel-closeButton {
-      height: 280px !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 240px !important;
+      width: 25px !important;
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
     }
 
-  
-  .flowPanel-panelModules {
-    //  display: flex;
-    //  flex-wrap: wrap;
-    //   gap: 3px;
-  
-  }
-  
-  .flowPanel-panelModules > hr {
-    // width: 100%; /* make sure hr takes up full width */
-    // border: none; /* remove default hr border */
-    // border-top: 1px solid grey; /* add custom border */
-    // margin: 10px 0; /* add margin top and bottom */
-  }
-  
-  // .flowPanel-after flowPanel-panelModules{
-
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   //gap: 5px;
-  //   //margin: 3px;
-  //   width: 140px; /* set a fixed width */
-
-  // }
-
-
-
-    
 
 
     .SaveSection{

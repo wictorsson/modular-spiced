@@ -70,12 +70,12 @@ function Environment() {
           <div className="flowPanel-panelModules">
             <button onClick={() => store.createNode("osc")}>Osc</button>
             <button onClick={() => store.createNode("noise")}>Noise</button>
-            <hr></hr>
+            {/* <hr></hr> */}
             <button onClick={() => store.createNode("channel")}>Channel</button>
             <button onClick={() => store.createNode("gain")}>Gain</button>
             <button onClick={() => store.createNode("reverb")}>Reverb</button>
             <button onClick={() => store.createNode("filter")}>Filter</button>
-            <hr></hr>
+            {/* <hr></hr> */}
             <button onClick={() => store.createNode("lfo")}>(LFO)</button>
             <button onClick={() => store.createNode("sequence")}>
               (Sequencer)

@@ -64,8 +64,10 @@ export default function PatchList() {
   }
   return (
     isSaveAsClicked && (
-      <div className="SaveAsPopup">
-        <SaveForm onSubmit={savePatch} />
+      <div className="overlayContainer">
+        <div className="SaveAsPopup">
+          <SaveForm onSubmit={savePatch} />
+        </div>
       </div>
     )
   );

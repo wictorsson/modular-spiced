@@ -5,22 +5,27 @@ import * as Tone from "tone";
 // Initiate empty object to hold audio connections
 
 let audioNodes = {};
+// Remove audio nodes later
 var audioEnabled = false;
 //Get beatarray from nodes, replace with intance value
 
 let beatArray = [];
 // Connect audio components
-export function addAudioEdge(sourceId, targetId, targetHandle) {
+export function addAudioEdge(sourceId, targetId, paramHandle) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  console.log(targetHandle);
+  //******************* */
 
-  if (targetHandle) {
-    switch (targetHandle) {
+  if (paramHandle) {
+    switch (paramHandle) {
       case "paramFrequency":
         console.log(audioNodeTarget.frequency);
         console.log("CONNECTING", audioNodeTarget.frequency);
         audioNodeSource.connect(audioNodeTarget.frequency);
+        audioNodeTarget.frequency.cancelScheduledValues(0, Tone.Time());
+
+        audioNodeSource.stop();
+        // audioNodeSource.disconnect(audioNodeTarget.frequency);
 
         break;
     }
@@ -81,22 +86,40 @@ export function removeAudioNode(id) {
 
 export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
-  let audioNodeTarget = audioNodes[targetId];
+  const audioNodeTarget = audioNodes[targetId];
   if (audioNodeSource.name === "LFO") {
     console.log("DISCONNECTING");
 
     console.log(audioNodeTarget.frequency);
-    audioNodeTarget.frequency.cancelScheduledValues();
+    // audioNodeTarget.cancelScheduledValues(0);
+
+    // Add a new event to set the value to 0.5 at 3 seconds
+    //param.setValueAtTime(0, Tone.Time());
+    audioNodeSource.disconnect(audioNodeTarget.frequency);
     audioNodeSource.stop();
-    //audioNodeSource.disconnect(audioNodeTarget.frequency);
-    //audioNodeSource.stop();
-    //audioNodeTarget.frequency.setValueAtTime(440, 0);
+    audioNodeTarget.frequency.cancelScheduledValues();
+
+    console.log(audioNodes);
+
+    // audioNodeTarget.frequency.cancelScheduledValues(Tone.now());
   } else if (audioNodeSource !== "sequence") {
     audioNodeSource.disconnect(audioNodeTarget);
   }
 }
 
 export function createAudioNode(id, type, data, setLampIndex) {
+  console.log("started");
+
+  // var filter = new Tone.Filter(1200, "lowpass");
+  // filter.frequency.value = 200;
+  // console.log(filter.frequency.value); //OUTPUTS 200!
+  // var lfo = new Tone.LFO(4, 200, 1200);
+  // lfo.connect(filter.frequency);
+  // filter.frequency.cancelScheduledValues();
+  // lfo.disconnect(filter.frequency);
+  // filter.frequency.value = 200;
+  // console.log(filter.frequency.value); //OUTPUTS 0
+
   if (!audioEnabled) {
     Tone.start();
     audioEnabled = true;
@@ -116,7 +139,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       break;
     case "filter":
       const filter = new Tone.Filter(data.frequency, data.type);
-
+      filter.frequency.setValueAtTime(0.5, Tone.Time() + 10);
       audioNodes[id] = filter;
       break;
     case "sequence":
@@ -151,6 +174,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
     case "lfo":
       // console.log("CREATED LFO");
       const lfo = new Tone.LFO(data.frequency, data.min, data.max);
+
       lfo.start();
       audioNodes[id] = lfo;
       break;

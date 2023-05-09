@@ -73,7 +73,9 @@ export default function SaveForm({ onSubmit }) {
           Public
         </label>
       </div>
-      <button type="submit">Save as</button>
+      <button type="submit" className="Form-SaveButton">
+        Save as
+      </button>
       <button
         type="button"
         className="CloseButton"
