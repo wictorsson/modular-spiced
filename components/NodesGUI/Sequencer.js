@@ -5,7 +5,7 @@ import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
   setKickFrequency: (e) => {
-    store.updateNode(id, { kickFrequency: e.target.value });
+    store.updateNode(id, { frequency: e.target.value });
   },
   setKickLength: (e) => {
     store.updateNode(id, { kickLength: e.target.value });
@@ -33,50 +33,59 @@ export default function Sequencer({ id, data }) {
   };
 
   return (
-    <div>
-      <div className="nodeContainer">
-        {/* <button onClick={toggleButton}>
+    <div className="nodeContainer">
+      {/* <button onClick={toggleButton}>
           {isButtonClicked ? "Clicked" : "Not clicked"}
         </button> */}
-        <h3>Sequencer</h3>
-        <h3>{lampIndex}</h3>
-        <span>Kick Pitch</span>
+      <h3>Sequencer</h3>
+      <h3>{lampIndex}</h3>
+      <span>Kick Pitch</span>
 
+      <input
+        id="slider"
+        className="nodrag"
+        type="range"
+        min="0"
+        max="100"
+        value={data.frequency}
+        onChange={setKickFrequency}
+      />
+      <span>{data.kickFrequency} </span>
+      <span>Kick Length</span>
+
+      <input
+        id="slider"
+        className="nodrag"
+        type="range"
+        min="0.1"
+        max="0.5"
+        step="0.001"
+        value={data.kickLength}
+        onChange={setKickLength}
+      />
+
+      <div>
+        <p>BPM</p>
         <input
-          id="slider"
-          className="nodrag"
-          type="range"
-          min="0"
-          max="100"
-          value={data.kickFrequency}
-          onChange={setKickFrequency}
-        />
-        <span>{data.kickFrequency} </span>
-        <span>Kick Length</span>
+          type="number"
+          required
+          min={30}
+          max={250}
+          value={data.bpm}
+          onChange={setBPM}
+        ></input>
+      </div>
+      <div className="sequenceNodeContainer">
+        {data.row1.map((lamp, index) => (
+          <div
+            key={index}
+            className="lamp"
+            style={{ backgroundColor: index === lampIndex ? "red" : "grey" }}
+          />
+        ))}
+      </div>
 
-        <input
-          id="slider"
-          className="nodrag"
-          type="range"
-          min="0.1"
-          max="0.5"
-          step="0.001"
-          value={data.kickLength}
-          onChange={setKickLength}
-        />
-
-        <div>
-          <p>BPM</p>
-          <input
-            type="number"
-            required
-            min={30}
-            max={250}
-            value={data.bpm}
-            onChange={setBPM}
-          ></input>
-        </div>
-        <div className="sequenceNodeContainer">
+      {/* <div className="sequenceNodeContainer">
           {data.row1.map((slider, index) => (
             <input
               key={index}
@@ -92,23 +101,23 @@ export default function Sequencer({ id, data }) {
               //onChange={(e) => handleSliderChange(e, index)}
             />
           ))}{" "}
-        </div>
-        <div className="sequenceNodeContainer">
-          {data.row1.map((slider, index) => (
-            <input
-              key={index}
-              orient="vertical"
-              // id={`slider-${index}`}
-              className="nodrag"
-              type="range"
-              min="0"
-              max="100"
-              value={data.row1[index]}
-              onChange={(e) => handleSliderChange(e, index)}
-            />
-          ))}{" "}
-        </div>
+        </div> */}
+      <div className="sequenceNodeContainer">
+        {data.row1.map((slider, index) => (
+          <input
+            key={index}
+            orient="vertical"
+            // id={`slider-${index}`}
+            className="nodrag"
+            type="range"
+            min="0"
+            max="100"
+            value={data.row1[index]}
+            onChange={(e) => handleSliderChange(e, index)}
+          />
+        ))}{" "}
       </div>
+
       {/* <Handle type="target" position="bottom" /> */}
       <Handle type="source" position="top" />
     </div>

@@ -601,10 +601,10 @@ export const GlobalStyle = createGlobalStyle`
     .sequenceNodeContainer {
       display: flex;
       flex-direction: row;
-      
+      width: 400px;
       //align-items: center;
       //justify-content: space-between;
-      padding: 10px;
+      padding: 20px;
       margin: 5px;
       background: radial-gradient(rgba(55, 41, 41, 1) 0%, rgba(20, 20, 20, 1) 100%);
       box-shadow: 0 0 5px 0 #444;
@@ -616,25 +616,20 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     .sequenceNodeContainer input[type="range"] {
-      width: 30px;
-       //height: 2px;
-     
-      // -webkit-appearance: none;
-      // background-color: transparent;
-       transform: rotate(-90deg);
-   
-      // margin: 5px;
+      width: 40px;
+      transform: rotate(-90deg);
+      margin: 10px -9px; /* Adjusted margin */
+      //margin-right: 5px;
     }
 
-    .sequenceSlider input[type="range"]::-webkit-slider-thumb {
-      // -webkit-appearance: none;
 
+    .lamp {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      margin-right: 5px;
     }
-
-    .sequenceSlider input[type=range]::-webkit-slider-runnable-track  {
-      // -webkit-appearance: none;
-  
-    }
+    
 
     .Header button {
       background: rgb(70,41,41,0);

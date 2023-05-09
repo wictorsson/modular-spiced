@@ -63,8 +63,8 @@ export const useStore = create((set, get) => ({
         data = {
           bpm: 120,
           row1: new Array(16).fill(0),
-          kickFrequency: 55,
-          kickLength: 100,
+          frequency: 20,
+          kickLength: 0.5,
         };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -92,11 +92,16 @@ export const useStore = create((set, get) => ({
     }
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
-    if (!sequenceNode || type !== "sequence") {
-      set({ nodes: [...get().nodes, { type, id, data, position }] });
-      // CReate node send function here to update bool
-      createAudioNode(id, type, data, get().setLampIndex);
-    }
+
+    set({ nodes: [...get().nodes, { type, id, data, position }] });
+    // CReate node send function here to update bool
+    createAudioNode(id, type, data, get().setLampIndex);
+
+    // if (!sequenceNode || type !== "sequence") {
+    //   set({ nodes: [...get().nodes, { type, id, data, position }] });
+    //   // CReate node send function here to update bool
+    //   createAudioNode(id, type, data, get().setLampIndex);
+    // }
   },
 
   //Parameters changed - updateNode(id, { type: "sine" }
