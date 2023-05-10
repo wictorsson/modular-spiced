@@ -418,7 +418,50 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
- 
+  .input-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .input-box p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .input-box input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-box input:focus {
+    outline: none;
+    border-color: #0066cc;
+  }
+  
+  .outputNodeContainer {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    //align-items: center;
+    //justify-content: space-between;
+    padding: 20px;
+    margin: 5px;
+    background: radial-gradient(rgba(55, 41, 41, 1) 0%, rgba(20, 20, 20, 1) 100%);
+    box-shadow: 0 0 5px 0 #444;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 5px;
+    border-width: 1px;
+    color: white;
+  }
 
 
   .waveformContainer{

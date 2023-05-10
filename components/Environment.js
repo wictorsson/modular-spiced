@@ -86,7 +86,7 @@ function Environment() {
             </button>
             <button onClick={() => store.createNode("filter")}>Filter</button>
             {/* <hr></hr> */}
-            <button onClick={() => store.createNode("lfo")}>(LFO)</button>
+            <button onClick={() => store.createNode("lfo")}>LFO</button>
             <button onClick={() => store.createNode("sequence")}>
               (Sequencer)
             </button>

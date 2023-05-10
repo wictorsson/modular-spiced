@@ -18,7 +18,7 @@ export const useStore = create((set, get) => ({
     {
       type: "audioOut",
       id: "output_id",
-      data: { label: "output" },
+      data: { bpm: 120, label: "output" },
       position: { x: 350, y: 40 },
       deletable: false,
     },

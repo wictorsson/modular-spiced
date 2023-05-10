@@ -66,7 +66,7 @@ export default function Sequencer({ id, data }) {
         onChange={setKickLength}
       />
 
-      <div>
+      {/* <div>
         <p>BPM</p>
         <input
           type="number"
@@ -76,7 +76,7 @@ export default function Sequencer({ id, data }) {
           value={data.bpm}
           onChange={setBPM}
         ></input>
-      </div>
+      </div> */}
       <div className="sequenceNodeContainer">
         {data.row1.map((lamp, index) => (
           <div

@@ -5,7 +5,6 @@ import { getContext } from "tone";
 // Initiate empty object to hold audio connections
 
 let audioNodes = {};
-let audioNodesLFO = [];
 // Remove audio nodes later
 var audioEnabled = false;
 //Get beatarray from nodes, replace with intance value
@@ -81,7 +80,7 @@ export function updateAudioNode(id, data) {
   Object.entries(data).forEach(([key, val]) => {
     console.log(val);
     console.log(key);
-    console.log(audioNode[key]);
+    console.log(key);
 
     if (key === "row1") {
       beatArray = val;

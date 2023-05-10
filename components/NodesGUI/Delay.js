@@ -21,6 +21,7 @@ export default function Delay({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
+        Delay
         <div className="nodeContainer">
           <h3>Time</h3>
 
@@ -80,9 +81,7 @@ export default function Delay({ id, data }) {
             <label htmlFor="16n">16n</label>
           </div>
         </div>
-
         <h3>Feedback</h3>
-
         <input
           className="nodrag"
           type="range"
@@ -94,7 +93,6 @@ export default function Delay({ id, data }) {
         />
         {/* <span>{data.gain}dB</span> */}
         <h3>Wet</h3>
-
         <input
           className="nodrag"
           type="range"
