@@ -35,6 +35,9 @@ export const useStore = create((set, get) => ({
   toggleSaveAs: () =>
     set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
 
+  isLfoSet: false,
+  toggleisLfoSet: () => set((state) => ({ isLfoSet: !state.isLfoSet })),
+
   // TEMPLATE MODULES
   createNode(type) {
     const id = nanoid();
@@ -151,6 +154,7 @@ export const useStore = create((set, get) => ({
   removeEdges(edges) {
     edges.forEach((edge) => {
       // Avoid removing twice the same connection!
+      console.log("AUDIO EDGE", edge.target);
       if (edges.length < 2) {
         removeAudioEdge(edge.source, edge.target);
       }
@@ -167,6 +171,7 @@ export const useStore = create((set, get) => ({
 
     console.log(data.targetHandle);
     if (sourceNode.type === "lfo") {
+      console.log(get().isLfoSet);
       set({
         nodes: get().nodes.map((node) =>
           node.id === sourceNode.id
@@ -192,10 +197,25 @@ export const useStore = create((set, get) => ({
           addAudioEdge(data.source, data.target, data.targetHandle);
         }
         //Nano ID generates random six digit ID
+
         const id = nanoid(6);
         const edge = { id, ...data };
+        console.log("SOUCEC", sourceNode.type);
 
-        set({ edges: [edge, ...get().edges] });
+        if (sourceNode.type === "lfo" && get().isLfoSet) {
+          // Don't add the edge to the edges array
+          console.log("Skipping adding edge");
+        } else {
+          // Add the edge to the edges array
+          const edges = [edge, ...get().edges];
+          set({ edges });
+
+          if (sourceNode.type === "lfo") {
+            // Toggle the isLfoSet boolean only if the source node type is "lfo"
+            const isLfoSet = !get().isLfoSet;
+            set({ isLfoSet });
+          }
+        }
       }
     }
   },

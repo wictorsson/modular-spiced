@@ -139,7 +139,9 @@ export function removeAudioEdge(sourceId, targetId) {
     const audioNodeSourceGainNode = audioNodes[sourceId + "gainNode"];
     Tone.disconnect(audioNodeSource, audioNodeSourceGainNode);
 
-    Tone.disconnect(audioNodeSourceGainNode, audioNodeTarget.frequency);
+    console.log("DISCONNECTING", targetId);
+    // Tone.disconnect(audioNodeSourceGainNode, audioNodeTarget.frequency);
+    Tone.disconnect(audioNodeSourceGainNode);
   } else if (audioNodeSource !== "MembraneSynth") {
     audioNodeSource.disconnect(audioNodeTarget);
   }
