@@ -9,6 +9,8 @@ import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
 import Lfo from "./NodesGUI/Lfo";
 import Reverb from "./NodesGUI/Reverb";
+import Distortion from "./NodesGUI/Distortion";
+import Delay from "./NodesGUI/Delay";
 import Noise from "./NodesGUI/Noise";
 import Channel from "./NodesGUI/Channel";
 import AudioOutToggle from "./NodesGUI/Output";
@@ -40,6 +42,8 @@ const nodeTypes = {
   noise: Noise,
   membsynth: Membsynth,
   channel: Channel,
+  distortion: Distortion,
+  delay: Delay,
 };
 
 const proOptions = { hideAttribution: true };
@@ -75,7 +79,11 @@ function Environment() {
             {/* <hr></hr> */}
             <button onClick={() => store.createNode("channel")}>Channel</button>
             <button onClick={() => store.createNode("gain")}>Gain</button>
+            <button onClick={() => store.createNode("delay")}>Delay</button>
             <button onClick={() => store.createNode("reverb")}>Reverb</button>
+            <button onClick={() => store.createNode("distortion")}>
+              Distortion
+            </button>
             <button onClick={() => store.createNode("filter")}>Filter</button>
             {/* <hr></hr> */}
             <button onClick={() => store.createNode("lfo")}>(LFO)</button>

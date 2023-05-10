@@ -89,6 +89,16 @@ export const useStore = create((set, get) => ({
         position = { x: randomXpos, y: randomYpos };
         break;
       }
+      case "distortion": {
+        data = { distortion: 0 };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "delay": {
+        data = { delayTime: 1000, feeback: 0.5, wet: 0.5 };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
     }
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");

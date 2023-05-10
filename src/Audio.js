@@ -94,7 +94,7 @@ export function updateAudioNode(id, data) {
       Tone.Transport.bpm.rampTo(val, 1);
     }
     //DRY!
-    else if (key === "min" || key === "max") {
+    else if (key === "min" || key === "max" || key === "distortion") {
       audioNode[key] = val;
     } else if (isNaN(val) || typeof val === "boolean") {
       audioNode[key] = val;
@@ -260,6 +260,17 @@ export function createAudioNode(id, type, data, setLampIndex) {
     case "reverb":
       const reverb = new Tone.Freeverb();
       audioNodes[id] = reverb;
+      break;
+
+    case "distortion":
+      const distortion = new Tone.Distortion(data.distortion);
+      audioNodes[id] = distortion;
+      break;
+
+    case "delay":
+      const delay = new Tone.Delay(0.1, data.feedback, data.wet);
+      const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5);
+      audioNodes[id] = feedbackDelay;
       break;
 
     case "noise":
