@@ -35,9 +35,6 @@ export const useStore = create((set, get) => ({
   toggleSaveAs: () =>
     set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
 
-  isLfoSet: false,
-  toggleisLfoSet: () => set((state) => ({ isLfoSet: !state.isLfoSet })),
-
   // TEMPLATE MODULES
   createNode(type) {
     const id = nanoid();
@@ -77,7 +74,6 @@ export const useStore = create((set, get) => ({
           frequency: "4n",
           min: -1,
           max: 1,
-          connectedTo: "paramGain",
         };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -114,15 +110,9 @@ export const useStore = create((set, get) => ({
     set({ nodes: [...get().nodes, { type, id, data, position }] });
     // CReate node send function here to update bool
     createAudioNode(id, type, data, get().setLampIndex);
-
-    // if (!sequenceNode || type !== "sequence") {
-    //   set({ nodes: [...get().nodes, { type, id, data, position }] });
-    //   // CReate node send function here to update bool
-    //   createAudioNode(id, type, data, get().setLampIndex);
-    // }
   },
 
-  //Parameters changed - updateNode(id, { type: "sine" }
+  //Parameters changed -
   updateNode(id, data) {
     updateAudioNode(id, data);
     set({
@@ -180,21 +170,6 @@ export const useStore = create((set, get) => ({
     // Check if connection is parameter connection
     let twoParamHandles = false;
 
-    // console.log(data.targetHandle);
-    if (sourceNode.type === "lfo") {
-      console.log(get().isLfoSet);
-      set({
-        nodes: get().nodes.map((node) =>
-          node.id === sourceNode.id
-            ? {
-                ...node,
-                data: { ...node.data, connectedTo: data.targetHandle },
-              }
-            : node
-        ),
-      });
-    }
-
     if (data.sourceHandle && data.targetHandle)
       if (data.sourceHandle[0] === "p" && data.targetHandle[0] === "p") {
         twoParamHandles = true;
@@ -213,19 +188,6 @@ export const useStore = create((set, get) => ({
         console.log("SOUCEC", sourceNode.type);
         const edges = [edge, ...get().edges];
         set({ edges });
-
-        // if (sourceNode.type === "lfo" && get().isLfoSet) {
-        //   // Don't add the edge to the edges array
-        //   console.log("Skipping adding edge");
-        // } else {
-        //   // Add the edge to the edges array
-
-        //   if (sourceNode.type === "lfo") {
-        //     // Toggle the isLfoSet boolean only if the source node type is "lfo"
-        //     const isLfoSet = !get().isLfoSet;
-        //     set({ isLfoSet });
-        //   }
-        // }
       }
     }
   },

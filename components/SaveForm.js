@@ -44,7 +44,7 @@ export default function SaveForm({ onSubmit, isSession }) {
         >
           ╳
         </button>
-        <p>Login Required</p>
+        <p>Sign in required</p>
       </div>
     );
   }

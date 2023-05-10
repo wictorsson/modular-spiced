@@ -19,23 +19,7 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
   //******************* */
-  // const filter = new Tone.Filter(1200, "lowpass");
 
-  // filter.frequency.value = 200;
-
-  // console.log("filter", filter.frequency.value);
-
-  // const gainNode = getContext().rawContext.createGain();
-  // const lfo = new Tone.LFO(4, 200, 1200);
-
-  // Tone.connect(lfo, gainNode);
-  // Tone.connect(gainNode, filter.frequency);
-
-  // Tone.disconnect(lfo, gainNode);
-  // Tone.disconnect(gainNode, filter.frequency);
-
-  // filter.frequency.value = 200;
-  //console.log("PARAMHANDLE", paramHandle);
   if (paramHandle) {
     // CHECK IF LFO
 
@@ -76,38 +60,23 @@ export function updateAudioNode(id, data) {
 
       if (audioNode.name === "MembraneSynth") {
         kickFrequency = val;
-
-        //audioNode.data.frequency = val;
       }
     } else if (key === "kickLength") {
       kickLength = val;
     } else if (key === "bpm") {
-      //   console.log("changin bpm");
       Tone.Transport.bpm.rampTo(val, 1);
-    }
-    //DRY!
-    else if (key === "min" || key === "max") {
+    } else if (key === "min" || key === "max") {
       audioNode[key] = (val + 1) * 20000;
 
-      audioNode2[key] = val;
+      audioNode2[key] = val * 2 - 1;
     } else if (key === "delayTime") {
       const time = Tone.Time(val).toSeconds();
-      console.log(val);
-      // const audioNodeSource = audioNodes[id];
-      // audioNodeSource.set({
-      //   delayTime: val,
-      // });
 
       audioNode[key].value = time;
     } else if (isNaN(val) || typeof val === "boolean" || key === "distortion") {
       audioNode[key] = val;
     } else {
-      // console.log(key);
-
       audioNode[key].value = val;
-
-      //console.log(audioNode[key].value);
-      // console.log(audioNode[key]);
     }
   });
 }
@@ -129,27 +98,19 @@ export function removeAudioNode(id) {
     console.log(audioNodes[id]);
     if (audioNodes[id].name === "MembraneSynth") {
       Tone.Transport.clear(audioNodes[id + "repeat"]);
+      beatArray.fill(0);
     }
   } else {
     // Tone.Transport.clear(audioNodes[id + "repeat"]);
-    Tone.Transport.stop();
-    Tone.Transport.cancel(0);
-    beatArray.fill(0);
-    Tone.Transport.bpm.rampTo(120, 1);
+    // Tone.Transport.stop();
+    // Tone.Transport.cancel(0);
+    // Tone.Transport.bpm.rampTo(120, 1);
   }
 }
 
 export function removeAudioEdge(sourceId, targetId, targetHandle) {
   const audioNodeSource = audioNodes[sourceId];
   const audioNodeTarget = audioNodes[targetId];
-  console.log("YOU ARE HERE", audioNodeTarget);
-  console.log("YOU ARE HERE", audioNodeSource.name);
-
-  // const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
-  // const audioNodeSourceGain2 = audioNodes[sourceId + "gainNode2"];
-
-  // Tone.disconnect(audioNodeSource, audioNodeSourceGain);
-  // Tone.disconnect(audioNodeSource2, audioNodeSourceGain2);
 
   if (audioNodeSource.name === "LFO") {
     if (targetHandle === "paramFrequency") {
@@ -240,9 +201,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
         index++;
       }, "16n");
       audioNodes[id + "repeat"] = scheduledEvent;
-      //console.log("REPEAT", repeat);
 
-      //audioNodes[id + "repeater"] = repeater;
       // transport must be started before it starts invoking events
 
       break;
@@ -319,3 +278,23 @@ export function toggleAudio() {
   console.log(Tone.context.state);
   return isRunning() ? Tone.start() : Tone.start();
 }
+
+//*********
+
+// const filter = new Tone.Filter(1200, "lowpass");
+
+// filter.frequency.value = 200;
+
+// console.log("filter", filter.frequency.value);
+
+// const gainNode = getContext().rawContext.createGain();
+// const lfo = new Tone.LFO(4, 200, 1200);
+
+// Tone.connect(lfo, gainNode);
+// Tone.connect(gainNode, filter.frequency);
+
+// Tone.disconnect(lfo, gainNode);
+// Tone.disconnect(gainNode, filter.frequency);
+
+// filter.frequency.value = 200;
+//console.log("PARAMHANDLE", paramHandle);

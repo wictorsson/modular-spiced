@@ -66,17 +66,6 @@ export default function Sequencer({ id, data }) {
         onChange={setKickLength}
       />
 
-      {/* <div>
-        <p>BPM</p>
-        <input
-          type="number"
-          required
-          min={30}
-          max={250}
-          value={data.bpm}
-          onChange={setBPM}
-        ></input>
-      </div> */}
       <h3>{lampIndex}</h3>
       <div className="sequenceNodeContainer">
         {data.row1.map((lamp, index) => (
@@ -87,55 +76,27 @@ export default function Sequencer({ id, data }) {
           />
         ))}
       </div>
-
-      {/* <div className="sequenceNodeContainer">
-          {data.row1.map((slider, index) => (
+      <div className="sequenceNodeContainer">
+        {data.row1.map((slider, index) => (
+          <React.Fragment key={index}>
             <input
-              key={index}
               orient="vertical"
-              // id={`slider-${index}`}
               className="nodrag"
               type="range"
               min="0"
               max="100"
-              //value={data.row1[index]}
-              readOnly
-              value={index === lampIndex ? "100" : "0"}
-              //onChange={(e) => handleSliderChange(e, index)}
+              value={data.row1[index]}
+              onChange={(e) => handleSliderChange(e, index)}
             />
-          ))}{" "}
-        </div> */}
-      <div className="sequenceNodeContainer">
-        {data.row1.map((slider, index) => (
-          <input
-            key={index}
-            orient="vertical"
-            // id={`slider-${index}`}
-            className="nodrag"
-            type="range"
-            min="0"
-            max="100"
-            value={data.row1[index]}
-            onChange={(e) => handleSliderChange(e, index)}
-          />
-        ))}{" "}
+            {(index + 1) % 4 === 0 && index !== data.row1.length - 1 && (
+              <div className="verticalLine">|</div>
+            )}
+          </React.Fragment>
+        ))}
       </div>
 
       {/* <Handle type="target" position="bottom" /> */}
       <Handle type="source" position="top" />
     </div>
   );
-}
-
-{
-  /* <div>
-{data.row1.map((isChecked, index) => (
-  <input
-    key={index}
-    type="checkbox"
-    checked={isChecked}
-    onChange={(e) => handleCheckboxChange(e, index)}
-  />
-))}
-</div> */
 }
