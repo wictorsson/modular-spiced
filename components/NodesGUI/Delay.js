@@ -21,18 +21,66 @@ export default function Delay({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
-        {/* <h3>Time</h3>
+        <div className="nodeContainer">
+          <h3>Time</h3>
 
-        <input
-          className="nodrag"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={data.delayTime}
-          onChange={setTime}
-        /> */}
-        {/* <span>{data.gain}dB</span> */}
+          <div>
+            <input
+              type="radio"
+              id="2n"
+              name="time"
+              value="2n"
+              onChange={setTime}
+              checked={data.delayTime === "2n"}
+            />
+            <label htmlFor="2n">2n</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="4n"
+              name="time"
+              value="4n"
+              onChange={setTime}
+              checked={data.delayTime === "4n"}
+            />
+            <label htmlFor="4n">4n</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="8n"
+              name="time"
+              value="8n"
+              onChange={setTime}
+              checked={data.delayTime === "8n"}
+            />
+            <label htmlFor="8n">8n</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="8n."
+              name="time"
+              value="8n."
+              onChange={setTime}
+              checked={data.delayTime === "8n."}
+            />
+            <label htmlFor="8n.">8n.</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="16n"
+              name="time"
+              value="16n"
+              onChange={setTime}
+              checked={data.delayTime === "16n"}
+            />
+            <label htmlFor="16n">16n</label>
+          </div>
+        </div>
+
         <h3>Feedback</h3>
 
         <input

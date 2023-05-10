@@ -38,20 +38,28 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
   // filter.frequency.value = 200;
   console.log("PARAMHANDLE", paramHandle);
   if (paramHandle) {
+    // CHECK IF LFO
+
     const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
     Tone.connect(audioNodeSource, audioNodeSourceGain);
     if (paramHandle === "paramFrequency") {
+      console.log("CHANGING THE RATE");
+      audioNodeSource.set({
+        min: 10,
+        max: 20000,
+      });
       Tone.connect(audioNodeSourceGain, audioNodeTarget.frequency);
     }
     if (paramHandle === "paramGain") {
+      console.log("CHANGING THE RATE");
       audioNodeSource.set({
         min: -1,
-        max: 0,
+        max: 1,
       });
 
       Tone.connect(audioNodeSourceGain, audioNodeTarget.volume);
     }
-
+    audioNodeSource.start();
     // switch (paramHandle) {
     //   case "paramFrequency":
     //     const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
@@ -67,26 +75,23 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
 // Update audio parameters
 export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
-  console.log(audioNode);
+  console.log("AUDIONODE", audioNode);
 
   //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
     console.log(val);
     console.log(key);
     console.log(audioNode[key]);
-    // console.log(id);
-    // console.log(key);
-    if (key === "row1") {
-      //audioNode.data[key] = val;
 
+    if (key === "row1") {
       beatArray = val;
     } else if (key === "frequency") {
       audioNode[key].value = val;
 
-      kickFrequency = val;
+      if (audioNode.name === "MembraneSynth") {
+        kickFrequency = val;
+      }
     } else if (key === "kickLength") {
-      //audioNode.data[key] = val;
-
       kickLength = val;
     } else if (key === "bpm") {
       //   console.log("changin bpm");
@@ -95,6 +100,15 @@ export function updateAudioNode(id, data) {
     //DRY!
     else if (key === "min" || key === "max" || key === "distortion") {
       audioNode[key] = val;
+    } else if (key === "delayTime") {
+      const time = Tone.Time(val).toSeconds();
+      console.log(val);
+      // const audioNodeSource = audioNodes[id];
+      // audioNodeSource.set({
+      //   delayTime: val,
+      // });
+
+      audioNode[key].value = time;
     } else if (isNaN(val) || typeof val === "boolean") {
       audioNode[key] = val;
     } else {
@@ -112,6 +126,7 @@ export function updateAudioNode(id, data) {
 export function removeAudioNode(id) {
   // check if LFO - GAIN!!!!
   console.log(audioNodes[id]);
+
   if (
     audioNodes[id] !== "MembraneSynth" &&
     Object.keys(audioNodes).length > 1
@@ -119,6 +134,8 @@ export function removeAudioNode(id) {
     const audioNode = audioNodes[id];
 
     audioNode.disconnect();
+    // IF LFO HERE ???
+
     // audioNode.stop?.();
     // Dispose - free garbage collection
     audioNode.dispose();
@@ -136,10 +153,15 @@ export function removeAudioEdge(sourceId, targetId) {
   let audioNodeTarget = audioNodes[targetId];
 
   if (audioNodeSource.name === "LFO") {
+    audioNodeSource.stop();
     const audioNodeSourceGainNode = audioNodes[sourceId + "gainNode"];
     Tone.disconnect(audioNodeSource, audioNodeSourceGainNode);
 
     console.log("DISCONNECTING", targetId);
+    audioNodeSource.set({
+      min: -1,
+      max: 1,
+    });
     // Tone.disconnect(audioNodeSourceGainNode, audioNodeTarget.frequency);
     Tone.disconnect(audioNodeSourceGainNode);
   } else if (audioNodeSource !== "MembraneSynth") {
@@ -230,7 +252,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
         if (beatArray[step] > 0) {
           membSynth.triggerAttackRelease(
             kickFrequency,
-            data.kickLength,
+            kickLength,
             time,
             beatArray[step] / 50
           );
@@ -242,7 +264,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       break;
 
     case "lfo":
-      const lfo = new Tone.LFO(data.frequency, -100, 0);
+      const lfo = new Tone.LFO(data.frequency, data.min, data.max);
 
       //const lfo = new Tone.LFO(data.frequency, data.min, data.max);
       let gainNode = getContext().rawContext.createGain();

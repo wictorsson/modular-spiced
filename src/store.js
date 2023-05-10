@@ -75,8 +75,8 @@ export const useStore = create((set, get) => ({
       case "lfo": {
         data = {
           frequency: "4n",
-          min: -90,
-          max: 6,
+          min: -1,
+          max: 1,
           connectedTo: "paramGain",
         };
         position = { x: randomXpos, y: randomYpos };
@@ -159,7 +159,14 @@ export const useStore = create((set, get) => ({
         removeAudioEdge(edge.source, edge.target);
       }
       const targetNode = get().nodes.find((node) => node.id === edge.target);
+      const sourceNode = get().nodes.find((node) => node.id === edge.source);
       targetNode.data.inputConnected = false;
+
+      if (sourceNode.type === "lfo") {
+        const isLfoSet = !get().isLfoSet;
+        set({ isLfoSet });
+        console.log("REMOVED EDGE", sourceNode);
+      }
     });
   },
 
@@ -170,7 +177,7 @@ export const useStore = create((set, get) => ({
     let twoParamHandles = false;
 
     console.log(data.targetHandle);
-    if (sourceNode.type === "lfo") {
+    if (sourceNode.type === "lfo" && !get().isLfoSet) {
       console.log(get().isLfoSet);
       set({
         nodes: get().nodes.map((node) =>

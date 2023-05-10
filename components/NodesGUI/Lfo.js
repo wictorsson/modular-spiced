@@ -114,7 +114,7 @@ export default function Lfo({ id, data }) {
             className="nodrag"
             type="range"
             min="-1"
-            max="0"
+            max="1"
             step="0.01"
             value={data.min}
             onChange={setMin}
@@ -127,7 +127,7 @@ export default function Lfo({ id, data }) {
             className="nodrag"
             type="range"
             min="-1"
-            max="0"
+            max="1"
             step="0.01"
             value={data.max}
             onChange={setMax}
