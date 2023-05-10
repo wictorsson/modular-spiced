@@ -13,6 +13,8 @@ var audioEnabled = false;
 let beatArray = [];
 let kickFrequency;
 let kickLength;
+let repeatStarted = false;
+let counter = 0;
 
 // Connect audio components
 export function addAudioEdge(sourceId, targetId, paramHandle) {
@@ -89,6 +91,8 @@ export function updateAudioNode(id, data) {
 
       if (audioNode.name === "MembraneSynth") {
         kickFrequency = val;
+
+        //audioNode.data.frequency = val;
       }
     } else if (key === "kickLength") {
       kickLength = val;
@@ -138,8 +142,11 @@ export function removeAudioNode(id) {
     // audioNode.stop?.();
     // Dispose - free garbage collection
     audioNode.dispose();
-    console.log(Tone.context.state);
+    beatArray = [];
+    //console.log(Tone.context.state);
+    Tone.Transport.clear(audioNodes[id + "repeat"]);
   } else {
+    // Tone.Transport.clear(audioNodes[id + "repeat"]);
     Tone.Transport.stop();
     Tone.Transport.cancel(0);
     beatArray.fill(0);
@@ -164,11 +171,13 @@ export function removeAudioEdge(sourceId, targetId) {
     // Tone.disconnect(audioNodeSourceGainNode, audioNodeTarget.frequency);
     Tone.disconnect(audioNodeSourceGainNode);
   } else if (audioNodeSource !== "MembraneSynth") {
-    audioNodeSource.disconnect(audioNodeTarget);
+    console.log("REEEEEEEEPEAT", audioNodes[sourceId + "repeat"]);
+    //Tone.Transport.clear(audioNodes[sourceId + "repeat"]);
   }
+  audioNodeSource.disconnect(audioNodeTarget);
 }
 
-export function createAudioNode(id, type, data, setLampIndex) {
+export function createAudioNode(id, type, data, setLampIndex, isSeqStarted) {
   console.log("started");
 
   // var filter = new Tone.Filter(1200, "lowpass");
@@ -227,7 +236,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       audioNodes[id] = filter;
       break;
     case "sequence":
-      const membSynth = new Tone.MembraneSynth().toDestination();
+      const membSynth = new Tone.MembraneSynth();
 
       audioNodes[id] = membSynth;
 
@@ -238,7 +247,8 @@ export function createAudioNode(id, type, data, setLampIndex) {
 
       let step = 0;
       let index = 0;
-      Tone.Transport.scheduleRepeat((time) => {
+
+      let scheduledEvent = Tone.Transport.scheduleRepeat((time) => {
         //console.log(audioNodes[id].frequency);
         step = index % 16;
         Tone.Draw.schedule(function () {
@@ -249,7 +259,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
 
         // use the callback time to schedule events
         if (beatArray[step] > 0) {
-          membSynth.triggerAttackRelease(
+          audioNodes[id].triggerAttackRelease(
             kickFrequency,
             kickLength,
             time,
@@ -258,6 +268,10 @@ export function createAudioNode(id, type, data, setLampIndex) {
         }
         index++;
       }, "16n");
+      audioNodes[id + "repeat"] = scheduledEvent;
+      //console.log("REPEAT", repeat);
+
+      //audioNodes[id + "repeater"] = repeater;
       // transport must be started before it starts invoking events
 
       break;
@@ -265,7 +279,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
     case "lfo":
       const lfo = new Tone.LFO(data.frequency, data.min, data.max);
 
-      //const lfo = new Tone.LFO(data.frequency, data.min, data.max);
+      //LFO workaround , pipe through a gainNode
       let gainNode = getContext().rawContext.createGain();
       lfo.start();
 

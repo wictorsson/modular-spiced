@@ -23,7 +23,7 @@ export default function AudioOut({ id, data }) {
       <Handle type="target" position="bottom" />
       <div className="nodeContainer">
         AUDIO OUT
-        <div class="input-box">
+        <div className="input-box">
           <h3>Tempo</h3>
           <input
             type="number"

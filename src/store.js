@@ -200,9 +200,8 @@ export const useStore = create((set, get) => ({
       //Check if it is a parameter connection. Handle is set to null if non paprameter
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
         //
-        if (sourceNode.type !== "sequence") {
-          addAudioEdge(data.source, data.target, data.targetHandle);
-        }
+
+        addAudioEdge(data.source, data.target, data.targetHandle);
         //Nano ID generates random six digit ID
 
         const id = nanoid(6);

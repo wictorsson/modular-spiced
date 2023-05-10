@@ -24,7 +24,7 @@ export default function Sequencer({ id, data }) {
 
   //Set in component, it is now global!
   const { lampIndex } = useStore();
-
+  //console.log(lampIndex);
   const handleSliderChange = (e, index) => {
     // Add new array here and update with zustand
     let updatedRowArray = [...data.row1];
@@ -40,7 +40,7 @@ export default function Sequencer({ id, data }) {
           {isButtonClicked ? "Clicked" : "Not clicked"}
         </button> */}
       <h3>Sequencer</h3>
-      <h3>{lampIndex}</h3>
+
       <span>Kick Pitch</span>
 
       <input
@@ -77,6 +77,7 @@ export default function Sequencer({ id, data }) {
           onChange={setBPM}
         ></input>
       </div> */}
+      <h3>{lampIndex}</h3>
       <div className="sequenceNodeContainer">
         {data.row1.map((lamp, index) => (
           <div
