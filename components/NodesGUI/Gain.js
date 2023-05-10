@@ -31,7 +31,7 @@ export default function Gain({ id, data }) {
 
       <Handle type="target" position="bottom" />
       <Handle type="source" position="top" />
-      <Handle type="target" position="right" id="paramFrequency" />
+      <Handle type="target" position="right" id="paramGain" />
     </div>
   );
 }

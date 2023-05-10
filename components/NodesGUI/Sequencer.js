@@ -21,6 +21,8 @@ export default function Sequencer({ id, data }) {
     selector(id),
     shallow
   );
+
+  //Set in component, it is now global!
   const { lampIndex } = useStore();
 
   const handleSliderChange = (e, index) => {

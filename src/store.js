@@ -70,7 +70,12 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "lfo": {
-        data = { frequency: "4n", min: 10, max: 20000 };
+        data = {
+          frequency: "4n",
+          min: -90,
+          max: 6,
+          connectedTo: "paramGain",
+        };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -159,6 +164,21 @@ export const useStore = create((set, get) => ({
     const sourceNode = get().nodes.find((node) => node.id === data.source);
     // Check if connection is parameter connection
     let twoParamHandles = false;
+
+    console.log(data.targetHandle);
+    if (sourceNode.type === "lfo") {
+      set({
+        nodes: get().nodes.map((node) =>
+          node.id === sourceNode.id
+            ? {
+                ...node,
+                data: { ...node.data, connectedTo: data.targetHandle },
+              }
+            : node
+        ),
+      });
+    }
+
     if (data.sourceHandle && data.targetHandle)
       if (data.sourceHandle[0] === "p" && data.targetHandle[0] === "p") {
         twoParamHandles = true;
@@ -167,6 +187,7 @@ export const useStore = create((set, get) => ({
     if (data.sourceHandle === data.targetHandle || twoParamHandles) {
       //Check if it is a parameter connection. Handle is set to null if non paprameter
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
+        //
         if (sourceNode.type !== "sequence") {
           addAudioEdge(data.source, data.target, data.targetHandle);
         }

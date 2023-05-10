@@ -90,9 +90,9 @@ function Environment() {
             <button onClick={() => store.createNode("sequence")}>
               (Sequencer)
             </button>
-            <button onClick={() => store.createNode("membsynth")}>
+            {/* <button onClick={() => store.createNode("membsynth")}>
               Kick Synth
-            </button>
+            </button> */}
           </div>
           <button
             className="flowPanel-closeButton"
