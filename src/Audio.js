@@ -41,13 +41,15 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
   if (paramHandle) {
     switch (paramHandle) {
       case "paramFrequency":
-        // console.log(audioNodeTarget.frequency);
-        // console.log("CONNECTING", audioNodeTarget.frequency);
-        let gainNode = getContext().rawContext.createGain();
-        audioNodes["gainNode"] = gainNode;
-        //audioNodeSource.connect(gainNode, audioNodeTarget.frequency);
-        Tone.connect(audioNodeSource, gainNode);
-        Tone.connect(gainNode, audioNodeTarget.frequency);
+        //let gainNode = getContext().rawContext.createGain();
+        //audioNodes["gainNode"] = gainNode;
+        const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
+
+        Tone.connect(audioNodeSource, audioNodeSourceGain);
+        Tone.connect(audioNodeSourceGain, audioNodeTarget.frequency);
+
+        // Tone.connect(audioNodeSource, gainNode);
+        // Tone.connect(gainNode, audioNodeTarget.frequency);
 
         // Tone.disconnect(audioNodeSource, gainNode);
         // Tone.disconnect(gainNode, audioNodeTarget.frequency);
@@ -109,6 +111,7 @@ export function updateAudioNode(id, data) {
 }
 
 export function removeAudioNode(id) {
+  // check if LFO - GAIN!!!!
   console.log(audioNodes[id]);
   if (
     audioNodes[id] !== "MembraneSynth" &&
@@ -133,15 +136,15 @@ export function removeAudioEdge(sourceId, targetId) {
   const audioNodeSource = audioNodes[sourceId];
   let audioNodeTarget = audioNodes[targetId];
 
-  Tone.disconnect(audioNodeSource, audioNodes["gainNode"]);
-  Tone.disconnect(audioNodes["gainNode"], audioNodeTarget.frequency);
-
   if (audioNodeSource.name === "LFO") {
     console.log("DISCONNECTING");
+    const audioNodeSourceGainNode = audioNodes[sourceId + "gainNode"];
+    Tone.disconnect(audioNodeSource, audioNodeSourceGainNode);
+    Tone.disconnect(audioNodeSourceGainNode, audioNodeTarget.frequency);
     // Tone.disconnect(audioNodeSource);
     // Tone.disconnect(audioNodeTarget.frequency);
     // audioNodeSource.disconnect(audioNodeTarget.frequency);
-    audioNodeSource.stop();
+    //audioNodeSource.stop();
     // audioNodesLFO.push(audioNodeSource);
     // Connect this LFO to the node, for start make osc only input one
   } else if (audioNodeSource !== "MembraneSynth") {
@@ -162,39 +165,26 @@ export function createAudioNode(id, type, data, setLampIndex) {
   // filter.frequency.value = 200;
   // console.log(filter.frequency.value); //OUTPUTS 0
 
+  //*************** */
+
   // const filter = new Tone.Filter(1200, "lowpass");
 
   // filter.frequency.value = 200;
 
   // console.log("filter", filter.frequency.value);
 
+  // const gainNode = getContext().rawContext.createGain();
   // const lfo = new Tone.LFO(4, 200, 1200);
 
-  // lfo.connect(filter.frequency);
-  // lfo.disconnect(filter.frequency);
+  // Tone.connect(lfo, gainNode);
+  // Tone.connect(gainNode, filter.frequency);
+
+  // Tone.disconnect(lfo, gainNode);
+  // Tone.disconnect(gainNode, filter.frequency);
 
   // filter.frequency.value = 200;
 
   // console.log("filter", filter.frequency.value);
-
-  const filter = new Tone.Filter(1200, "lowpass");
-
-  filter.frequency.value = 200;
-
-  console.log("filter", filter.frequency.value);
-
-  const gainNode = getContext().rawContext.createGain();
-  const lfo = new Tone.LFO(4, 200, 1200);
-
-  Tone.connect(lfo, gainNode);
-  Tone.connect(gainNode, filter.frequency);
-
-  Tone.disconnect(lfo, gainNode);
-  Tone.disconnect(gainNode, filter.frequency);
-
-  filter.frequency.value = 200;
-
-  console.log("filter", filter.frequency.value);
 
   if (!audioEnabled) {
     Tone.start();
@@ -257,19 +247,14 @@ export function createAudioNode(id, type, data, setLampIndex) {
       break;
 
     case "lfo":
-      // const filter = new Tone.Filter(1200, "lowpass");
-
-      // filter.frequency.value = 200;
-
-      // console.log("filter", filter.frequency.value);
-
       const lfo = new Tone.LFO(4, 200, 1200);
 
       //const lfo = new Tone.LFO(data.frequency, data.min, data.max);
-
+      let gainNode = getContext().rawContext.createGain();
       lfo.start();
 
       audioNodes[id] = lfo;
+      audioNodes[id + "gainNode"] = gainNode;
       break;
 
     case "reverb":
