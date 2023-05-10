@@ -39,9 +39,9 @@ export default function Sequencer({ id, data }) {
       {/* <button onClick={toggleButton}>
           {isButtonClicked ? "Clicked" : "Not clicked"}
         </button> */}
-      <h3>Sequencer</h3>
+      <h3>Kick Seq</h3>
 
-      <span>Kick Pitch</span>
+      <span>Pitch</span>
 
       <input
         id="slider"
@@ -53,7 +53,7 @@ export default function Sequencer({ id, data }) {
         onChange={setKickFrequency}
       />
       <span>{data.kickFrequency} </span>
-      <span>Kick Length</span>
+      <span>Decay</span>
 
       <input
         id="slider"

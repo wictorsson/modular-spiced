@@ -74,22 +74,26 @@ function Environment() {
           {/* button load patch() */}
 
           <div className="flowPanel-panelModules">
+            <button onClick={() => store.createNode("channel")}>Channel</button>
+
             <button onClick={() => store.createNode("osc")}>Osc</button>
             <button onClick={() => store.createNode("noise")}>Noise</button>
+            <button onClick={() => store.createNode("sequence")}>
+              Kick Seq
+            </button>
             {/* <hr></hr> */}
-            <button onClick={() => store.createNode("channel")}>Channel</button>
+
+            <button onClick={() => store.createNode("lfo")}>LFO</button>
+            <button onClick={() => store.createNode("filter")}>Filter</button>
             <button onClick={() => store.createNode("gain")}>Gain</button>
             <button onClick={() => store.createNode("delay")}>Delay</button>
             <button onClick={() => store.createNode("reverb")}>Reverb</button>
             <button onClick={() => store.createNode("distortion")}>
               Distortion
             </button>
-            <button onClick={() => store.createNode("filter")}>Filter</button>
+
             {/* <hr></hr> */}
-            <button onClick={() => store.createNode("lfo")}>LFO</button>
-            <button onClick={() => store.createNode("sequence")}>
-              (Sequencer)
-            </button>
+
             {/* <button onClick={() => store.createNode("membsynth")}>
               Kick Synth
             </button> */}

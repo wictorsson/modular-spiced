@@ -67,7 +67,7 @@ export const useStore = create((set, get) => ({
           bpm: 120,
           row1: new Array(16).fill(0),
           frequency: 20,
-          kickLength: 0.5,
+          kickLength: 0.1,
         };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -155,11 +155,15 @@ export const useStore = create((set, get) => ({
     edges.forEach((edge) => {
       // Avoid removing twice the same connection!
       console.log("AUDIO EDGE", edge.target);
-      if (edges.length < 2) {
-        removeAudioEdge(edge.source, edge.target);
-      }
+
       const targetNode = get().nodes.find((node) => node.id === edge.target);
       const sourceNode = get().nodes.find((node) => node.id === edge.source);
+
+      console.log("TARGET REMOVED EDGE->", edge.targetHandle);
+      if (edges.length < 2) {
+        removeAudioEdge(edge.source, edge.target, edge.targetHandle);
+      }
+
       targetNode.data.inputConnected = false;
 
       if (sourceNode.type === "lfo") {
@@ -176,8 +180,8 @@ export const useStore = create((set, get) => ({
     // Check if connection is parameter connection
     let twoParamHandles = false;
 
-    console.log(data.targetHandle);
-    if (sourceNode.type === "lfo" && !get().isLfoSet) {
+    // console.log(data.targetHandle);
+    if (sourceNode.type === "lfo") {
       console.log(get().isLfoSet);
       set({
         nodes: get().nodes.map((node) =>
@@ -207,21 +211,21 @@ export const useStore = create((set, get) => ({
         const id = nanoid(6);
         const edge = { id, ...data };
         console.log("SOUCEC", sourceNode.type);
+        const edges = [edge, ...get().edges];
+        set({ edges });
 
-        if (sourceNode.type === "lfo" && get().isLfoSet) {
-          // Don't add the edge to the edges array
-          console.log("Skipping adding edge");
-        } else {
-          // Add the edge to the edges array
-          const edges = [edge, ...get().edges];
-          set({ edges });
+        // if (sourceNode.type === "lfo" && get().isLfoSet) {
+        //   // Don't add the edge to the edges array
+        //   console.log("Skipping adding edge");
+        // } else {
+        //   // Add the edge to the edges array
 
-          if (sourceNode.type === "lfo") {
-            // Toggle the isLfoSet boolean only if the source node type is "lfo"
-            const isLfoSet = !get().isLfoSet;
-            set({ isLfoSet });
-          }
-        }
+        //   if (sourceNode.type === "lfo") {
+        //     // Toggle the isLfoSet boolean only if the source node type is "lfo"
+        //     const isLfoSet = !get().isLfoSet;
+        //     set({ isLfoSet });
+        //   }
+        // }
       }
     }
   },

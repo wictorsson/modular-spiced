@@ -38,8 +38,9 @@ export default function Lfo({ id, data }) {
             id="slider"
             className="nodrag"
             type="range"
-            min="10"
-            max="20000"
+            min="0.01"
+            max="1"
+            step="0.01"
             value={data.min}
             onChange={setMin}
           />
@@ -50,8 +51,9 @@ export default function Lfo({ id, data }) {
             id="slider"
             className="nodrag"
             type="range"
-            min="10"
-            max="20000"
+            min="0.01"
+            max="1"
+            step="0.01"
             value={data.max}
             onChange={setMax}
           />
