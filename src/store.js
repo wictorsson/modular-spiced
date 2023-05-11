@@ -45,7 +45,7 @@ export const useStore = create((set, get) => ({
 
     const randomYpos = 400;
     const randomXpos =
-      130 + get().offSetPos + Math.floor(Math.random() * 30) + 20;
+      10 + get().offSetPos + Math.floor(Math.random() * 30) + 20;
     if (get().offSetPos > 600) {
       set({ offSetPos: 0 });
     }
@@ -153,8 +153,6 @@ export const useStore = create((set, get) => ({
   },
 
   onNodesChange(changes) {
-    //console.log();
-    console.log(changes[0].clickDelete);
     if (changes[0].clickDelete) {
       removeAudioNode(changes[0].id);
     }
@@ -171,7 +169,6 @@ export const useStore = create((set, get) => ({
 
   // Takes an array of nodes
   removeNodes(nodes) {
-    console.log("NODES REOOOOOOOVE", nodes);
     nodes.forEach((node) => {
       removeAudioNode(node.id);
     });
@@ -180,12 +177,10 @@ export const useStore = create((set, get) => ({
   removeEdges(edges) {
     edges.forEach((edge) => {
       // Avoid removing twice the same connection!
-      console.log("AUDIO EDGE", edge.target);
 
       const targetNode = get().nodes.find((node) => node.id === edge.target);
       const sourceNode = get().nodes.find((node) => node.id === edge.source);
 
-      console.log("TARGET REMOVED EDGE->", edge.targetHandle);
       if (edges.length < 2) {
         removeAudioEdge(edge.source, edge.target, edge.targetHandle);
       }
@@ -198,7 +193,6 @@ export const useStore = create((set, get) => ({
       if (sourceNode.type === "lfo") {
         const isLfoSet = !get().isLfoSet;
         set({ isLfoSet });
-        console.log("REMOVED EDGE", sourceNode);
       }
     });
   },
@@ -224,7 +218,7 @@ export const useStore = create((set, get) => ({
 
         const id = nanoid(6);
         const edge = { id, ...data };
-        console.log("SOUCEC", sourceNode.type);
+
         const edges = [edge, ...get().edges];
         set({ edges });
       }

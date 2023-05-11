@@ -13,12 +13,12 @@ const selector = (id) => (store) => ({
 });
 
 export default function Distortion({ id, data }) {
-  const { setDistortion,removeNode } = useStore(selector(id), shallow);
+  const { setDistortion, removeNode } = useStore(selector(id), shallow);
 
   return (
     <div>
-      <div className="nodeContainer">
-        <h3>Dist</h3>
+      <div className="nodeContainer-fx">
+        <h3>Distortion</h3>
 
         <input
           className="nodrag"

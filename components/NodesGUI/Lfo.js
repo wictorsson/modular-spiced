@@ -14,7 +14,7 @@ const selector = (id) => (store) => ({
 });
 
 export default function Lfo({ id, data }) {
-  const { setFrequency, setMin, setMax, setType,removeNode } = useStore(
+  const { setFrequency, setMin, setMax, setType, removeNode } = useStore(
     selector(id),
     shallow
   );
@@ -27,6 +27,7 @@ export default function Lfo({ id, data }) {
         <h3>LFO</h3>
 
         <span>Freq</span>
+        <span>{data.frequency}</span>
 
         <input
           id="slider"
@@ -64,44 +65,45 @@ export default function Lfo({ id, data }) {
           value={data.max}
           onChange={setMax}
         />
-
-        <div className="nodrag">
-          <label style={{ display: "block" }}>
-            <input
-              type="radio"
-              name={typeName}
-              value="sine"
-              checked={data.type === "sine"}
-              onChange={setType}
-            />
-            Sine
-            <input
-              type="radio"
-              name={typeName + "sine"}
-              value="triangle"
-              checked={data.type === "triangle"}
-              onChange={setType}
-            />
-            Triangle
-          </label>
-          <label style={{ display: "block" }}>
-            <input
-              type="radio"
-              name={typeName + "triangle"}
-              value="sawtooth"
-              checked={data.type === "sawtooth"}
-              onChange={setType}
-            />
-            Saw
-            <input
-              type="radio"
-              name={typeName + "square"}
-              value="square"
-              checked={data.type === "square"}
-              onChange={setType}
-            />
-            Square
-          </label>
+        <div className="nodeContainer">
+          <div className="nodrag">
+            <label style={{ display: "block" }}>
+              <input
+                type="radio"
+                name={typeName}
+                value="sine"
+                checked={data.type === "sine"}
+                onChange={setType}
+              />
+              Sine
+              <input
+                type="radio"
+                name={typeName + "sine"}
+                value="triangle"
+                checked={data.type === "triangle"}
+                onChange={setType}
+              />
+              Triangle
+            </label>
+            <label style={{ display: "block" }}>
+              <input
+                type="radio"
+                name={typeName + "triangle"}
+                value="sawtooth"
+                checked={data.type === "sawtooth"}
+                onChange={setType}
+              />
+              Saw
+              <input
+                type="radio"
+                name={typeName + "square"}
+                value="square"
+                checked={data.type === "square"}
+                onChange={setType}
+              />
+              Square
+            </label>
+          </div>
         </div>
         <button type="button" className="CloseButton" onClick={removeNode}>
           ╳

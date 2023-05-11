@@ -19,13 +19,16 @@ const selector = (id) => (store) => ({
 });
 
 export default function Delay({ id, data }) {
-  const { setTime, setFeedback, setWet,removeNode } = useStore(selector(id), shallow);
+  const { setTime, setFeedback, setWet, removeNode } = useStore(
+    selector(id),
+    shallow
+  );
   const typeName = id + "_typeDelay";
   return (
     <div>
-      <div className="nodeContainer">
-        Delay
-        <div className="nodeContainer">
+      <div className="nodeContainer-fx">
+        <h3>Delay</h3>
+        <div className="nodeContainer-fx">
           <h3>Time</h3>
 
           <div>
@@ -84,7 +87,8 @@ export default function Delay({ id, data }) {
             <label htmlFor="16n"></label>
           </div>
         </div>
-        <h3>Feedback</h3>
+        <br></br>
+        <span>Feedback</span>
         <input
           className="nodrag"
           type="range"
@@ -95,7 +99,7 @@ export default function Delay({ id, data }) {
           onChange={setFeedback}
         />
         {/* <span>{data.gain}dB</span> */}
-        <h3>Wet</h3>
+        <span>Wet</span>
         <input
           className="nodrag"
           type="range"

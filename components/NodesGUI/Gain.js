@@ -18,8 +18,9 @@ export default function Gain({ id, data }) {
 
   return (
     <div>
-      <div className="nodeContainer">
+      <div className="nodeContainer-gain">
         <h3>Gain</h3>
+
         <input
           className="nodrag"
           type="range"

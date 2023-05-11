@@ -418,6 +418,48 @@ export const GlobalStyle = createGlobalStyle`
     color:white;
   }
 
+  .nodeContainer-fx{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+  
+    background: rgb(70,41,41);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(41,51,41,1) 0%, rgba(15,15,15,1) 100%);
+    box-shadow: 0 0 5px 0 #444;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 5px;
+    border-width: 1px;
+    color:white;
+
+  }
+
+  .nodeContainer-gain{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+  
+    background: rgb(70,41,41);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(35,35,50,1) 0%, rgba(10,10,15,1) 100%);
+    box-shadow: 0 0 5px 0 #444;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 5px;
+    border-width: 1px;
+    color:white;
+
+  }
+
 
   .input-box {
     display: flex;
@@ -508,12 +550,12 @@ export const GlobalStyle = createGlobalStyle`
 
   .react-flow__handle-right{
     //top: auto;
-    top: 50%;
+    top: 95px;
     left: 95%;
     //bottom: 12px;
    
     transform: translate(0, 0);
-    border-color: cyan;
+    border-color: yellow;
 
   }
 
@@ -589,7 +631,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .flowPanel-closeButton {
-      height: 240px !important;
+      height: 330px !important;
       width: 35px !important;
  
     }

@@ -32,9 +32,9 @@ export default function Channel({ id, data }) {
   const typeName = id + "_type";
   return (
     <div>
-      <div className="nodeContainer">
-        <h3>Gain</h3>
-
+      <div className="nodeContainer-gain">
+        <h3>Channel</h3>
+        <span>Gain</span> <span>{data.volume} dB</span>
         <input
           className="nodrag"
           type="range"
@@ -44,10 +44,8 @@ export default function Channel({ id, data }) {
           value={data.volume}
           onChange={setVolume}
         />
-        <span>{data.volume} dB</span>
-
-        <h3>Pan</h3>
-
+        <span></span>
+        <span>Pan</span> <span>{data.pan} dB</span>
         <input
           className="nodrag"
           type="range"
@@ -58,24 +56,27 @@ export default function Channel({ id, data }) {
           onChange={setPan}
         />
         <span>{data.pan} </span>
+        <div className="nodeContainer-gain">
+          <div>
+            <input
+              type="checkbox"
+              id={typeName + "solo"}
+              name={typeName + "solo"}
+              checked={Boolean(data.solo)}
+              onChange={setSolo}
+            />
+            <label htmlFor="checkbox">Solo</label>
 
-        <input
-          type="checkbox"
-          id={typeName + "solo"}
-          name={typeName + "solo"}
-          checked={Boolean(data.solo)}
-          onChange={setSolo}
-        />
-        <label htmlFor="checkbox">Solo</label>
-
-        <input
-          type="checkbox"
-          id={typeName + "mute"}
-          name={typeName + "mute"}
-          checked={Boolean(data.mute)}
-          onChange={setMute}
-        />
-        <label htmlFor="checkbox">Mute</label>
+            <input
+              type="checkbox"
+              id={typeName + "mute"}
+              name={typeName + "mute"}
+              checked={Boolean(data.mute)}
+              onChange={setMute}
+            />
+            <label htmlFor="checkbox">Mute</label>
+          </div>
+        </div>
         <button type="button" className="CloseButton" onClick={removeNode}>
           ╳
         </button>

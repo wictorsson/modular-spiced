@@ -11,11 +11,11 @@ const selector = (id) => (store) => ({
 });
 
 export default function Reverb({ id, data }) {
-  const { setroomSize,removeNode } = useStore(selector(id), shallow);
+  const { setroomSize, removeNode } = useStore(selector(id), shallow);
 
   return (
     <div>
-      <div className="nodeContainer">
+      <div className="nodeContainer-fx">
         <h3>Reverb</h3>
 
         <span>Size</span>
@@ -28,7 +28,7 @@ export default function Reverb({ id, data }) {
           value={data.roomSize}
           onChange={setroomSize}
         />
-         <button type="button" className="CloseButton" onClick={removeNode}>
+        <button type="button" className="CloseButton" onClick={removeNode}>
           ╳
         </button>
       </div>

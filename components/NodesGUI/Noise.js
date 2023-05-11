@@ -20,37 +20,38 @@ export default function Osc({ id, data }) {
       <div className="nodeContainer">
         <h3></h3>
         <h3>Noise Oscillators</h3>
-
-        <div className="waveformContainer">
-          <div className="nodrag">
-            <label style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={typeName}
-                value="pink"
-                checked={data.type === "pink"}
-                onChange={setType}
-              />
-              Pink
-              <input
-                type="radio"
-                name={typeName}
-                value="white"
-                checked={data.type === "white"}
-                onChange={setType}
-              />
-              White
-            </label>
-            <label style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={typeName}
-                value="brown"
-                checked={data.type === "brown"}
-                onChange={setType}
-              />
-              Brown
-            </label>
+        <div className="nodeContainer">
+          <div className="waveformContainer">
+            <div className="nodrag">
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name={typeName}
+                  value="pink"
+                  checked={data.type === "pink"}
+                  onChange={setType}
+                />
+                Pink
+                <input
+                  type="radio"
+                  name={typeName}
+                  value="white"
+                  checked={data.type === "white"}
+                  onChange={setType}
+                />
+                White
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name={typeName}
+                  value="brown"
+                  checked={data.type === "brown"}
+                  onChange={setType}
+                />
+                Brown
+              </label>
+            </div>
           </div>
         </div>
         <button type="button" className="CloseButton" onClick={removeNode}>

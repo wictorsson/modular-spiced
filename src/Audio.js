@@ -22,7 +22,7 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
 
   if (paramHandle) {
     // CHECK IF LFO
-    console.log(audioNodes[sourceId + "lfoType"]);
+
     const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
     const audioNodeSourceGain2 = audioNodes[sourceId + "gainNode2"];
     const audioNodeSource2 = audioNodes[sourceId + "lfo2"];
@@ -46,12 +46,11 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
 export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
   const audioNode2 = audioNodes[id + "lfo2"];
-  //console.log("AUDIONODE", audioNode);
 
   //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
-    console.log(val);
-    console.log(data);
+    // console.log(val);
+    // console.log(data);
 
     if (key === "row1") {
       beatArray = val;
@@ -60,8 +59,6 @@ export function updateAudioNode(id, data) {
       if (audioNode2) {
         audioNode2[key].value = val;
       }
-      console.log("FREQ set");
-      console.log(audioNode[key]);
 
       if (audioNode.name === "MembraneSynth") {
         kickFrequency = val;
@@ -88,7 +85,6 @@ export function updateAudioNode(id, data) {
 
 export function removeAudioNode(id) {
   // check if LFO - GAIN!!!!
-  console.log(audioNodes[id]);
 
   if (Object.keys(audioNodes).length > 1) {
     const audioNode = audioNodes[id];
@@ -100,7 +96,7 @@ export function removeAudioNode(id) {
     // Dispose - free garbage collection
     audioNode.dispose();
     //beatArray = [];
-    console.log(audioNodes[id]);
+
     if (audioNodes[id].name === "MembraneSynth") {
       Tone.Transport.clear(audioNodes[id + "repeat"]);
       beatArray.fill(0);
@@ -118,7 +114,6 @@ export function removeAudioEdge(sourceId, targetId, targetHandle) {
   const audioNodeTarget = audioNodes[targetId];
 
   if (audioNodeSource.name === "LFO") {
-    console.log("CONSOLE AUDIO TYPE", audioNodes[sourceId + "lfotype"]);
     if (targetHandle === "paramFrequency") {
       audioNodeSource.stop();
       const audioNodeSourceGainNode = audioNodes[sourceId + "gainNode"];
@@ -187,7 +182,6 @@ export function createAudioNode(id, type, data, setLampIndex) {
       });
 
       let scheduledEvent = Tone.Transport.scheduleRepeat((time) => {
-        //console.log(audioNodes[id].frequency);
         step = index % 16;
         Tone.Draw.schedule(function () {
           setLampIndex(step);
@@ -305,7 +299,7 @@ export function toggleAudio() {
     audioNodes["c"] = out;
   }
   // Change here to suspend if needed later
-  console.log(Tone.context.state);
+  // console.log(Tone.context.state);
   return isRunning() ? Tone.start() : Tone.start();
 }
 

@@ -17,7 +17,7 @@ const selector = (id) => (store) => ({
 
 // id and data are passed down as props from the React Flow library! Gets the data from nodeTypes
 export default function Osc({ id, data }) {
-  const { setFrequency, setType,removeNode } = useStore(selector(id), shallow);
+  const { setFrequency, setType, removeNode } = useStore(selector(id), shallow);
   const typeName = id + "_type";
   const linearValue = 100 * Math.pow(data.frequency / 20000, 1 / 4);
   const roundedLinearValue = parseFloat(linearValue.toFixed(0));
@@ -27,6 +27,7 @@ export default function Osc({ id, data }) {
         <h3>Oscillator</h3>
 
         <span>Freq</span>
+        <span>{data.frequency} Hz</span>
 
         <input
           id="slider"
@@ -37,47 +38,50 @@ export default function Osc({ id, data }) {
           value={roundedLinearValue}
           onChange={setFrequency}
         />
-        <span>{data.frequency} Hz</span>
+
         <div className="waveformContainer">
-          <div className="nodrag">
-            <label style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={typeName}
-                value="sine"
-                checked={data.type === "sine"}
-                onChange={setType}
-              />
-              Sine
-              <input
-                type="radio"
-                name={typeName + "sine"}
-                value="triangle"
-                checked={data.type === "triangle"}
-                onChange={setType}
-              />
-              Triangle
-            </label>
-            <label style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={typeName + "triangle"}
-                value="sawtooth"
-                checked={data.type === "sawtooth"}
-                onChange={setType}
-              />
-              Saw
-              <input
-                type="radio"
-                name={typeName + "square"}
-                value="square"
-                checked={data.type === "square"}
-                onChange={setType}
-              />
-              Square
-            </label>
+          <div className="nodeContainer">
+            <div className="nodrag">
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name={typeName}
+                  value="sine"
+                  checked={data.type === "sine"}
+                  onChange={setType}
+                />
+                Sine
+                <input
+                  type="radio"
+                  name={typeName + "sine"}
+                  value="triangle"
+                  checked={data.type === "triangle"}
+                  onChange={setType}
+                />
+                Triangle
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name={typeName + "triangle"}
+                  value="sawtooth"
+                  checked={data.type === "sawtooth"}
+                  onChange={setType}
+                />
+                Saw
+                <input
+                  type="radio"
+                  name={typeName + "square"}
+                  value="square"
+                  checked={data.type === "square"}
+                  onChange={setType}
+                />
+                Square
+              </label>
+            </div>
           </div>
         </div>
+
         <button type="button" className="CloseButton" onClick={removeNode}>
           ╳
         </button>

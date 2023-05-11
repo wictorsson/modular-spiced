@@ -12,7 +12,6 @@ const selector = (id) => (store) => ({
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
   setBPM: (e) => store.updateNode("output_id", { bpm: e.target.value }),
- 
 });
 
 export default function AudioOut({ id, data }) {
@@ -22,7 +21,7 @@ export default function AudioOut({ id, data }) {
   return (
     <div>
       <Handle type="target" position="bottom" />
-      <div className="nodeContainer">
+      <div className="nodeContainer-gain">
         AUDIO OUT
         <div className="input-box">
           <h3>Tempo</h3>
