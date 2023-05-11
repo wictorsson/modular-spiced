@@ -2,7 +2,8 @@ import React from "react";
 import { Handle } from "reactflow";
 import { shallow } from "zustand/shallow";
 import { useStore } from "../../src/store";
-
+import soundLogo from "../../public/soundwave.png";
+import Image from "next/image";
 // const selector = (store) => ({
 //   isRunning: store.isRunning,
 //   toggleAudio: store.toggleAudio,
@@ -22,9 +23,19 @@ export default function AudioOut({ id, data }) {
     <div>
       <Handle type="target" position="bottom" />
       <div className="nodeContainer-gain">
-        AUDIO OUT
+        <div className="imageLogo">
+          <Image
+            src={soundLogo}
+            alt=""
+            style={{ width: "110px", height: "15px", marginLeft: "10px" }}
+          />
+        </div>
+        <span></span>
+        <br></br>
+        <h4>AUDIO OUT</h4>
         <div className="input-box">
-          <h3>Tempo</h3>
+          <span>Tempo</span>
+
           <input
             type="number"
             required

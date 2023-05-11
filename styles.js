@@ -19,7 +19,14 @@ export const GlobalStyle = createGlobalStyle`
     padding: 6rem;
   }
 
-
+.imageLogo{
+  position: absolute;
+  left: -3px;
+  top: 0 px;
+  height: 20px;
+  width:20px;
+ 
+}
   .Header{
     display: flex;
     justify-content: center;
@@ -460,12 +467,12 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
-
   .input-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px 0;
+    margin: 8x 0;
+    padding: 10px;
   }
   
   .input-box p {
