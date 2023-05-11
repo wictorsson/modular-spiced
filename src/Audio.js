@@ -51,12 +51,15 @@ export function updateAudioNode(id, data) {
   //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
     console.log(val);
-    console.log(key);
+    console.log(data);
 
     if (key === "row1") {
       beatArray = val;
     } else if (key === "frequency") {
       audioNode[key].value = val;
+      audioNode2[key].value = val;
+      console.log("FREQ set");
+      console.log(audioNode[key]);
 
       if (audioNode.name === "MembraneSynth") {
         kickFrequency = val;
@@ -196,7 +199,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
             kickFrequency,
             kickLength,
             time,
-            beatArray[step] / 50
+            beatArray[step] / 25
           );
         }
         index++;

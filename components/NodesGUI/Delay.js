@@ -17,7 +17,7 @@ const selector = (id) => (store) => ({
 
 export default function Delay({ id, data }) {
   const { setTime, setFeedback, setWet } = useStore(selector(id), shallow);
-  const typeName = id + "_type";
+  const typeName = id + "_typeDelay";
   return (
     <div>
       <div className="nodeContainer">
@@ -34,7 +34,7 @@ export default function Delay({ id, data }) {
               onChange={setTime}
               checked={data.delayTime === "2n"}
             />
-            <label htmlFor="2n">2n</label>
+            <label htmlFor="2n"></label>
           </div>
           <div>
             <input
@@ -45,7 +45,7 @@ export default function Delay({ id, data }) {
               onChange={setTime}
               checked={data.delayTime === "4n"}
             />
-            <label htmlFor="4n">4n</label>
+            <label htmlFor="4n"></label>
           </div>
           <div>
             <input
@@ -56,7 +56,7 @@ export default function Delay({ id, data }) {
               onChange={setTime}
               checked={data.delayTime === "8n"}
             />
-            <label htmlFor="8n">8n</label>
+            <label htmlFor="8n"></label>
           </div>
           <div>
             <input
@@ -67,7 +67,7 @@ export default function Delay({ id, data }) {
               onChange={setTime}
               checked={data.delayTime === "8n."}
             />
-            <label htmlFor="8n.">8n.</label>
+            <label htmlFor="8n."></label>
           </div>
           <div>
             <input
@@ -78,7 +78,7 @@ export default function Delay({ id, data }) {
               onChange={setTime}
               checked={data.delayTime === "16n"}
             />
-            <label htmlFor="16n">16n</label>
+            <label htmlFor="16n"></label>
           </div>
         </div>
         <h3>Feedback</h3>

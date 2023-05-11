@@ -74,6 +74,7 @@ export const useStore = create((set, get) => ({
           frequency: 6,
           min: -1,
           max: 1,
+          type: "sine",
         };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -83,6 +84,7 @@ export const useStore = create((set, get) => ({
           frequency: "4n",
           min: -1,
           max: 1,
+          type: "sine",
         };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -116,11 +118,18 @@ export const useStore = create((set, get) => ({
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
 
-    if (!sequenceNode) {
+    if (type !== "sequence") {
       set({ nodes: [...get().nodes, { type, id, data, position }] });
 
       // CReate node send function here to update bool
       createAudioNode(id, type, data, get().setLampIndex);
+    } else {
+      if (!sequenceNode) {
+        set({ nodes: [...get().nodes, { type, id, data, position }] });
+
+        // CReate node send function here to update bool
+        createAudioNode(id, type, data, get().setLampIndex);
+      }
     }
   },
 

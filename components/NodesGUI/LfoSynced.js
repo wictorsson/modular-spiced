@@ -7,12 +7,14 @@ const selector = (id) => (store) => ({
   setTime: (e) => store.updateNode(id, { frequency: e.target.value }),
   setMin: (e) => store.updateNode(id, { min: e.target.value }),
   setMax: (e) => store.updateNode(id, { max: e.target.value }),
+  setType: (e) => store.updateNode(id, { type: e.target.value }),
 });
 
 export default function LfoSynced({ id, data }) {
-  const { setTime, setMin, setMax } = useStore(selector(id), shallow);
+  const { setTime, setMin, setMax, setType } = useStore(selector(id), shallow);
   //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
+  const typeName2 = id + "_type2";
 
   return (
     <div>
@@ -104,6 +106,45 @@ export default function LfoSynced({ id, data }) {
           value={data.max}
           onChange={setMax}
         />
+
+        <div className="nodrag">
+          <label style={{ display: "block" }}>
+            <input
+              type="radio"
+              name={typeName2 + "sine"}
+              value="sine"
+              checked={data.type === "sine"}
+              onChange={setType}
+            />
+            Sine
+            <input
+              type="radio"
+              name={typeName2 + "sine"}
+              value="triangle"
+              checked={data.type === "triangle"}
+              onChange={setType}
+            />
+            Triangle
+          </label>
+          <label style={{ display: "block" }}>
+            <input
+              type="radio"
+              name={typeName2 + "triangle"}
+              value="sawtooth"
+              checked={data.type === "sawtooth"}
+              onChange={setType}
+            />
+            Saw
+            <input
+              type="radio"
+              name={typeName2 + "square"}
+              value="square"
+              checked={data.type === "square"}
+              onChange={setType}
+            />
+            Square
+          </label>
+        </div>
       </div>
 
       <Handle type="source" position="top" id="paramHandle" />
