@@ -8,6 +8,7 @@ import Filter from "./NodesGUI/Filter";
 import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
 import Lfo from "./NodesGUI/Lfo";
+import LfoSynced from "./NodesGUI/LfoSynced";
 import Reverb from "./NodesGUI/Reverb";
 import Distortion from "./NodesGUI/Distortion";
 import Delay from "./NodesGUI/Delay";
@@ -38,6 +39,7 @@ const nodeTypes = {
   audioOut: AudioOutToggle,
   sequence: Sequence,
   lfo: Lfo,
+  lfosynced: LfoSynced,
   reverb: Reverb,
   noise: Noise,
   membsynth: Membsynth,
@@ -84,6 +86,9 @@ function Environment() {
             {/* <hr></hr> */}
 
             <button onClick={() => store.createNode("lfo")}>LFO</button>
+            <button onClick={() => store.createNode("lfosynced")}>
+              LFO sync
+            </button>
             <button onClick={() => store.createNode("filter")}>Filter</button>
             <button onClick={() => store.createNode("gain")}>Gain</button>
             <button onClick={() => store.createNode("delay")}>Delay</button>

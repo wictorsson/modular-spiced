@@ -4,24 +4,21 @@ import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
-  setTime: (e) => {
-    store.updateNode(id, { delayTime: e.target.value });
-  },
-  setFeedback: (e) => {
-    store.updateNode(id, { feedback: e.target.value });
-  },
-  setWet: (e) => {
-    store.updateNode(id, { wet: e.target.value });
-  },
+  setTime: (e) => store.updateNode(id, { frequency: e.target.value }),
+  setMin: (e) => store.updateNode(id, { min: e.target.value }),
+  setMax: (e) => store.updateNode(id, { max: e.target.value }),
 });
 
-export default function Delay({ id, data }) {
-  const { setTime, setFeedback, setWet } = useStore(selector(id), shallow);
+export default function LfoSynced({ id, data }) {
+  const { setTime, setMin, setMax } = useStore(selector(id), shallow);
+  //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
+
   return (
     <div>
       <div className="nodeContainer">
-        Delay
+        <h3>LFO synced</h3>
+
         <div className="nodeContainer">
           <h3>Time</h3>
 
@@ -32,7 +29,7 @@ export default function Delay({ id, data }) {
               name={typeName}
               value="2n"
               onChange={setTime}
-              checked={data.delayTime === "2n"}
+              checked={data.frequency === "2n"}
             />
             <label htmlFor="2n">2n</label>
           </div>
@@ -43,7 +40,7 @@ export default function Delay({ id, data }) {
               name={typeName}
               value="4n"
               onChange={setTime}
-              checked={data.delayTime === "4n"}
+              checked={data.frequency === "4n"}
             />
             <label htmlFor="4n">4n</label>
           </div>
@@ -54,7 +51,7 @@ export default function Delay({ id, data }) {
               name={typeName}
               value="8n"
               onChange={setTime}
-              checked={data.delayTime === "8n"}
+              checked={data.frequency === "8n"}
             />
             <label htmlFor="8n">8n</label>
           </div>
@@ -65,7 +62,7 @@ export default function Delay({ id, data }) {
               name={typeName}
               value="8n."
               onChange={setTime}
-              checked={data.delayTime === "8n."}
+              checked={data.frequency === "8n."}
             />
             <label htmlFor="8n.">8n.</label>
           </div>
@@ -76,38 +73,43 @@ export default function Delay({ id, data }) {
               name={typeName}
               value="16n"
               onChange={setTime}
-              checked={data.delayTime === "16n"}
+              checked={data.frequency === "16n"}
             />
             <label htmlFor="16n">16n</label>
           </div>
         </div>
-        <h3>Feedback</h3>
+
+        <span>Min</span>
+
         <input
+          id="slider"
           className="nodrag"
           type="range"
-          min="0"
+          min="0.01"
           max="1"
           step="0.01"
-          value={data.feedback}
-          onChange={setFeedback}
+          value={data.min}
+          onChange={setMin}
         />
-        {/* <span>{data.gain}dB</span> */}
-        <h3>Wet</h3>
+
+        <span>Max</span>
+
         <input
+          id="slider"
           className="nodrag"
           type="range"
-          min="0"
+          min="0.01"
           max="1"
           step="0.01"
-          value={data.wet}
-          onChange={setWet}
+          value={data.max}
+          onChange={setMax}
         />
-        {/* <span>{data.gain}dB</span> */}
       </div>
 
-      <Handle type="target" position="bottom" />
-      <Handle type="source" position="top" />
-      {/* <Handle type="target" position="right" id="paramFrequency" /> */}
+      <Handle type="source" position="top" id="paramHandle" />
+      <Handle type="target" position="right" id="paramFrequency" />
+      {/* <Handle type="target" position="bottom" /> */}
+      {/* <Handle type="target" position="right" id="freqHandle" /> */}
     </div>
   );
 }

@@ -71,6 +71,15 @@ export const useStore = create((set, get) => ({
       }
       case "lfo": {
         data = {
+          frequency: 6,
+          min: -1,
+          max: 1,
+        };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "lfosynced": {
+        data = {
           frequency: "4n",
           min: -1,
           max: 1,
@@ -99,7 +108,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "delay": {
-        data = { delayTime: 1000, feeback: 0.5, wet: 0.5 };
+        data = { delayTime: "4n", feeback: 0.5, wet: 0.5 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }

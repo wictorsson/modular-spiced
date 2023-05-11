@@ -22,7 +22,7 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
 
   if (paramHandle) {
     // CHECK IF LFO
-
+    console.log(audioNodes[sourceId + "lfoType"]);
     const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
     const audioNodeSourceGain2 = audioNodes[sourceId + "gainNode2"];
     const audioNodeSource2 = audioNodes[sourceId + "lfo2"];
@@ -113,6 +113,7 @@ export function removeAudioEdge(sourceId, targetId, targetHandle) {
   const audioNodeTarget = audioNodes[targetId];
 
   if (audioNodeSource.name === "LFO") {
+    console.log("CONSOLE AUDIO TYPE", audioNodes[sourceId + "lfotype"]);
     if (targetHandle === "paramFrequency") {
       audioNodeSource.stop();
       const audioNodeSourceGainNode = audioNodes[sourceId + "gainNode"];
@@ -222,6 +223,29 @@ export function createAudioNode(id, type, data, setLampIndex) {
 
       audioNodes[id + "lfo2"] = lfo2;
       audioNodes[id + "gainNode2"] = gainNode2;
+      audioNodes[id + "lfotype"] = "lfoUnsync";
+      break;
+
+    case "lfosynced":
+      const lfoSynced = new Tone.LFO(data.frequency, 10, 20000);
+      const lfo2Synced = new Tone.LFO(data.frequency, data.min, data.max);
+      lfoSynced.sync();
+      lfo2Synced.sync();
+      // Tone.Transport.syncSignal(lfoSynced.delayTime);
+      // Tone.Transport.syncSignal(lfo2Synced.delayTime);
+      //LFO workaround , pipe through a gainNode
+      let gainNodeSynced = getContext().rawContext.createGain();
+      lfoSynced.start();
+
+      let gainNode2Synced = getContext().rawContext.createGain();
+      lfo2Synced.start();
+
+      audioNodes[id] = lfoSynced;
+      audioNodes[id + "gainNode"] = gainNodeSynced;
+
+      audioNodes[id + "lfo2"] = lfo2Synced;
+      audioNodes[id + "gainNode2"] = gainNode2Synced;
+      audioNodes[id + "lfotype"] = "lfosync";
       break;
 
     case "reverb":
@@ -237,6 +261,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
     case "delay":
       const delay = new Tone.Delay(0.1, data.feedback, data.wet);
       const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5);
+      Tone.Transport.syncSignal(feedbackDelay.delayTime);
       audioNodes[id] = feedbackDelay;
       break;
 
