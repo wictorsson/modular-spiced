@@ -107,9 +107,12 @@ export const useStore = create((set, get) => ({
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
 
-    set({ nodes: [...get().nodes, { type, id, data, position }] });
-    // CReate node send function here to update bool
-    createAudioNode(id, type, data, get().setLampIndex);
+    if (!sequenceNode) {
+      set({ nodes: [...get().nodes, { type, id, data, position }] });
+
+      // CReate node send function here to update bool
+      createAudioNode(id, type, data, get().setLampIndex);
+    }
   },
 
   //Parameters changed -
