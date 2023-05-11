@@ -18,7 +18,7 @@ export const useStore = create((set, get) => ({
     {
       type: "audioOut",
       id: "output_id",
-      data: { label: "output" },
+      data: { bpm: 120, label: "output" },
       position: { x: 350, y: 40 },
       deletable: false,
     },
@@ -26,10 +26,14 @@ export const useStore = create((set, get) => ({
 
   edges: [],
   lampIndex: 0, // initial value
-  //isButtonClicked: false,
+
   setLampIndex: (beatIndex) => set({ lampIndex: beatIndex }),
-  // toggleButton: () =>
-  //  set((state) => ({ isButtonClicked: !state.isButtonClicked })),
+  isPatchListClicked: false,
+  togglePatchList: () =>
+    set((state) => ({ isPatchListClicked: !state.isPatchListClicked })),
+  isSaveAsClicked: false,
+  toggleSaveAs: () =>
+    set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
 
   // TEMPLATE MODULES
   createNode(type) {
@@ -45,23 +49,32 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "gain": {
-        data = { gain: 1, inputConnected: false };
+        data = { gain: 1, inputConnected: false, TypeName: "decibels" };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
       case "filter": {
-        data = { frequency: 1200, type: "lowpass", rolloff: -48, Q: 1 };
+        data = { frequency: 400, type: "lowpass", rolloff: -48, Q: 1 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
 
       case "sequence": {
-        data = { bpm: 120, row1: new Array(16).fill(0) };
+        data = {
+          bpm: 120,
+          row1: new Array(16).fill(0),
+          frequency: 20,
+          kickLength: 0.1,
+        };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
       case "lfo": {
-        data = { frequency: "4n", min: 10, max: 20000 };
+        data = {
+          frequency: "4n",
+          min: -1,
+          max: 1,
+        };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -75,17 +88,31 @@ export const useStore = create((set, get) => ({
         position = { x: randomXpos, y: randomYpos };
         break;
       }
+      case "channel": {
+        data = { volume: 0, pan: 0, solo: false, mute: false };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "distortion": {
+        data = { distortion: 0 };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "delay": {
+        data = { delayTime: 1000, feeback: 0.5, wet: 0.5 };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
     }
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
-    if (!sequenceNode || type !== "sequence") {
-      set({ nodes: [...get().nodes, { type, id, data, position }] });
-      // CReate node send function here to update bool
-      createAudioNode(id, type, data, get().setLampIndex);
-    }
+
+    set({ nodes: [...get().nodes, { type, id, data, position }] });
+    // CReate node send function here to update bool
+    createAudioNode(id, type, data, get().setLampIndex);
   },
 
-  //Parameters changed - updateNode(id, { type: "sine" }
+  //Parameters changed -
   updateNode(id, data) {
     updateAudioNode(id, data);
     set({
@@ -116,33 +143,51 @@ export const useStore = create((set, get) => ({
 
   removeEdges(edges) {
     edges.forEach((edge) => {
-      //const sourceNode = get().nodes.find((node) => node.id === edge.source);
-      // Needed to not remove twice the same connection!
+      // Avoid removing twice the same connection!
+      console.log("AUDIO EDGE", edge.target);
 
-      if (edges.length < 2) {
-        removeAudioEdge(edge.source, edge.target);
-      }
       const targetNode = get().nodes.find((node) => node.id === edge.target);
+      const sourceNode = get().nodes.find((node) => node.id === edge.source);
+
+      console.log("TARGET REMOVED EDGE->", edge.targetHandle);
+      if (edges.length < 2) {
+        removeAudioEdge(edge.source, edge.target, edge.targetHandle);
+      }
+
       targetNode.data.inputConnected = false;
+
+      if (sourceNode.type === "lfo") {
+        const isLfoSet = !get().isLfoSet;
+        set({ isLfoSet });
+        console.log("REMOVED EDGE", sourceNode);
+      }
     });
   },
 
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
     const sourceNode = get().nodes.find((node) => node.id === data.source);
+    // Check if connection is parameter connection
+    let twoParamHandles = false;
 
-    //console.log(data);
-    //Check if it is a parameter connection. Handle is set to null if non paprameter
-    if (data.sourceHandle === data.targetHandle) {
+    if (data.sourceHandle && data.targetHandle)
+      if (data.sourceHandle[0] === "p" && data.targetHandle[0] === "p") {
+        twoParamHandles = true;
+      }
+
+    if (data.sourceHandle === data.targetHandle || twoParamHandles) {
+      //Check if it is a parameter connection. Handle is set to null if non paprameter
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
-        if (sourceNode.type !== "sequence") {
-          addAudioEdge(data.source, data.target);
-        }
+        //
+
+        addAudioEdge(data.source, data.target, data.targetHandle);
         //Nano ID generates random six digit ID
+
         const id = nanoid(6);
         const edge = { id, ...data };
-
-        set({ edges: [edge, ...get().edges] });
+        console.log("SOUCEC", sourceNode.type);
+        const edges = [edge, ...get().edges];
+        set({ edges });
       }
     }
   },
@@ -172,8 +217,11 @@ export const useStore = create((set, get) => ({
       addAudioEdge(source, target);
     });
   },
-  currentPatch: "645104adbb037381f6ef4b5e",
+  currentPatch: "untitled",
   setCurrentPatch: (patch) => set({ currentPatch: patch }),
+
+  currentPatchName: "Untitled Project",
+  setCurrentPatchName: (patch) => set({ currentPatchName: patch }),
   //****************************************************/
   // AUDIO TOGGLE temp
 

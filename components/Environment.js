@@ -9,9 +9,13 @@ import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
 import Lfo from "./NodesGUI/Lfo";
 import Reverb from "./NodesGUI/Reverb";
+import Distortion from "./NodesGUI/Distortion";
+import Delay from "./NodesGUI/Delay";
 import Noise from "./NodesGUI/Noise";
+import Channel from "./NodesGUI/Channel";
 import AudioOutToggle from "./NodesGUI/Output";
-
+import Membsynth from "./NodesGUI/Membsynth";
+import { useState } from "react";
 // THE viewport of the app, the nodes will go into separate components
 // Nodes are the draggable components, edges are the draggable virtual cables between nodes
 //TODO - send node chain to audio chain. Remove soundSource here
@@ -36,6 +40,10 @@ const nodeTypes = {
   lfo: Lfo,
   reverb: Reverb,
   noise: Noise,
+  membsynth: Membsynth,
+  channel: Channel,
+  distortion: Distortion,
+  delay: Delay,
 };
 
 const proOptions = { hideAttribution: true };
@@ -44,9 +52,11 @@ const proOptions = { hideAttribution: true };
 
 function Environment() {
   const store = useStore(selector, shallow);
-
+  const [panelClass, setPanelClass] = useState("flowPanel");
+  const [panelBool, setPanelBool] = useState(true);
+  const [closeIcon, setCloseIcon] = useState("╳");
   return (
-    <div style={{ height: 550 }}>
+    <div style={{ height: 660 }}>
       <ReactFlow
         onEdgesDelete={store.onEdgesDelete}
         onNodesDelete={store.onNodesDelete}
@@ -60,20 +70,48 @@ function Environment() {
         proOptions={proOptions}
         className="touchdevice-flow"
       >
-        <Panel position="left" className="flowPanel">
+        <Panel position="left" className={panelClass}>
           {/* button load patch() */}
-          <button onClick={() => store.createNode("osc")}>Osc</button>
-          <button onClick={() => store.createNode("noise")}>Noise</button>
-          <hr></hr>
-          <button onClick={() => store.createNode("gain")}>Gain</button>
-          <button onClick={() => store.createNode("reverb")}>Reverb</button>
-          <button onClick={() => store.createNode("filter")}>Filter</button>
-          <hr></hr>
-          <button onClick={() => store.createNode("lfo")}>(LFO)</button>
-          <button onClick={() => store.createNode("sequence")}>
-            (Sequencer)
+
+          <div className="flowPanel-panelModules">
+            <button onClick={() => store.createNode("channel")}>Channel</button>
+
+            <button onClick={() => store.createNode("osc")}>Osc</button>
+            <button onClick={() => store.createNode("noise")}>Noise</button>
+            <button onClick={() => store.createNode("sequence")}>
+              Kick Seq
+            </button>
+            {/* <hr></hr> */}
+
+            <button onClick={() => store.createNode("lfo")}>LFO</button>
+            <button onClick={() => store.createNode("filter")}>Filter</button>
+            <button onClick={() => store.createNode("gain")}>Gain</button>
+            <button onClick={() => store.createNode("delay")}>Delay</button>
+            <button onClick={() => store.createNode("reverb")}>Reverb</button>
+            <button onClick={() => store.createNode("distortion")}>
+              Distortion
+            </button>
+
+            {/* <hr></hr> */}
+
+            {/* <button onClick={() => store.createNode("membsynth")}>
+              Kick Synth
+            </button> */}
+          </div>
+          <button
+            className="flowPanel-closeButton"
+            onClick={() => {
+              panelBool
+                ? setPanelClass("flowPanel-hidden")
+                : setPanelClass("flowPanel");
+              setPanelBool(!panelBool);
+              setCloseIcon(closeIcon === "╳" ? "↱" : "╳");
+            }}
+          >
+            {closeIcon}
           </button>
         </Panel>
+
         <Background variant="dots" gap="80" color="cyan" />
         <Controls showZoom={false} showInteractive={false} />
       </ReactFlow>

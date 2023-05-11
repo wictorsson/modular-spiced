@@ -13,7 +13,7 @@ const selector = (id) => (store) => ({
 });
 
 // id and data are passed down as props from the React Flow library! Gets the data from nodeTypes
-export default function Osc({ id, data }) {
+export default function Membsynth({ id, data }) {
   const { setFrequency, setType } = useStore(selector(id), shallow);
   const typeName = id + "_type";
   const linearValue = 100 * Math.pow(data.frequency / 20000, 1 / 4);
@@ -78,7 +78,7 @@ export default function Osc({ id, data }) {
       </div>
 
       <Handle type="source" position="top" />
-      <Handle type="target" position="right" id="paramFrequency" />
+      <Handle type="target" position="bottom" id="paramFrequency" />
     </div>
   );
 }

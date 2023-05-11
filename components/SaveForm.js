@@ -1,12 +1,21 @@
 import React from "react";
-import { useRouter } from "next/router.js";
+// import { useRouter } from "next/router.js";
+import { useStore } from "../src/store";
+import { shallow } from "zustand/shallow";
 
-export default function SaveForm({ onSubmit }) {
-  const router = useRouter();
+const selector = (store) => ({
+  toggleSaveAs: store.toggleSaveAs,
+});
+
+export default function SaveForm({ onSubmit, isSession }) {
+  const store = useStore(selector, shallow);
+  //const router = useRouter();
+
   function handleSubmit(event) {
     event.preventDefault();
 
     onSubmit(event);
+    store.toggleSaveAs();
   }
 
   const options = {
@@ -15,36 +24,80 @@ export default function SaveForm({ onSubmit }) {
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
+    second: "2-digit",
     hour12: false,
     timeZone: "UTC",
   };
-  const defaultDate =
-    "Name-" +
-    new Date()
-      .toLocaleString("en-US", options)
-      .replace(/ /g, "-")
-      .replace(",", "");
+
+  const now = new Date();
+  const formattedDate = now.toLocaleString("en-US", options);
+  const dateWithoutTime = formattedDate.split(", ")[0];
+  const defaultTitle = "New Project " + dateWithoutTime;
+
+  if (!isSession) {
+    return (
+      <div>
+        <button
+          type="button"
+          className="CloseButton"
+          onClick={() => store.toggleSaveAs()}
+        >
+          ╳
+        </button>
+        <p>Sign in required</p>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <button type="submit">
-        Save as
-        {/* {defaultData ? "Update place" : "Add place"} */}
-      </button>
-      <label> </label>
-      <input id="name" name="name" type="text" defaultValue={defaultDate} />
-      <label>
-        Public
+    <form onSubmit={handleSubmit} className="SaveForm">
+      <div>
+        <label htmlFor="name" className="Textbox-label">
+          Title (required)
+        </label>
         <input
-          name="publicPatch"
-          type="checkbox"
-          defaultChecked={false}
-          onChange={(event) => {
-            event.target.value = event.target.checked ? "true" : "false";
-          }}
+          id="name"
+          name="name"
+          type="text"
+          defaultValue={defaultTitle}
+          className="Textbox"
         />
-      </label>
-      {/* <input id="nodes" name="nodes" type="text" defaultValue={[{}, {}, {}]} />
-      <input id="edges" name="edges" type="text" defaultValue={[{}, {}, {}]} /> */}
+      </div>
+      <div className="Form-Radiobuttons">
+        <label>
+          <input
+            type="radio"
+            name="publicPatch"
+            value="false"
+            defaultChecked
+            onChange={(event) => {
+              event.target.value = event.target.checked ? "false" : "";
+            }}
+          />
+          Private
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="publicPatch"
+            value="true"
+            onChange={(event) => {
+              event.target.value = event.target.checked ? "true" : "";
+            }}
+          />
+          Public
+        </label>
+      </div>
+      <button type="submit" className="Form-SaveButton">
+        Save as
+      </button>
+      <button
+        type="button"
+        className="CloseButton"
+        onClick={() => store.toggleSaveAs()}
+      >
+        ╳
+      </button>
     </form>
   );
 }
