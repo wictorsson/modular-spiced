@@ -13,10 +13,13 @@ const selector = (id) => (store) => ({
   },
   setType: (e) => store.updateNode(id, { type: e.target.value }),
   setResonance: (e) => store.updateNode(id, { Q: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Filter({ id, data }) {
-  const { setFrequency, setType, setResonance } = useStore(
+  const { setFrequency, setType, setResonance,removeNode } = useStore(
     selector(id),
     shallow
   );
@@ -89,6 +92,9 @@ export default function Filter({ id, data }) {
             </label>
           </div>
         </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="source" position="top" />

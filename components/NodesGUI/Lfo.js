@@ -8,10 +8,13 @@ const selector = (id) => (store) => ({
   setMin: (e) => store.updateNode(id, { min: e.target.value }),
   setMax: (e) => store.updateNode(id, { max: e.target.value }),
   setType: (e) => store.updateNode(id, { type: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Lfo({ id, data }) {
-  const { setFrequency, setMin, setMax, setType } = useStore(
+  const { setFrequency, setMin, setMax, setType,removeNode } = useStore(
     selector(id),
     shallow
   );
@@ -100,6 +103,9 @@ export default function Lfo({ id, data }) {
             Square
           </label>
         </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="source" position="top" id="paramHandle" />

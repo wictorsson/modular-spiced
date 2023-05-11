@@ -8,13 +8,17 @@ const selector = (id) => (store) => ({
     const scewedParam = 20000 * Math.pow(e.target.value / 100, 4);
     const roundedScewParam = parseFloat(scewedParam.toFixed(0));
     store.updateNode(id, { frequency: roundedScewParam });
+    
   },
   setType: (e) => store.updateNode(id, { type: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 // id and data are passed down as props from the React Flow library! Gets the data from nodeTypes
 export default function Membsynth({ id, data }) {
-  const { setFrequency, setType } = useStore(selector(id), shallow);
+  const { setFrequency, setType,removeNode} = useStore(selector(id), shallow);
   const typeName = id + "_type";
   const linearValue = 100 * Math.pow(data.frequency / 20000, 1 / 4);
   const roundedLinearValue = parseFloat(linearValue.toFixed(0));
@@ -75,6 +79,9 @@ export default function Membsynth({ id, data }) {
             </label>
           </div>
         </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="source" position="top" />

@@ -35,12 +35,21 @@ export const useStore = create((set, get) => ({
   toggleSaveAs: () =>
     set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
 
+  offSetPos: 0,
+  setoffSetPos: () =>
+    set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
+
   // TEMPLATE MODULES
   createNode(type) {
     const id = nanoid();
-    // Position new nodes randomly so they dont hide each other
-    const randomYpos = Math.floor(Math.random() * 250) + 200;
-    const randomXpos = Math.floor(Math.random() * 400) + 30;
+
+    const randomYpos = 400;
+    const randomXpos =
+      130 + get().offSetPos + Math.floor(Math.random() * 30) + 20;
+    if (get().offSetPos > 600) {
+      set({ offSetPos: 0 });
+    }
+    set({ offSetPos: get().offSetPos + 200 });
     let data, position;
     switch (type) {
       case "osc": {
@@ -144,6 +153,11 @@ export const useStore = create((set, get) => ({
   },
 
   onNodesChange(changes) {
+    //console.log();
+    console.log(changes[0].clickDelete);
+    if (changes[0].clickDelete) {
+      removeAudioNode(changes[0].id);
+    }
     set({
       nodes: applyNodeChanges(changes, get().nodes),
     });
@@ -157,6 +171,7 @@ export const useStore = create((set, get) => ({
 
   // Takes an array of nodes
   removeNodes(nodes) {
+    console.log("NODES REOOOOOOOVE", nodes);
     nodes.forEach((node) => {
       removeAudioNode(node.id);
     });
@@ -175,8 +190,11 @@ export const useStore = create((set, get) => ({
         removeAudioEdge(edge.source, edge.target, edge.targetHandle);
       }
 
-      targetNode.data.inputConnected = false;
+      if (targetNode) {
+        targetNode.data.inputConnected = false;
+      }
 
+      // REMOVE????
       if (sourceNode.type === "lfo") {
         const isLfoSet = !get().isLfoSet;
         set({ isLfoSet });

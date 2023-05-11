@@ -57,7 +57,9 @@ export function updateAudioNode(id, data) {
       beatArray = val;
     } else if (key === "frequency") {
       audioNode[key].value = val;
-      audioNode2[key].value = val;
+      if (audioNode2) {
+        audioNode2[key].value = val;
+      }
       console.log("FREQ set");
       console.log(audioNode[key]);
 

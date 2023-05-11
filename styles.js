@@ -216,6 +216,7 @@ export const GlobalStyle = createGlobalStyle`
        position: absolute; 
        left: 15px;
        top: 15px;
+       margin: -10px;
     }
   
     

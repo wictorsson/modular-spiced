@@ -8,10 +8,13 @@ const selector = (id) => (store) => ({
   setMin: (e) => store.updateNode(id, { min: e.target.value }),
   setMax: (e) => store.updateNode(id, { max: e.target.value }),
   setType: (e) => store.updateNode(id, { type: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function LfoSynced({ id, data }) {
-  const { setTime, setMin, setMax, setType } = useStore(selector(id), shallow);
+  const { setTime, setMin, setMax, setType,removeNode } = useStore(selector(id), shallow);
   //Make unique type name to avoid conflicts when using multiple intances
   const typeName = id + "_type";
   const typeName2 = id + "_type2";
@@ -145,6 +148,9 @@ export default function LfoSynced({ id, data }) {
             Square
           </label>
         </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="source" position="top" id="paramHandle" />

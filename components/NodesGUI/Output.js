@@ -12,6 +12,7 @@ const selector = (id) => (store) => ({
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
   setBPM: (e) => store.updateNode("output_id", { bpm: e.target.value }),
+ 
 });
 
 export default function AudioOut({ id, data }) {

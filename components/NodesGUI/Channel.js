@@ -16,10 +16,16 @@ const selector = (id) => (store) => ({
   setMute: (e) => {
     store.updateNode(id, { mute: e.target.checked });
   },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id }]);
+  },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Channel({ id, data }) {
-  const { setVolume, setPan, setSolo, setMute } = useStore(
+  const { setVolume, setPan, setSolo, setMute, removeNode } = useStore(
     selector(id),
     shallow
   );
@@ -70,6 +76,9 @@ export default function Channel({ id, data }) {
           onChange={setMute}
         />
         <label htmlFor="checkbox">Mute</label>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />

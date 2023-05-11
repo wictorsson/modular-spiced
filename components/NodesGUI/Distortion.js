@@ -7,10 +7,13 @@ const selector = (id) => (store) => ({
   setDistortion: (e) => {
     store.updateNode(id, { distortion: e.target.value });
   },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Distortion({ id, data }) {
-  const { setDistortion } = useStore(selector(id), shallow);
+  const { setDistortion,removeNode } = useStore(selector(id), shallow);
 
   return (
     <div>
@@ -27,6 +30,9 @@ export default function Distortion({ id, data }) {
           onChange={setDistortion}
         />
         {/* <span>{data.gain}dB</span> */}
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />

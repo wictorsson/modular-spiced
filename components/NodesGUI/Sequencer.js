@@ -14,13 +14,14 @@ const selector = (id) => (store) => ({
     store.updateNode(id, { row1: updatedRowArray });
   },
   setBPM: (e) => store.updateNode(id, { bpm: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Sequencer({ id, data }) {
-  const { setBeatArray, setBPM, setKickFrequency, setKickLength } = useStore(
-    selector(id),
-    shallow
-  );
+  const { setBeatArray, setBPM, setKickFrequency, setKickLength, removeNode } =
+    useStore(selector(id), shallow);
 
   //Set in component, it is now global!
   const { lampIndex } = useStore();
@@ -93,6 +94,9 @@ export default function Sequencer({ id, data }) {
             )}
           </React.Fragment>
         ))}
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       {/* <Handle type="target" position="bottom" /> */}

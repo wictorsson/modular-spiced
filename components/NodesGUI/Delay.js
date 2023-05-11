@@ -13,10 +13,13 @@ const selector = (id) => (store) => ({
   setWet: (e) => {
     store.updateNode(id, { wet: e.target.value });
   },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Delay({ id, data }) {
-  const { setTime, setFeedback, setWet } = useStore(selector(id), shallow);
+  const { setTime, setFeedback, setWet,removeNode } = useStore(selector(id), shallow);
   const typeName = id + "_typeDelay";
   return (
     <div>
@@ -103,6 +106,9 @@ export default function Delay({ id, data }) {
           onChange={setWet}
         />
         {/* <span>{data.gain}dB</span> */}
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />
