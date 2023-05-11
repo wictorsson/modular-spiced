@@ -18,7 +18,7 @@ export default function Osc({ id, data }) {
   return (
     <div>
       <div className="nodeContainer">
-        <h3></h3>
+        <p> </p>
         <h3>Noise Oscillators</h3>
         <div className="nodeContainer">
           <div className="waveformContainer">

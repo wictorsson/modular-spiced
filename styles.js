@@ -457,7 +457,8 @@ export const GlobalStyle = createGlobalStyle`
   
     background: rgb(70,41,41);
    // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
-    background: radial-gradient(rgba(35,35,50,1) 0%, rgba(10,10,15,1) 100%);
+    background: radial-gradient(rgba(35,35,50,1) 0%, rgba(12,12,15,1) 100%);
+   
     box-shadow: 0 0 5px 0 #444;
     border-style: solid;
     border-color: grey;
@@ -467,50 +468,71 @@ export const GlobalStyle = createGlobalStyle`
 
   }
 
+
+  *******************INPUT BOX
+
   .input-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 8x 0;
-    padding: 10px;
+    margin: 12x 0;
+    padding: 20px;
   }
   
-  .input-box p {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
+  // .input-box p {
+  //   font-size: 18px;
+  //   font-weight: bold;
+  //   margin-bottom: 10px;
+  // }
   
   .input-box input {
     width: 100%;
     max-width: 300px;
-    padding: 10px;
+    padding: 12px;
+    
     border: 2px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14spx;
     transition: border-color 0.3s ease;
+    text-align: center; /* center the text horizontally */
+    background: rgba(245,245,245,1);
   }
   
   .input-box input:focus {
     outline: none;
     border-color: #0066cc;
+    color: black;
   }
-  
+
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  position: absolute;
+  right: 0px;
+  bottom: 20%;
+  border-radius: 5px;
+    height: 20px;
+    opacity: 1;
+}
+
   .outputNodeContainer {
     display: flex;
-    flex-direction: row;
-    width: 400px;
-    //align-items: center;
-    //justify-content: space-between;
-    padding: 20px;
-    margin: 5px;
-    background: radial-gradient(rgba(55, 41, 41, 1) 0%, rgba(20, 20, 20, 1) 100%);
+    flex-direction: column;
+    padding: 25px;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    width: 125px;
+    background: rgb(70,41,41);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(35,35,50,1) 0%, rgba(12,12,15,1) 100%);
+   
     box-shadow: 0 0 5px 0 #444;
     border-style: solid;
     border-color: grey;
     border-radius: 5px;
     border-width: 1px;
-    color: white;
+    color:white;
   }
 
 

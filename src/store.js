@@ -43,7 +43,7 @@ export const useStore = create((set, get) => ({
   createNode(type) {
     const id = nanoid();
 
-    const randomYpos = 400;
+    let randomYpos = 400;
     const randomXpos =
       10 + get().offSetPos + Math.floor(Math.random() * 30) + 20;
     if (get().offSetPos > 600) {
@@ -58,11 +58,13 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "gain": {
+        randomYpos = 200;
         data = { gain: 1, inputConnected: false, TypeName: "decibels" };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
       case "filter": {
+        randomYpos = 300;
         data = { frequency: 400, type: "lowpass", rolloff: -48, Q: 1 };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -109,6 +111,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "channel": {
+        randomYpos = 200;
         data = { volume: 0, pan: 0, solo: false, mute: false };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -141,7 +144,6 @@ export const useStore = create((set, get) => ({
       }
     }
   },
-
 
   //Parameters changed -
   updateNode(id, data) {
@@ -191,10 +193,10 @@ export const useStore = create((set, get) => ({
       }
 
       // REMOVE????
-      if (sourceNode.type === "lfo") {
-        const isLfoSet = !get().isLfoSet;
-        set({ isLfoSet });
-      }
+      // if (sourceNode.type === "lfo") {
+      //   const isLfoSet = !get().isLfoSet;
+      //   set({ isLfoSet });
+      // }
     });
   },
 
@@ -215,15 +217,43 @@ export const useStore = create((set, get) => ({
         //
 
         addAudioEdge(data.source, data.target, data.targetHandle);
+
         //Nano ID generates random six digit ID
 
         const id = nanoid(6);
-        const edge = { id, ...data };
-
+        // const edge = { id, ...data };
+        const edge = { id, ...data, updateable: "source" }; // set updateable property to "target"
         const edges = [edge, ...get().edges];
+        console.log(edge);
         set({ edges });
       }
     }
+  },
+
+  updateEdge: (oldEdge, newConnection) => {
+    const { edges } = get();
+    const newEdges = edges.map((edge) => {
+      if (edge.id === oldEdge.id) {
+        return {
+          ...edge,
+          ...newConnection,
+        };
+      }
+      return edge;
+    });
+    set({ edges: newEdges });
+  },
+
+  // on connect function
+  onConnect: (params) => {
+    const { source, target } = params;
+    const newEdge = {
+      id: `${source}-${target}`,
+      source,
+      target,
+    };
+    set({ edges: [...get().edges, newEdge] });
+    addAudioEdge(newEdge);
   },
 
   //********************** db **********************

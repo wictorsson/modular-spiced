@@ -29,6 +29,7 @@ const selector = (store) => ({
   onEdgesChange: store.onEdgesChange,
   addEdge: store.addEdge,
   createNode: store.createNode,
+  updateEdge: store.updateEdge,
 });
 
 //Create nodetype object, should be defined outside of app component
@@ -57,6 +58,11 @@ function Environment() {
   const [panelClass, setPanelClass] = useState("flowPanel");
   const [panelBool, setPanelBool] = useState(true);
   const [closeIcon, setCloseIcon] = useState("╳");
+
+  // const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
+  //   store.updateEdge(oldEdge, newConnection); // call the updateEdge action from the store
+  // }, []);
+
   return (
     <div style={{ height: 660 }}>
       <ReactFlow
@@ -68,6 +74,7 @@ function Environment() {
         onNodesChange={store.onNodesChange}
         onEdgesChange={store.onEdgesChange}
         onConnect={store.addEdge}
+        onEdgeUpdate={store.onEdgeUpdate}
         //fitView
         proOptions={proOptions}
         className="touchdevice-flow"

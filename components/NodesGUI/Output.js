@@ -22,7 +22,7 @@ export default function AudioOut({ id, data }) {
   return (
     <div>
       <Handle type="target" position="bottom" />
-      <div className="nodeContainer-gain">
+      <div className="outputNodeContainer">
         <div className="imageLogo">
           <Image
             src={soundLogo}
@@ -33,9 +33,8 @@ export default function AudioOut({ id, data }) {
         <span></span>
         <br></br>
         <h4>AUDIO OUT</h4>
+        <span>Tempo</span>
         <div className="input-box">
-          <span>Tempo</span>
-
           <input
             type="number"
             required

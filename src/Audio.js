@@ -77,8 +77,14 @@ export function updateAudioNode(id, data) {
       audioNode[key].value = time;
     } else if (isNaN(val) || typeof val === "boolean" || key === "distortion") {
       audioNode[key] = val;
+      if (audioNode2) {
+        audioNode2[key] = val;
+      }
     } else {
       audioNode[key].value = val;
+      if (audioNode2) {
+        audioNode2[key].value = val;
+      }
     }
   });
 }
@@ -230,8 +236,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       const lfo2Synced = new Tone.LFO(data.frequency, data.min, data.max);
       lfoSynced.sync();
       lfo2Synced.sync();
-      // Tone.Transport.syncSignal(lfoSynced.delayTime);
-      // Tone.Transport.syncSignal(lfo2Synced.delayTime);
+
       //LFO workaround , pipe through a gainNode
       let gainNodeSynced = getContext().rawContext.createGain();
       lfoSynced.start();

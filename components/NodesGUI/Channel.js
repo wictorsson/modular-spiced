@@ -45,7 +45,7 @@ export default function Channel({ id, data }) {
           onChange={setVolume}
         />
         <span></span>
-        <span>Pan</span> <span>{data.pan} dB</span>
+        <span>Pan</span> <span>{data.pan} </span>
         <input
           className="nodrag"
           type="range"
@@ -55,7 +55,6 @@ export default function Channel({ id, data }) {
           value={data.pan}
           onChange={setPan}
         />
-        <span>{data.pan} </span>
         <div className="nodeContainer-gain">
           <div>
             <input
@@ -67,14 +66,14 @@ export default function Channel({ id, data }) {
             />
             <label htmlFor="checkbox">Solo</label>
 
-            <input
+            {/* <input
               type="checkbox"
               id={typeName + "mute"}
               name={typeName + "mute"}
               checked={Boolean(data.mute)}
               onChange={setMute}
             />
-            <label htmlFor="checkbox">Mute</label>
+            <label htmlFor="checkbox">Mute</label> */}
           </div>
         </div>
         <button type="button" className="CloseButton" onClick={removeNode}>
