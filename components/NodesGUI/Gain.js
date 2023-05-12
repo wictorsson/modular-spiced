@@ -7,14 +7,18 @@ const selector = (id) => (store) => ({
   setGain: (e) => {
     store.updateNode(id, { gain: e.target.value });
   },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+    // store.onEdgesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Gain({ id, data }) {
-  const { setGain } = useStore(selector(id), shallow);
+  const { setGain, removeNode } = useStore(selector(id), shallow);
 
   return (
     <div>
-      <div className="nodeContainer">
+      <div className="nodeContainer-gain">
         <h3>Gain</h3>
 
         <input
@@ -27,11 +31,15 @@ export default function Gain({ id, data }) {
           onChange={setGain}
         />
         {/* <span>{data.gain}dB</span> */}
+        {/* <button onClick={() => store.createNode("gain")}>Gain</button> */}
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />
       <Handle type="source" position="top" />
-      <Handle type="target" position="right" id="paramGain" />
+      {/* <Handle type="target" position="right" id="paramGain" /> */}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import Filter from "./NodesGUI/Filter";
 import Sequence from "./NodesGUI/Sequencer";
 import Gain from "./NodesGUI/Gain";
 import Lfo from "./NodesGUI/Lfo";
+import LfoSynced from "./NodesGUI/LfoSynced";
 import Reverb from "./NodesGUI/Reverb";
 import Distortion from "./NodesGUI/Distortion";
 import Delay from "./NodesGUI/Delay";
@@ -28,6 +29,8 @@ const selector = (store) => ({
   onEdgesChange: store.onEdgesChange,
   addEdge: store.addEdge,
   createNode: store.createNode,
+  onEdgeUpdate: store.updateEdge,
+  onConnectStart: store.onConnectStart,
 });
 
 //Create nodetype object, should be defined outside of app component
@@ -38,6 +41,7 @@ const nodeTypes = {
   audioOut: AudioOutToggle,
   sequence: Sequence,
   lfo: Lfo,
+  lfosynced: LfoSynced,
   reverb: Reverb,
   noise: Noise,
   membsynth: Membsynth,
@@ -55,6 +59,11 @@ function Environment() {
   const [panelClass, setPanelClass] = useState("flowPanel");
   const [panelBool, setPanelBool] = useState(true);
   const [closeIcon, setCloseIcon] = useState("╳");
+
+  // const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
+  //   store.updateEdge(oldEdge, newConnection); // call the updateEdge action from the store
+  // }, []);
+
   return (
     <div style={{ height: 660 }}>
       <ReactFlow
@@ -66,7 +75,9 @@ function Environment() {
         onNodesChange={store.onNodesChange}
         onEdgesChange={store.onEdgesChange}
         onConnect={store.addEdge}
+        onEdgeUpdate={store.onEdgeUpdate}
         //fitView
+        onConnectStart={store.onConnectStart}
         proOptions={proOptions}
         className="touchdevice-flow"
       >
@@ -84,6 +95,9 @@ function Environment() {
             {/* <hr></hr> */}
 
             <button onClick={() => store.createNode("lfo")}>LFO</button>
+            <button onClick={() => store.createNode("lfosynced")}>
+              LFO sync
+            </button>
             <button onClick={() => store.createNode("filter")}>Filter</button>
             <button onClick={() => store.createNode("gain")}>Gain</button>
             <button onClick={() => store.createNode("delay")}>Delay</button>

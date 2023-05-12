@@ -7,12 +7,19 @@ const selector = (id) => (store) => ({
   setFrequency: (e) => store.updateNode(id, { frequency: e.target.value }),
   setMin: (e) => store.updateNode(id, { min: e.target.value }),
   setMax: (e) => store.updateNode(id, { max: e.target.value }),
+  setType: (e) => store.updateNode(id, { type: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Lfo({ id, data }) {
-  const { setFrequency, setMin, setMax } = useStore(selector(id), shallow);
+  const { setFrequency, setMin, setMax, setType, removeNode } = useStore(
+    selector(id),
+    shallow
+  );
   //Make unique type name to avoid conflicts when using multiple intances
-  // const typeName = id + "_type";
+  const typeName = id + "_type";
 
   return (
     <div>
@@ -20,6 +27,7 @@ export default function Lfo({ id, data }) {
         <h3>LFO</h3>
 
         <span>Freq</span>
+        <span>{data.frequency}</span>
 
         <input
           id="slider"
@@ -57,33 +65,53 @@ export default function Lfo({ id, data }) {
           value={data.max}
           onChange={setMax}
         />
-
-        {/* <div className="waveformContainer">
+        <div className="nodeContainer">
           <div className="nodrag">
             <label style={{ display: "block" }}>
               <input
                 type="radio"
                 name={typeName}
-                value="lowpass"
-                checked={data.type === "lowpass"}
+                value="sine"
+                checked={data.type === "sine"}
                 onChange={setType}
               />
-              SINE
+              Sine
               <input
                 type="radio"
-                name={typeName}
-                value="highpass"
-                checked={data.type === "highpass"}
+                name={typeName + "sine"}
+                value="triangle"
+                checked={data.type === "triangle"}
                 onChange={setType}
               />
-              SAW
+              Triangle
+            </label>
+            <label style={{ display: "block" }}>
+              <input
+                type="radio"
+                name={typeName + "triangle"}
+                value="sawtooth"
+                checked={data.type === "sawtooth"}
+                onChange={setType}
+              />
+              Saw
+              <input
+                type="radio"
+                name={typeName + "square"}
+                value="square"
+                checked={data.type === "square"}
+                onChange={setType}
+              />
+              Square
             </label>
           </div>
-        </div> */}
+        </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="source" position="top" id="paramHandle" />
-      <Handle type="target" position="right" id="paramFrequency" />
+      {/* <Handle type="target" position="right" id="paramFrequency" /> */}
       {/* <Handle type="target" position="bottom" /> */}
       {/* <Handle type="target" position="right" id="freqHandle" /> */}
     </div>

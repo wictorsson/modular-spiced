@@ -19,7 +19,7 @@ export const useStore = create((set, get) => ({
       type: "audioOut",
       id: "output_id",
       data: { bpm: 120, label: "output" },
-      position: { x: 350, y: 40 },
+      position: { x: 200, y: 40 },
       deletable: false,
     },
   ],
@@ -35,12 +35,21 @@ export const useStore = create((set, get) => ({
   toggleSaveAs: () =>
     set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
 
+  offSetPos: 0,
+  setoffSetPos: () =>
+    set((state) => ({ isSaveAsClicked: !state.isSaveAsClicked })),
+
   // TEMPLATE MODULES
   createNode(type) {
     const id = nanoid();
-    // Position new nodes randomly so they dont hide each other
-    const randomYpos = Math.floor(Math.random() * 250) + 200;
-    const randomXpos = Math.floor(Math.random() * 400) + 30;
+
+    let randomYpos = 400;
+    const randomXpos =
+      10 + get().offSetPos + Math.floor(Math.random() * 30) + 20;
+    if (get().offSetPos > 600) {
+      set({ offSetPos: 0 });
+    }
+    set({ offSetPos: get().offSetPos + 200 });
     let data, position;
     switch (type) {
       case "osc": {
@@ -49,11 +58,13 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "gain": {
+        randomYpos = 200;
         data = { gain: 1, inputConnected: false, TypeName: "decibels" };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
       case "filter": {
+        randomYpos = 300;
         data = { frequency: 400, type: "lowpass", rolloff: -48, Q: 1 };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -71,9 +82,20 @@ export const useStore = create((set, get) => ({
       }
       case "lfo": {
         data = {
+          frequency: 6,
+          min: -1,
+          max: 1,
+          type: "sine",
+        };
+        position = { x: randomXpos, y: randomYpos };
+        break;
+      }
+      case "lfosynced": {
+        data = {
           frequency: "4n",
           min: -1,
           max: 1,
+          type: "sine",
         };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -89,6 +111,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "channel": {
+        randomYpos = 200;
         data = { volume: 0, pan: 0, solo: false, mute: false };
         position = { x: randomXpos, y: randomYpos };
         break;
@@ -99,7 +122,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "delay": {
-        data = { delayTime: 1000, feeback: 0.5, wet: 0.5 };
+        data = { delayTime: "4n", feedback: 0.5, wet: 0.5 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -107,9 +130,19 @@ export const useStore = create((set, get) => ({
     // Prevent multiple sequences
     const sequenceNode = get().nodes.find((node) => node.type === "sequence");
 
-    set({ nodes: [...get().nodes, { type, id, data, position }] });
-    // CReate node send function here to update bool
-    createAudioNode(id, type, data, get().setLampIndex);
+    if (type !== "sequence") {
+      set({ nodes: [...get().nodes, { type, id, data, position }] });
+
+      // CReate node send function here to update bool
+      createAudioNode(id, type, data, get().setLampIndex);
+    } else {
+      if (!sequenceNode) {
+        set({ nodes: [...get().nodes, { type, id, data, position }] });
+
+        // CReate node send function here to update bool
+        createAudioNode(id, type, data, get().setLampIndex);
+      }
+    }
   },
 
   //Parameters changed -
@@ -123,6 +156,9 @@ export const useStore = create((set, get) => ({
   },
 
   onNodesChange(changes) {
+    if (changes[0].clickDelete) {
+      removeAudioNode(changes[0].id);
+    }
     set({
       nodes: applyNodeChanges(changes, get().nodes),
     });
@@ -143,30 +179,21 @@ export const useStore = create((set, get) => ({
 
   removeEdges(edges) {
     edges.forEach((edge) => {
-      // Avoid removing twice the same connection!
-      console.log("AUDIO EDGE", edge.target);
-
       const targetNode = get().nodes.find((node) => node.id === edge.target);
-      const sourceNode = get().nodes.find((node) => node.id === edge.source);
 
-      console.log("TARGET REMOVED EDGE->", edge.targetHandle);
       if (edges.length < 2) {
         removeAudioEdge(edge.source, edge.target, edge.targetHandle);
       }
 
-      targetNode.data.inputConnected = false;
-
-      if (sourceNode.type === "lfo") {
-        const isLfoSet = !get().isLfoSet;
-        set({ isLfoSet });
-        console.log("REMOVED EDGE", sourceNode);
+      if (targetNode) {
+        targetNode.data.inputConnected = false;
       }
     });
   },
 
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
-    const sourceNode = get().nodes.find((node) => node.id === data.source);
+
     // Check if connection is parameter connection
     let twoParamHandles = false;
 
@@ -178,18 +205,55 @@ export const useStore = create((set, get) => ({
     if (data.sourceHandle === data.targetHandle || twoParamHandles) {
       //Check if it is a parameter connection. Handle is set to null if non paprameter
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
-        //
-
         addAudioEdge(data.source, data.target, data.targetHandle);
+
         //Nano ID generates random six digit ID
 
         const id = nanoid(6);
-        const edge = { id, ...data };
-        console.log("SOUCEC", sourceNode.type);
+        // const edge = { id, ...data };
+        const edge = { id, ...data, updatable: true };
+
         const edges = [edge, ...get().edges];
+        // console.log(edge);
         set({ edges });
       }
     }
+  },
+
+  onConnectStart: (oldEdge, newConnection) => {
+    //removeAudioEdge(oldEdge.source, oldEdge.target, oldEdge.targetHandle);
+
+    const { edges } = get();
+    const newEdges = edges.map((edge) => {
+      if (edge.id === oldEdge.id) {
+        return {
+          ...edge,
+          ...newConnection,
+        };
+      }
+      return edge;
+    });
+    set({ edges: newEdges });
+  },
+
+  updateEdge: (oldEdge, newConnection) => {
+    removeAudioEdge(oldEdge.source, oldEdge.target, oldEdge.targetHandle);
+    addAudioEdge(
+      newConnection.source,
+      newConnection.target,
+      newConnection.targetHandle
+    );
+    const { edges } = get();
+    const newEdges = edges.map((edge) => {
+      if (edge.id === oldEdge.id) {
+        return {
+          ...edge,
+          ...newConnection,
+        };
+      }
+      return edge;
+    });
+    set({ edges: newEdges });
   },
 
   //********************** db **********************
@@ -213,8 +277,8 @@ export const useStore = create((set, get) => ({
     });
 
     set({ edges: [...edges] });
-    edges.forEach(({ source, target }) => {
-      addAudioEdge(source, target);
+    edges.forEach(({ source, target, targetHandle }) => {
+      addAudioEdge(source, target, targetHandle);
     });
   },
   currentPatch: "untitled",

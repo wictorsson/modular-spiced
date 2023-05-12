@@ -7,6 +7,7 @@ const selector = (store) => ({
   readPatch: store.readPatch,
   setCurrentPatch: store.setCurrentPatch,
   togglePatchList: store.togglePatchList,
+  setCurrentPatchName: store.setCurrentPatchName,
 });
 
 export default function PatchList() {
@@ -66,6 +67,7 @@ export default function PatchList() {
                           store.setCurrentPatch(patch._id);
                           store.readPatch(patch);
                           store.togglePatchList();
+                          store.setCurrentPatchName(patch.name);
                         }}
                       >
                         {patch.name}

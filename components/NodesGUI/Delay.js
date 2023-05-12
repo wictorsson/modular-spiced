@@ -13,75 +13,82 @@ const selector = (id) => (store) => ({
   setWet: (e) => {
     store.updateNode(id, { wet: e.target.value });
   },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Delay({ id, data }) {
-  const { setTime, setFeedback, setWet } = useStore(selector(id), shallow);
-
+  const { setTime, setFeedback, setWet, removeNode } = useStore(
+    selector(id),
+    shallow
+  );
+  const typeName = id + "_typeDelay";
   return (
     <div>
-      <div className="nodeContainer">
-        Delay
-        <div className="nodeContainer">
+      <div className="nodeContainer-fx">
+        <h3>Delay</h3>
+        <div className="nodeContainer-fx">
           <h3>Time</h3>
 
           <div>
             <input
               type="radio"
               id="2n"
-              name="time"
+              name={typeName}
               value="2n"
               onChange={setTime}
               checked={data.delayTime === "2n"}
             />
-            <label htmlFor="2n">2n</label>
+            <label htmlFor="2n"></label>
           </div>
           <div>
             <input
               type="radio"
               id="4n"
-              name="time"
+              name={typeName}
               value="4n"
               onChange={setTime}
               checked={data.delayTime === "4n"}
             />
-            <label htmlFor="4n">4n</label>
+            <label htmlFor="4n"></label>
           </div>
           <div>
             <input
               type="radio"
               id="8n"
-              name="time"
+              name={typeName}
               value="8n"
               onChange={setTime}
               checked={data.delayTime === "8n"}
             />
-            <label htmlFor="8n">8n</label>
+            <label htmlFor="8n"></label>
           </div>
           <div>
             <input
               type="radio"
               id="8n."
-              name="time"
+              name={typeName}
               value="8n."
               onChange={setTime}
               checked={data.delayTime === "8n."}
             />
-            <label htmlFor="8n.">8n.</label>
+            <label htmlFor="8n."></label>
           </div>
           <div>
             <input
               type="radio"
               id="16n"
-              name="time"
+              name={typeName}
               value="16n"
               onChange={setTime}
               checked={data.delayTime === "16n"}
             />
-            <label htmlFor="16n">16n</label>
+            <label htmlFor="16n"></label>
           </div>
         </div>
-        <h3>Feedback</h3>
+        <br></br>
+        <span>Feedback</span>
         <input
           className="nodrag"
           type="range"
@@ -92,7 +99,7 @@ export default function Delay({ id, data }) {
           onChange={setFeedback}
         />
         {/* <span>{data.gain}dB</span> */}
-        <h3>Wet</h3>
+        <span>Wet</span>
         <input
           className="nodrag"
           type="range"
@@ -103,6 +110,9 @@ export default function Delay({ id, data }) {
           onChange={setWet}
         />
         {/* <span>{data.gain}dB</span> */}
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />

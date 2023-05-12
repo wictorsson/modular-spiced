@@ -16,19 +16,25 @@ const selector = (id) => (store) => ({
   setMute: (e) => {
     store.updateNode(id, { mute: e.target.checked });
   },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id }]);
+  },
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Channel({ id, data }) {
-  const { setVolume, setPan, setSolo, setMute } = useStore(
+  const { setVolume, setPan, setSolo, setMute, removeNode } = useStore(
     selector(id),
     shallow
   );
   const typeName = id + "_type";
   return (
     <div>
-      <div className="nodeContainer">
-        <h3>Gain</h3>
-
+      <div className="nodeContainer-gain">
+        <h3>Channel</h3>
+        <span>Gain</span> <span>{data.volume} dB</span>
         <input
           className="nodrag"
           type="range"
@@ -38,10 +44,8 @@ export default function Channel({ id, data }) {
           value={data.volume}
           onChange={setVolume}
         />
-        <span>{data.volume} dB</span>
-
-        <h3>Pan</h3>
-
+        <span></span>
+        <span>Pan</span> <span>{data.pan} </span>
         <input
           className="nodrag"
           type="range"
@@ -51,25 +55,30 @@ export default function Channel({ id, data }) {
           value={data.pan}
           onChange={setPan}
         />
-        <span>{data.pan} </span>
+        <div className="nodeContainer-gain">
+          <div>
+            <input
+              type="checkbox"
+              id={typeName + "solo"}
+              name={typeName + "solo"}
+              checked={Boolean(data.solo)}
+              onChange={setSolo}
+            />
+            <label htmlFor="checkbox">Solo</label>
 
-        <input
-          type="checkbox"
-          id={typeName + "solo"}
-          name={typeName + "solo"}
-          checked={Boolean(data.solo)}
-          onChange={setSolo}
-        />
-        <label htmlFor="checkbox">Solo</label>
-
-        <input
-          type="checkbox"
-          id={typeName + "mute"}
-          name={typeName + "mute"}
-          checked={Boolean(data.mute)}
-          onChange={setMute}
-        />
-        <label htmlFor="checkbox">Mute</label>
+            {/* <input
+              type="checkbox"
+              id={typeName + "mute"}
+              name={typeName + "mute"}
+              checked={Boolean(data.mute)}
+              onChange={setMute}
+            />
+            <label htmlFor="checkbox">Mute</label> */}
+          </div>
+        </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />

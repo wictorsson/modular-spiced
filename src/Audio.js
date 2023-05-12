@@ -20,9 +20,10 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
   const audioNodeTarget = audioNodes[targetId];
   //******************* */
 
-  if (paramHandle) {
+  // if (paramHandle) {
+  if (audioNodeSource.name === "LFO") {
     // CHECK IF LFO
-
+    //Paramhandle is undefiend
     const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
     const audioNodeSourceGain2 = audioNodes[sourceId + "gainNode2"];
     const audioNodeSource2 = audioNodes[sourceId + "lfo2"];
@@ -30,13 +31,16 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
     Tone.connect(audioNodeSource2, audioNodeSourceGain2);
     if (paramHandle === "paramFrequency") {
       Tone.connect(audioNodeSourceGain, audioNodeTarget.frequency);
+
+      //audioNodeSource.sync();
+      // audioNodeSource.start();
     }
     if (paramHandle === "paramGain") {
       Tone.connect(audioNodeSourceGain2, audioNodeTarget.volume);
+      // audioNodeSource2.sync();
+      // audioNodeSource2.start();
     }
     //Start lfo
-    audioNodeSource.start();
-    audioNodeSource2.start();
   } else {
     audioNodeSource.connect(audioNodeTarget);
   }
@@ -46,17 +50,19 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
 export function updateAudioNode(id, data) {
   const audioNode = audioNodes[id];
   const audioNode2 = audioNodes[id + "lfo2"];
-  //console.log("AUDIONODE", audioNode);
 
   //TODO make switch
   Object.entries(data).forEach(([key, val]) => {
-    console.log(val);
-    console.log(key);
+    // console.log(val);
+    // console.log(data);
 
     if (key === "row1") {
       beatArray = val;
     } else if (key === "frequency") {
       audioNode[key].value = val;
+      if (audioNode2) {
+        audioNode2[key].value = val;
+      }
 
       if (audioNode.name === "MembraneSynth") {
         kickFrequency = val;
@@ -75,15 +81,20 @@ export function updateAudioNode(id, data) {
       audioNode[key].value = time;
     } else if (isNaN(val) || typeof val === "boolean" || key === "distortion") {
       audioNode[key] = val;
+      if (audioNode2) {
+        audioNode2[key] = val;
+      }
     } else {
       audioNode[key].value = val;
+      if (audioNode2) {
+        audioNode2[key].value = val;
+      }
     }
   });
 }
 
 export function removeAudioNode(id) {
   // check if LFO - GAIN!!!!
-  console.log(audioNodes[id]);
 
   if (Object.keys(audioNodes).length > 1) {
     const audioNode = audioNodes[id];
@@ -95,7 +106,7 @@ export function removeAudioNode(id) {
     // Dispose - free garbage collection
     audioNode.dispose();
     //beatArray = [];
-    console.log(audioNodes[id]);
+
     if (audioNodes[id].name === "MembraneSynth") {
       Tone.Transport.clear(audioNodes[id + "repeat"]);
       beatArray.fill(0);
@@ -181,7 +192,6 @@ export function createAudioNode(id, type, data, setLampIndex) {
       });
 
       let scheduledEvent = Tone.Transport.scheduleRepeat((time) => {
-        //console.log(audioNodes[id].frequency);
         step = index % 16;
         Tone.Draw.schedule(function () {
           setLampIndex(step);
@@ -195,7 +205,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
             kickFrequency,
             kickLength,
             time,
-            beatArray[step] / 50
+            beatArray[step] / 25
           );
         }
         index++;
@@ -207,6 +217,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       break;
 
     case "lfo":
+      console.log("CREATING lfo");
       const lfo = new Tone.LFO(data.frequency, 10, 20000);
       const lfo2 = new Tone.LFO(data.frequency, data.min, data.max);
 
@@ -222,6 +233,28 @@ export function createAudioNode(id, type, data, setLampIndex) {
 
       audioNodes[id + "lfo2"] = lfo2;
       audioNodes[id + "gainNode2"] = gainNode2;
+      audioNodes[id + "lfotype"] = "lfoUnsync";
+      break;
+
+    case "lfosynced":
+      const lfoSynced = new Tone.LFO(data.frequency, 10, 20000);
+      const lfo2Synced = new Tone.LFO(data.frequency, data.min, data.max);
+      lfoSynced.sync();
+      lfo2Synced.sync();
+
+      //LFO workaround , pipe through a gainNode
+      let gainNodeSynced = getContext().rawContext.createGain();
+      lfoSynced.start();
+
+      let gainNode2Synced = getContext().rawContext.createGain();
+      lfo2Synced.start();
+
+      audioNodes[id] = lfoSynced;
+      audioNodes[id + "gainNode"] = gainNodeSynced;
+
+      audioNodes[id + "lfo2"] = lfo2Synced;
+      audioNodes[id + "gainNode2"] = gainNode2Synced;
+      audioNodes[id + "lfotype"] = "lfosync";
       break;
 
     case "reverb":
@@ -237,6 +270,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
     case "delay":
       const delay = new Tone.Delay(0.1, data.feedback, data.wet);
       const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5);
+      Tone.Transport.syncSignal(feedbackDelay.delayTime);
       audioNodes[id] = feedbackDelay;
       break;
 
@@ -268,15 +302,14 @@ export function isRunning() {
 }
 
 // TEMP function to be able to use audiocontext in next.js. Create modules here
-export function toggleAudio() {
-  if (Tone.context.state === "suspended") {
-    const out = Tone.getDestination();
 
-    audioNodes["c"] = out;
+export function toggleAudio() {
+  const context = Tone.context.rawContext;
+  if (Tone.context.state !== "running") {
+    Tone.context.resume(); //
+    Tone.Transport.start("+0.1");
   }
-  // Change here to suspend if needed later
-  console.log(Tone.context.state);
-  return isRunning() ? Tone.start() : Tone.start();
+  return isRunning() ? context.suspend() : Tone.start();
 }
 
 //*********

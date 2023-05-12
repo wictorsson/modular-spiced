@@ -2,7 +2,6 @@ import React from "react";
 import { Handle } from "reactflow";
 import { useStore } from "../../src/store";
 import { shallow } from "zustand/shallow";
-import { useState, useEffect } from "react";
 
 const selector = (id) => (store) => ({
   setFrequency: (e) => {
@@ -13,24 +12,16 @@ const selector = (id) => (store) => ({
   },
   setType: (e) => store.updateNode(id, { type: e.target.value }),
   setResonance: (e) => store.updateNode(id, { Q: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Filter({ id, data }) {
-  const { setFrequency, setType, setResonance } = useStore(
+  const { setFrequency, setType, setResonance, removeNode } = useStore(
     selector(id),
     shallow
   );
-
-  // const [roundedResult, setRoundedResult] = useState(
-  //   parseFloat((20000 * Math.pow(data.frequency / 100, 2)).toFixed(0))
-  // );
-
-  // useEffect(() => {
-  //   // Update the rounded result whenever the frequency value changes
-  //   setRoundedResult(
-  //     parseFloat((20000 * Math.pow(data.frequency / 100, 2)).toFixed(0))
-  //   );
-  // }, [data.frequency]);
 
   const linearValue = 100 * Math.pow(data.frequency / 20000, 1 / 4);
   const roundedLinearValue = parseFloat(linearValue.toFixed(0));
@@ -39,11 +30,9 @@ export default function Filter({ id, data }) {
   const typeName = id + "_type";
   return (
     <div>
-      <div className="nodeContainer">
+      <div className="nodeContainer-fx">
         <h3>Filter</h3>
-
-        <span>Freq</span>
-
+        <span>Freq</span> <div> {data.frequency.toFixed(0)} Hz</div>
         <input
           id="slider"
           className="nodrag"
@@ -54,9 +43,7 @@ export default function Filter({ id, data }) {
           onChange={setFrequency}
         />
         {/* const exponentialValue = Math.pow(baseValue, (linearValue - 1) / (baseMax - 1)) * exponentialMax; */}
-        <div> {data.frequency.toFixed(0)} Hz</div>
         <span>Res</span>
-
         <input
           id="slider"
           className="nodrag"
@@ -66,29 +53,33 @@ export default function Filter({ id, data }) {
           value={data.Q}
           onChange={setResonance}
         />
-
         <div className="waveformContainer">
-          <div className="nodrag">
-            <label style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={typeName}
-                value="lowpass"
-                checked={data.type === "lowpass"}
-                onChange={setType}
-              />
-              LPF
-              <input
-                type="radio"
-                name={typeName}
-                value="highpass"
-                checked={data.type === "highpass"}
-                onChange={setType}
-              />
-              HPF
-            </label>
+          <div className="nodeContainer-fx">
+            <div className="nodrag">
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name={typeName}
+                  value="lowpass"
+                  checked={data.type === "lowpass"}
+                  onChange={setType}
+                />
+                LPF
+                <input
+                  type="radio"
+                  name={typeName}
+                  value="highpass"
+                  checked={data.type === "highpass"}
+                  onChange={setType}
+                />
+                HPF
+              </label>
+            </div>
           </div>
         </div>
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="source" position="top" />

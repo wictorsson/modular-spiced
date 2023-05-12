@@ -5,14 +5,17 @@ import { shallow } from "zustand/shallow";
 
 const selector = (id) => (store) => ({
   setroomSize: (e) => store.updateNode(id, { roomSize: e.target.value }),
+  removeNode: (e) => {
+    store.onNodesChange([{ type: "remove", id: id, clickDelete: true }]);
+  },
 });
 
 export default function Reverb({ id, data }) {
-  const { setroomSize } = useStore(selector(id), shallow);
+  const { setroomSize, removeNode } = useStore(selector(id), shallow);
 
   return (
     <div>
-      <div className="nodeContainer">
+      <div className="nodeContainer-fx">
         <h3>Reverb</h3>
 
         <span>Size</span>
@@ -25,6 +28,9 @@ export default function Reverb({ id, data }) {
           value={data.roomSize}
           onChange={setroomSize}
         />
+        <button type="button" className="CloseButton" onClick={removeNode}>
+          ╳
+        </button>
       </div>
 
       <Handle type="target" position="bottom" />

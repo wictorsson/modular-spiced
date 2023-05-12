@@ -19,7 +19,14 @@ export const GlobalStyle = createGlobalStyle`
     padding: 6rem;
   }
 
-
+.imageLogo{
+  position: absolute;
+  left: -3px;
+  top: 0 px;
+  height: 20px;
+  width:20px;
+ 
+}
   .Header{
     display: flex;
     justify-content: center;
@@ -60,8 +67,8 @@ export const GlobalStyle = createGlobalStyle`
   align-items: center;
   padding: 2rem;
   position: fixed;
-  color: grey;
-  gap: 10px;
+  // color: grey;
+  // gap: 10px;
   width: 100%;
   text-align: center;
   z-index: 1;
@@ -76,6 +83,12 @@ export const GlobalStyle = createGlobalStyle`
   border-width: 1px;
   bottom: 0px;
 }
+
+.Footer img {
+  width: 8%;
+  height: auto;
+}
+
   body {
  
       background: rgb(191,191,191);
@@ -216,6 +229,7 @@ export const GlobalStyle = createGlobalStyle`
        position: absolute; 
        left: 15px;
        top: 15px;
+       margin: -10px;
     }
   
     
@@ -417,50 +431,119 @@ export const GlobalStyle = createGlobalStyle`
     color:white;
   }
 
-
-  .input-box {
+  .nodeContainer-fx{
     display: flex;
     flex-direction: column;
+    padding: 15px;
+    gap: 5px;
     align-items: center;
-    margin: 20px 0;
-  }
+    justify-content: space-between;
+    font-size: 10px;
   
-  .input-box p {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .input-box input {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .input-box input:focus {
-    outline: none;
-    border-color: #0066cc;
-  }
-  
-  .outputNodeContainer {
-    display: flex;
-    flex-direction: row;
-    width: 400px;
-    //align-items: center;
-    //justify-content: space-between;
-    padding: 20px;
-    margin: 5px;
-    background: radial-gradient(rgba(55, 41, 41, 1) 0%, rgba(20, 20, 20, 1) 100%);
+    background: rgb(70,41,41);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(41,51,41,1) 0%, rgba(15,15,15,1) 100%);
     box-shadow: 0 0 5px 0 #444;
     border-style: solid;
     border-color: grey;
     border-radius: 5px;
     border-width: 1px;
-    color: white;
+    color:white;
+
+  }
+
+  .nodeContainer-gain{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+  
+    background: rgb(70,41,41);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(35,35,50,1) 0%, rgba(12,12,15,1) 100%);
+   
+    box-shadow: 0 0 5px 0 #444;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 5px;
+    border-width: 1px;
+    color:white;
+
+  }
+
+
+  *******************INPUT BOX
+
+  .input-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 12x 0;
+    padding: 20px;
+  }
+  
+  // .input-box p {
+  //   font-size: 18px;
+  //   font-weight: bold;
+  //   margin-bottom: 10px;
+  // }
+  
+  .input-box input {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 14spx;
+    transition: border-color 0.3s ease;
+    text-align: center; /* center the text horizontally */
+    background: rgba(245,245,245,1);
+  }
+  
+  .input-box input:focus {
+    outline: none;
+    border-color: #0066cc;
+    color: black;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  position: absolute;
+  right: 0px;
+  bottom: 25%;
+  border-radius: 5px;
+    height: 20px;
+    opacity: 1;
+}
+
+// .Footer{
+//   color: rgb(117,151,117,0.8);
+
+// }
+
+  .outputNodeContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    width: 125px;
+    background: rgb(70,41,41);
+   // background: radial-gradient(circle, rgba(55,41,41,1) 0%, rgba(20,20,20,1) 100%);
+    background: radial-gradient(rgba(35,35,50,1) 0%, rgba(12,12,15,1) 100%);
+   
+    box-shadow: 0 0 5px 0 #444;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 5px;
+    border-width: 1px;
+    color:white;
   }
 
 
@@ -507,12 +590,12 @@ export const GlobalStyle = createGlobalStyle`
 
   .react-flow__handle-right{
     //top: auto;
-    top: 50%;
+    top: 95px;
     left: 95%;
     //bottom: 12px;
    
     transform: translate(0, 0);
-    border-color: cyan;
+    border-color: yellow;
 
   }
 
@@ -588,7 +671,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .flowPanel-closeButton {
-      height: 240px !important;
+      height: 330px !important;
       width: 35px !important;
  
     }
