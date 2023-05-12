@@ -65,7 +65,7 @@ function Environment() {
   // }, []);
 
   return (
-    <div style={{ height: 660 }}>
+    <div style={{ height: 700 }}>
       <ReactFlow
         onEdgesDelete={store.onEdgesDelete}
         onNodesDelete={store.onNodesDelete}
