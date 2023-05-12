@@ -30,16 +30,15 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
     Tone.connect(audioNodeSource, audioNodeSourceGain);
     Tone.connect(audioNodeSource2, audioNodeSourceGain2);
     if (paramHandle === "paramFrequency") {
-      console.log("PAAAAAAAAAAAAAAAAARAM");
       Tone.connect(audioNodeSourceGain, audioNodeTarget.frequency);
 
-      audioNodeSource.sync();
-      audioNodeSource.start();
+      //audioNodeSource.sync();
+      // audioNodeSource.start();
     }
     if (paramHandle === "paramGain") {
       Tone.connect(audioNodeSourceGain2, audioNodeTarget.volume);
-      audioNodeSource2.sync();
-      audioNodeSource2.start();
+      // audioNodeSource2.sync();
+      // audioNodeSource2.start();
     }
     //Start lfo
   } else {

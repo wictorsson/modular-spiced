@@ -222,7 +222,7 @@ export const useStore = create((set, get) => ({
 
   onConnectStart: (oldEdge, newConnection) => {
     //removeAudioEdge(oldEdge.source, oldEdge.target, oldEdge.targetHandle);
-    console.log("Connect start", oldEdge, "NEW connoection", newConnection);
+
     const { edges } = get();
     const newEdges = edges.map((edge) => {
       if (edge.id === oldEdge.id) {
@@ -237,7 +237,6 @@ export const useStore = create((set, get) => ({
   },
 
   updateEdge: (oldEdge, newConnection) => {
-    console.log("UPDATE", oldEdge);
     removeAudioEdge(oldEdge.source, oldEdge.target, oldEdge.targetHandle);
     addAudioEdge(
       newConnection.source,
