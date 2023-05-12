@@ -20,23 +20,28 @@ export function addAudioEdge(sourceId, targetId, paramHandle) {
   const audioNodeTarget = audioNodes[targetId];
   //******************* */
 
-  if (paramHandle) {
+  // if (paramHandle) {
+  if (audioNodeSource.name === "LFO") {
     // CHECK IF LFO
-
+    //Paramhandle is undefiend
     const audioNodeSourceGain = audioNodes[sourceId + "gainNode"];
     const audioNodeSourceGain2 = audioNodes[sourceId + "gainNode2"];
     const audioNodeSource2 = audioNodes[sourceId + "lfo2"];
     Tone.connect(audioNodeSource, audioNodeSourceGain);
     Tone.connect(audioNodeSource2, audioNodeSourceGain2);
     if (paramHandle === "paramFrequency") {
+      console.log("PAAAAAAAAAAAAAAAAARAM");
       Tone.connect(audioNodeSourceGain, audioNodeTarget.frequency);
+
+      audioNodeSource.sync();
+      audioNodeSource.start();
     }
     if (paramHandle === "paramGain") {
       Tone.connect(audioNodeSourceGain2, audioNodeTarget.volume);
+      audioNodeSource2.sync();
+      audioNodeSource2.start();
     }
     //Start lfo
-    audioNodeSource.start();
-    audioNodeSource2.start();
   } else {
     audioNodeSource.connect(audioNodeTarget);
   }
@@ -213,6 +218,7 @@ export function createAudioNode(id, type, data, setLampIndex) {
       break;
 
     case "lfo":
+      console.log("CREATING lfo");
       const lfo = new Tone.LFO(data.frequency, 10, 20000);
       const lfo2 = new Tone.LFO(data.frequency, data.min, data.max);
 
@@ -297,15 +303,14 @@ export function isRunning() {
 }
 
 // TEMP function to be able to use audiocontext in next.js. Create modules here
-export function toggleAudio() {
-  if (Tone.context.state === "suspended") {
-    const out = Tone.getDestination();
 
-    audioNodes["c"] = out;
+export function toggleAudio() {
+  const context = Tone.context.rawContext;
+  if (Tone.context.state !== "running") {
+    Tone.context.resume(); //
+    Tone.Transport.start("+0.1");
   }
-  // Change here to suspend if needed later
-  // console.log(Tone.context.state);
-  return isRunning() ? Tone.start() : Tone.start();
+  return isRunning() ? context.suspend() : Tone.start();
 }
 
 //*********

@@ -19,7 +19,7 @@ export const useStore = create((set, get) => ({
       type: "audioOut",
       id: "output_id",
       data: { bpm: 120, label: "output" },
-      position: { x: 350, y: 40 },
+      position: { x: 200, y: 40 },
       deletable: false,
     },
   ],
@@ -122,7 +122,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "delay": {
-        data = { delayTime: "4n", feeback: 0.5, wet: 0.5 };
+        data = { delayTime: "4n", feedback: 0.5, wet: 0.5 };
         position = { x: randomXpos, y: randomYpos };
         break;
       }
@@ -179,10 +179,7 @@ export const useStore = create((set, get) => ({
 
   removeEdges(edges) {
     edges.forEach((edge) => {
-      // Avoid removing twice the same connection!
-
       const targetNode = get().nodes.find((node) => node.id === edge.target);
-      const sourceNode = get().nodes.find((node) => node.id === edge.source);
 
       if (edges.length < 2) {
         removeAudioEdge(edge.source, edge.target, edge.targetHandle);
@@ -191,18 +188,12 @@ export const useStore = create((set, get) => ({
       if (targetNode) {
         targetNode.data.inputConnected = false;
       }
-
-      // REMOVE????
-      // if (sourceNode.type === "lfo") {
-      //   const isLfoSet = !get().isLfoSet;
-      //   set({ isLfoSet });
-      // }
     });
   },
 
   addEdge(data) {
     const targetNode = get().nodes.find((node) => node.id === data.target);
-    const sourceNode = get().nodes.find((node) => node.id === data.source);
+
     // Check if connection is parameter connection
     let twoParamHandles = false;
 
@@ -214,23 +205,24 @@ export const useStore = create((set, get) => ({
     if (data.sourceHandle === data.targetHandle || twoParamHandles) {
       //Check if it is a parameter connection. Handle is set to null if non paprameter
       if (!targetNode.data.inputConnected || targetNode.type === "audioOut") {
-        //
-
         addAudioEdge(data.source, data.target, data.targetHandle);
 
         //Nano ID generates random six digit ID
 
         const id = nanoid(6);
         // const edge = { id, ...data };
-        const edge = { id, ...data, updateable: "source" }; // set updateable property to "target"
+        const edge = { id, ...data, updatable: true };
+
         const edges = [edge, ...get().edges];
-        console.log(edge);
+        // console.log(edge);
         set({ edges });
       }
     }
   },
 
-  updateEdge: (oldEdge, newConnection) => {
+  onConnectStart: (oldEdge, newConnection) => {
+    //removeAudioEdge(oldEdge.source, oldEdge.target, oldEdge.targetHandle);
+    console.log("Connect start", oldEdge, "NEW connoection", newConnection);
     const { edges } = get();
     const newEdges = edges.map((edge) => {
       if (edge.id === oldEdge.id) {
@@ -244,16 +236,25 @@ export const useStore = create((set, get) => ({
     set({ edges: newEdges });
   },
 
-  // on connect function
-  onConnect: (params) => {
-    const { source, target } = params;
-    const newEdge = {
-      id: `${source}-${target}`,
-      source,
-      target,
-    };
-    set({ edges: [...get().edges, newEdge] });
-    addAudioEdge(newEdge);
+  updateEdge: (oldEdge, newConnection) => {
+    console.log("UPDATE", oldEdge);
+    removeAudioEdge(oldEdge.source, oldEdge.target, oldEdge.targetHandle);
+    addAudioEdge(
+      newConnection.source,
+      newConnection.target,
+      newConnection.targetHandle
+    );
+    const { edges } = get();
+    const newEdges = edges.map((edge) => {
+      if (edge.id === oldEdge.id) {
+        return {
+          ...edge,
+          ...newConnection,
+        };
+      }
+      return edge;
+    });
+    set({ edges: newEdges });
   },
 
   //********************** db **********************
@@ -277,8 +278,8 @@ export const useStore = create((set, get) => ({
     });
 
     set({ edges: [...edges] });
-    edges.forEach(({ source, target }) => {
-      addAudioEdge(source, target);
+    edges.forEach(({ source, target, targetHandle }) => {
+      addAudioEdge(source, target, targetHandle);
     });
   },
   currentPatch: "untitled",

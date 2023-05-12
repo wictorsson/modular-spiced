@@ -9,14 +9,17 @@ import Image from "next/image";
 //   toggleAudio: store.toggleAudio,
 // });
 
-const selector = (id) => (store) => ({
+const selector2 = (store) => ({
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
+});
+
+const selector = (id) => (store) => ({
   setBPM: (e) => store.updateNode("output_id", { bpm: e.target.value }),
 });
 
 export default function AudioOut({ id, data }) {
-  //const { isRunning, toggleAudio } = useStore(selector, shallow);
+  const { isRunning, toggleAudio } = useStore(selector2, shallow);
   const { setBPM } = useStore(selector(id), shallow);
 
   return (
@@ -33,6 +36,17 @@ export default function AudioOut({ id, data }) {
         <span></span>
         <br></br>
         <h4>AUDIO OUT</h4>
+        <button onClick={toggleAudio}>
+          {isRunning ? (
+            <span role="img" aria-label="mute">
+              ⌽
+            </span>
+          ) : (
+            <span role="img" aria-label="unmute">
+              ⌽
+            </span>
+          )}
+        </button>
         <span>Tempo</span>
         <div className="input-box">
           <input
@@ -45,6 +59,7 @@ export default function AudioOut({ id, data }) {
           ></input>
         </div>
       </div>
+
       {/* <button onClick={toggleAudio}>
         {isRunning ? <div>✅</div> : <div>❌</div>}
       </button> */}

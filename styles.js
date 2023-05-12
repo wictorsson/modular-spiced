@@ -67,8 +67,8 @@ export const GlobalStyle = createGlobalStyle`
   align-items: center;
   padding: 2rem;
   position: fixed;
-  color: grey;
-  gap: 10px;
+  // color: grey;
+  // gap: 10px;
   width: 100%;
   text-align: center;
   z-index: 1;
@@ -83,6 +83,12 @@ export const GlobalStyle = createGlobalStyle`
   border-width: 1px;
   bottom: 0px;
 }
+
+.Footer img {
+  width: 8%;
+  height: auto;
+}
+
   body {
  
       background: rgb(191,191,191);
@@ -508,11 +514,16 @@ export const GlobalStyle = createGlobalStyle`
 input[type=number]::-webkit-outer-spin-button { 
   position: absolute;
   right: 0px;
-  bottom: 20%;
+  bottom: 25%;
   border-radius: 5px;
     height: 20px;
     opacity: 1;
 }
+
+// .Footer{
+//   color: rgb(117,151,117,0.8);
+
+// }
 
   .outputNodeContainer {
     display: flex;

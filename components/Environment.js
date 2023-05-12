@@ -29,7 +29,8 @@ const selector = (store) => ({
   onEdgesChange: store.onEdgesChange,
   addEdge: store.addEdge,
   createNode: store.createNode,
-  updateEdge: store.updateEdge,
+  onEdgeUpdate: store.updateEdge,
+  onConnectStart: store.onConnectStart,
 });
 
 //Create nodetype object, should be defined outside of app component
@@ -76,6 +77,7 @@ function Environment() {
         onConnect={store.addEdge}
         onEdgeUpdate={store.onEdgeUpdate}
         //fitView
+        onConnectStart={store.onConnectStart}
         proOptions={proOptions}
         className="touchdevice-flow"
       >
