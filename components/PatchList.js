@@ -90,6 +90,7 @@ export default function PatchList() {
                       store.setCurrentPatch(patch._id);
                       store.readPatch(patch);
                       store.togglePatchList();
+                      store.setCurrentPatchName(patch.name);
                     }}
                   >
                     {patch.name}
